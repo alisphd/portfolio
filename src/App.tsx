@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  Mail, Phone, MapPin, Linkedin, BookOpen, Briefcase, 
+import {
+  Mail, Phone, MapPin, Linkedin, BookOpen, Briefcase,
   Award, GraduationCap, Code, FileText, User, ChevronRight,
   ArrowUpRight, Library, ShieldCheck, Microscope, Database,
   ExternalLink, Sprout, Dna, FlaskConical, Leaf, Trophy,
@@ -60,7 +60,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-600 font-sans pb-24 selection:bg-slate-900 selection:text-white">
-      
+
       {/* Static Hero Background for better performance */}
       <div className="h-64 bg-slate-900 relative overflow-hidden">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#27272a_1px,transparent_1px),linear-gradient(to_bottom,#27272a_1px,transparent_1px)] bg-[size:3rem_3rem] opacity-20"></div>
@@ -69,9 +69,9 @@ export default function App() {
       </div>
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-32 relative z-10">
-        
+
         {/* Profile Card - Solid Background */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
@@ -79,27 +79,27 @@ export default function App() {
         >
           {/* Picture - Modern Frame with Shake Effect */}
           <div className="shrink-0 relative group">
-            <motion.div 
-              whileTap={{ 
+            <motion.div
+              whileTap={{
                 rotate: [0, -2, 2, -2, 2, 0],
                 x: [0, -2, 2, -2, 2, 0]
               }}
               transition={{ duration: 0.4 }}
               className="w-40 h-40 md:w-48 md:h-48 rounded-2xl overflow-hidden border-8 border-white shadow-[0_20px_50px_rgba(0,0,0,0.1)] bg-slate-100 cursor-pointer relative z-10"
             >
-              <img 
-                src="https://picsum.photos/seed/saqib/400/400" 
-                alt={cvData.name} 
+              <img
+                src="https://picsum.photos/seed/saqib/400/400"
+                alt={cvData.name}
                 className="w-full h-full object-cover object-top"
                 referrerPolicy="no-referrer"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </motion.div>
-            
+
             {/* Decorative ring behind image */}
             <div className="absolute -inset-4 bg-teal-500/5 rounded-[3rem] blur-2xl -z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            
-            <motion.div 
+
+            <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.5, type: "spring" }}
@@ -111,7 +111,7 @@ export default function App() {
 
           {/* Info */}
           <div className="flex-1 text-center md:text-left pt-2">
-            <motion.h1 
+            <motion.h1
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
@@ -119,7 +119,7 @@ export default function App() {
             >
               {cvData.name}
             </motion.h1>
-            <motion.h2 
+            <motion.h2
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
@@ -127,8 +127,8 @@ export default function App() {
             >
               {cvData.title}
             </motion.h2>
-            
-            <motion.div 
+
+            <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
@@ -166,9 +166,9 @@ export default function App() {
                   `}
                 >
                   {isActive && (
-                    <motion.div 
+                    <motion.div
                       layoutId="activeTab"
-                      className="absolute inset-0 bg-teal-600 rounded-full shadow-md"
+                      className="absolute inset-0 bg-blue-600 rounded-full shadow-[0_0_16px_rgba(37,99,235,0.6)] border border-blue-400/30"
                       transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                     />
                   )}
@@ -193,12 +193,12 @@ export default function App() {
             >
               {/* Subtle background graphic for content area */}
               <div className="absolute top-0 right-0 w-96 h-96 bg-slate-50 rounded-full blur-3xl -z-10 opacity-50 translate-x-1/2 -translate-y-1/2"></div>
-              
+
               {/* ABOUT TAB */}
               {activeTab === 'about' && (
                 <div className="max-w-4xl">
                   <SectionHeading title="Professional Summary" icon={User} />
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2 }}
@@ -206,14 +206,14 @@ export default function App() {
                   >
                     {cvData.about}
                   </motion.div>
-                  
+
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
                     {[
                       { icon: Sprout, title: "Wet-Lab Expertise", desc: "Molecular diagnostics, SSR genotyping, marker-assisted selection, and stress screening." },
                       { icon: Dna, title: "Computational Skills", desc: "Genome-wide analysis, synteny mapping, protein structure prediction, and molecular dynamics." },
                       { icon: Leaf, title: "Data Workflows", desc: "Proficient in integrated R/Python workflows for plant-pathogen interaction studies." }
                     ].map((item, i) => (
-                      <motion.div 
+                      <motion.div
                         key={i}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -237,7 +237,7 @@ export default function App() {
                   <SectionHeading title="Work Experience" icon={FlaskConical} />
                   <div className="space-y-16 mt-12">
                     {cvData.experience.map((exp, idx) => (
-                      <motion.div 
+                      <motion.div
                         key={idx}
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
@@ -267,9 +267,9 @@ export default function App() {
                             <div className="flex flex-wrap items-center gap-4 mb-6">
                               <p className="text-slate-500 font-semibold text-lg">{exp.organization}</p>
                               {exp.certificateUrl && (
-                                <a 
-                                  href={exp.certificateUrl} 
-                                  target="_blank" 
+                                <a
+                                  href={exp.certificateUrl}
+                                  target="_blank"
                                   rel="noopener noreferrer"
                                   className="flex items-center gap-1.5 px-3 py-1 bg-teal-50 text-teal-600 rounded-lg text-xs font-bold hover:bg-teal-100 transition-colors"
                                 >
@@ -351,7 +351,7 @@ export default function App() {
                   <SectionHeading title="Academic Background" icon={GraduationCap} />
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
                     {cvData.education.map((edu, idx) => (
-                      <motion.div 
+                      <motion.div
                         key={idx}
                         whileHover={{ y: -5 }}
                         className="p-8 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col h-full hover:bg-slate-50 hover:shadow-md hover:border-teal-200 transition-all duration-500 group relative overflow-hidden"
@@ -363,14 +363,14 @@ export default function App() {
                           <GraduationCap className="w-5 h-5 text-slate-400" />
                           {edu.institution}
                         </p>
-                        
+
                         {edu.thesis && (
                           <div className="mb-8 p-4 bg-white rounded-xl border border-slate-100 shadow-sm">
                             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5">Thesis Topic</span>
                             <p className="text-slate-700 text-sm font-medium leading-relaxed">{edu.thesis}</p>
                           </div>
                         )}
-                        
+
                         <div className="flex items-center justify-between pt-6 border-t border-slate-100 mt-auto">
                           <div className="flex items-center gap-2 text-sm text-slate-500 font-medium">
                             <MapPin className="w-4 h-4 text-slate-400" />
@@ -406,7 +406,7 @@ export default function App() {
                       { title: "Review Articles", items: cvData.publications.reviews },
                       { title: "Conference Abstracts", items: cvData.publications.conferences }
                     ].map((group, gIdx) => (
-                      <motion.div 
+                      <motion.div
                         key={gIdx}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -427,9 +427,9 @@ export default function App() {
                               </div>
                               {pub.pdfUrl && (
                                 <div className="ml-12">
-                                  <a 
-                                    href={pub.pdfUrl} 
-                                    target="_blank" 
+                                  <a
+                                    href={pub.pdfUrl}
+                                    target="_blank"
                                     rel="noopener noreferrer"
                                     className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-200 text-slate-600 rounded-xl text-xs font-bold hover:bg-teal-600 hover:text-white hover:border-teal-600 transition-all shadow-sm"
                                   >
@@ -453,7 +453,7 @@ export default function App() {
                   <SectionHeading title="Technical Skills" icon={Binary} />
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
                     {cvData.skills.map((skill, idx) => (
-                      <motion.div 
+                      <motion.div
                         key={idx}
                         whileHover={{ scale: 1.02 }}
                         className="p-8 rounded-2xl border border-slate-100 bg-slate-50 hover:bg-white hover:shadow-md hover:border-teal-100 transition-all duration-500"
@@ -485,7 +485,7 @@ export default function App() {
                       {cvData.courses.length} Total
                     </div>
                   </div>
-                  
+
                   <div className="space-y-10">
                     {Object.entries(
                       cvData.courses.reduce((acc, course) => {
@@ -495,7 +495,7 @@ export default function App() {
                         return acc;
                       }, {} as Record<string, typeof cvData.courses>)
                     ).map(([spec, courses], specIdx) => (
-                      <motion.div 
+                      <motion.div
                         key={specIdx}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -528,9 +528,9 @@ export default function App() {
                                   {(course as any).grade || 'Completed'}
                                 </span>
                                 {course.certificateUrl && course.certificateUrl !== '#' && (
-                                  <a 
-                                    href={course.certificateUrl} 
-                                    target="_blank" 
+                                  <a
+                                    href={course.certificateUrl}
+                                    target="_blank"
                                     rel="noopener noreferrer"
                                     className="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-50 border border-teal-100 text-teal-700 rounded-lg text-xs font-bold hover:bg-teal-600 hover:text-white hover:border-teal-600 transition-all shadow-sm"
                                   >
@@ -555,7 +555,7 @@ export default function App() {
                     <SectionHeading title="Honors & Fellowships" icon={Trophy} />
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
                       {[...cvData.honors, ...cvData.fellowships].map((item: any, idx) => (
-                        <motion.div 
+                        <motion.div
                           key={idx}
                           whileHover={{ x: 10 }}
                           className="flex gap-6 p-8 rounded-2xl border border-slate-100 bg-slate-50 hover:bg-white hover:shadow-md hover:border-teal-100 transition-all duration-300"
@@ -567,9 +567,9 @@ export default function App() {
                             <div className="flex items-center justify-between gap-4 mb-1">
                               <h4 className="font-extrabold text-slate-900 text-xl">{item.title}</h4>
                               {item.certificateUrl && (
-                                <a 
-                                  href={item.certificateUrl} 
-                                  target="_blank" 
+                                <a
+                                  href={item.certificateUrl}
+                                  target="_blank"
                                   rel="noopener noreferrer"
                                   className="shrink-0 p-2 bg-white border border-slate-100 rounded-xl text-slate-400 hover:text-teal-600 hover:border-teal-100 transition-all shadow-sm"
                                   title="View PDF"
@@ -590,7 +590,7 @@ export default function App() {
                     <SectionHeading title="Certifications" icon={ShieldCheck} />
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
                       {cvData.certifications.map((cert: any, idx) => (
-                        <motion.div 
+                        <motion.div
                           key={idx}
                           whileHover={{ y: -5 }}
                           className="p-8 rounded-2xl border border-slate-100 bg-slate-50 hover:bg-white hover:shadow-md hover:border-teal-100 transition-all duration-500 flex flex-col h-full group"
@@ -598,9 +598,9 @@ export default function App() {
                           <div className="flex items-start justify-between gap-4 mb-6">
                             <h4 className="font-bold text-slate-900 text-lg leading-snug flex-1 group-hover:text-teal-600 transition-colors">{cert.title}</h4>
                             {cert.certificateUrl && (
-                              <a 
-                                href={cert.certificateUrl} 
-                                target="_blank" 
+                              <a
+                                href={cert.certificateUrl}
+                                target="_blank"
                                 rel="noopener noreferrer"
                                 className="shrink-0 p-2 bg-white border border-slate-100 rounded-xl text-slate-400 hover:text-teal-600 hover:border-teal-100 transition-all shadow-sm"
                                 title="View PDF"
