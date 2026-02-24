@@ -8,7 +8,7 @@
 
 @layer base {
   body {
-    @apply bg-slate-50 text-slate-600 font-sans antialiased overflow-x-hidden;
+    @apply bg-slate-50 text-slate-600 font-sans antialiased;
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-display text-slate-900 tracking-tight;

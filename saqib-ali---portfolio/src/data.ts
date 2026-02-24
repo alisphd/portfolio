@@ -699,74 +699,31 @@ export const cvData = {
   skills: [
     {
       category: "Molecular Biology & Plant Pathology",
-      details: [
-        "Pathogen isolation & identification",
-        "PCR, Gel Electrophoresis",
-        "SSR Genotyping, Marker-Assisted Selection (MAS)",
-        "Primer Design",
-        "Physiological Assays (SPAD, IRGA, Porometer, Osmometer, Spectrophotometry)",
-        "Biochemical profiling (MDA, POD activity)"
-      ]
+      details: "Pathogen isolation & identification, PCR, Gel Electrophoresis, SSR Genotyping, Marker-Assisted Selection (MAS), Primer Design. Physiological Assays (SPAD, IRGA, Porometer, Osmometer, Spectrophotometry). Biochemical profiling (MDA, POD activity)."
     },
     {
       category: "Genome-Wide & Comparative Genomics",
-      details: [
-        "HMM-based gene family identification (HMMER 3.0)",
-        "Protein domain verification (SMART, Pfam)",
-        "Gene structure analysis (GSDS 2.0)",
-        "Motif discovery (MEME Suite)",
-        "Synteny analysis (MCScanX, Circos, TBtools-II)",
-        "Promoter cis-element analysis (PlantCARE)",
-        "Subcellular localization prediction (WoLF PSORT)"
-      ]
+      details: "HMM-based gene family identification (HMMER 3.0), protein domain verification (SMART, Pfam), gene structure analysis (GSDS 2.0), motif discovery (MEME Suite). Synteny analysis (MCScanX, Circos, TBtools-II), promoter cis-element analysis (PlantCARE), subcellular localization prediction (WoLF PSORT)."
     },
     {
       category: "Phylogenomics & Molecular Evolution",
-      details: [
-        "Phylogenetic reconstruction (MEGA 11/12; Maximum Likelihood, Neighbor-Joining; 1,000 bootstrap replicates)",
-        "Sequence alignment (MAFFT, ClustalW)",
-        "Recombination detection (RDP5, 7 algorithms)",
-        "Positive selection analysis (MEME)",
-        "Evolutionary metrics (KaKs_Calculator, DnaSP 6)",
-        "Tree visualization (iTOL, ggtree)"
-      ]
+      details: "Phylogenetic reconstruction (MEGA 11/12; Maximum Likelihood, Neighbor-Joining; 1,000 bootstrap replicates). Sequence alignment (MAFFT, ClustalW). Recombination detection (RDP5, 7 algorithms). Positive selection analysis (MEME). Evolutionary metrics (KaKs_Calculator, DnaSP 6). Tree visualization (iTOL, ggtree)."
     },
     {
       category: "Protein Structure & Docking",
-      details: [
-        "Structure prediction (ColabFold)",
-        "Protein-protein docking (HDOCK)",
-        "Molecular dynamics simulations (GROMACS)",
-        "PPI network analysis (STRING database)"
-      ]
+      details: "Structure prediction (ColabFold), Protein-protein docking (HDOCK), Molecular dynamics simulations (GROMACS). PPI network analysis (STRING database)."
     },
     {
       category: "Data Analysis & Visualization",
-      details: [
-        "R Programming (tidyverse, ggplot2, ComplexHeatmap, pheatmap, circlize, seqinr)",
-        "Python (BioPython, Pandas)",
-        "Statistical analysis (ANOVA, Kruskal-Wallis, PCA, t-SNE)",
-        "RNA-seq analysis (expression profiling, heatmap clustering)",
-        "GIS & Remote Sensing"
-      ]
+      details: "R Programming (tidyverse, ggplot2, ComplexHeatmap, pheatmap, circlize, seqinr), Python (BioPython, Pandas), Statistical analysis (ANOVA, Kruskal-Wallis, PCA, t-SNE), RNA-seq analysis (expression profiling, heatmap clustering), GIS & Remote Sensing."
     },
     {
       category: "Field & Agricultural Research",
-      details: [
-        "Greenhouse & field trial management (RCBD, factorial design)",
-        "Screening for biotic & abiotic stress tolerance in rice and other crops",
-        "Agroecological data collection",
-        "IPM/IDM practices",
-        "Sustainable agriculture frameworks"
-      ]
+      details: "Greenhouse & field trial management (RCBD, factorial design), Screening for biotic & abiotic stress tolerance in rice and other crops, Agroecological data collection, IPM/IDM practices, sustainable agriculture frameworks"
     },
     {
       category: "Academic & Professional",
-      details: [
-        "Scientific writing",
-        "Conference presentations",
-        "Fundraising"
-      ]
+      details: "Scientific writing, conference presentations, Fundraising."
     }
   ],
   recommendations: [

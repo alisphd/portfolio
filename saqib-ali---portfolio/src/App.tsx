@@ -59,7 +59,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<TabId>('about');
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-600 font-sans pb-24 selection:bg-slate-900 selection:text-white">
+    <div className="min-h-screen bg-slate-50 text-slate-600 font-sans pb-24 selection:bg-slate-900 selection:text-white overflow-x-hidden">
       
       {/* Static Hero Background for better performance */}
       <div className="h-64 bg-slate-900 relative overflow-hidden">
@@ -70,12 +70,12 @@ export default function App() {
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-32 relative z-10">
         
-        {/* Profile Card - Solid Background */}
+        {/* Profile Card - Glass Effect */}
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 p-8 sm:p-8 mb-10 flex flex-col md:flex-row gap-8 items-center md:items-start"
+          className="glass rounded-2xl shadow-xl shadow-slate-200/50 p-8 sm:p-8 mb-10 flex flex-col md:flex-row gap-8 items-center md:items-start"
         >
           {/* Picture - Modern Frame with Shake Effect */}
           <div className="shrink-0 relative group">
@@ -152,7 +152,7 @@ export default function App() {
 
         {/* Interactive Tabs Navigation */}
         <div className="mb-12 sticky top-6 z-30 flex justify-center">
-          <div className="bg-slate-900/90 backdrop-blur-xl rounded-full p-1.5 shadow-xl shadow-slate-900/10 border border-slate-800 flex overflow-x-auto hide-scrollbar gap-1 max-w-full">
+          <div className="bg-white/80 backdrop-blur-xl rounded-full p-1.5 shadow-lg shadow-slate-200/50 border border-slate-200/60 flex overflow-x-auto hide-scrollbar gap-1 max-w-full">
             {TABS.map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
@@ -162,17 +162,17 @@ export default function App() {
                   onClick={() => setActiveTab(tab.id)}
                   className={`
                     relative flex items-center gap-2 py-2.5 px-5 text-sm font-semibold rounded-full transition-all duration-300 whitespace-nowrap
-                    ${isActive ? 'text-white' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'}
+                    ${isActive ? 'text-teal-700' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-100/50'}
                   `}
                 >
                   {isActive && (
                     <motion.div 
                       layoutId="activeTab"
-                      className="absolute inset-0 bg-teal-600 rounded-full shadow-md"
+                      className="absolute inset-0 bg-teal-50 rounded-full border border-teal-100/50"
                       transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                     />
                   )}
-                  <Icon className={`w-4 h-4 relative z-10 ${isActive ? 'text-white' : 'text-slate-500 group-hover:text-slate-300'}`} />
+                  <Icon className={`w-4 h-4 relative z-10 ${isActive ? 'text-teal-600' : 'text-slate-400'}`} />
                   <span className="relative z-10">{tab.label}</span>
                 </button>
               );
@@ -198,14 +198,14 @@ export default function App() {
               {activeTab === 'about' && (
                 <div className="max-w-4xl">
                   <SectionHeading title="Professional Summary" icon={User} />
-                  <motion.div 
+                  <motion.p 
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2 }}
-                    className="bg-slate-50 border-l-4 border-teal-500 p-6 md:p-8 rounded-r-2xl text-slate-700 font-medium italic shadow-sm mb-12 text-lg leading-relaxed"
+                    className="text-slate-600 leading-relaxed text-xl font-medium mb-12"
                   >
                     {cvData.about}
-                  </motion.div>
+                  </motion.p>
                   
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
                     {[
@@ -218,13 +218,11 @@ export default function App() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3 + i * 0.1 }}
-                        className="p-8 rounded-2xl bg-white border border-slate-200 shadow-sm hover:bg-teal-50 hover:shadow-md hover:border-teal-200 transition-all duration-300 group"
+                        className="p-8 rounded-2xl bg-white border border-slate-200 shadow-sm hover:bg-white hover:shadow-md hover:border-teal-100 transition-all duration-300 group"
                       >
-                        <div className="w-14 h-14 bg-slate-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-white group-hover:shadow-sm transition-all duration-300">
-                          <item.icon className="w-7 h-7 text-slate-400 group-hover:text-teal-500 transition-colors group-hover:scale-110 duration-300" />
-                        </div>
+                        <item.icon className="w-8 h-8 text-slate-400 mb-6 group-hover:text-teal-500 transition-colors group-hover:scale-110 duration-300" />
                         <h4 className="font-bold text-slate-900 mb-3 text-lg">{item.title}</h4>
-                        <p className="text-sm text-slate-500 leading-relaxed group-hover:text-slate-600 transition-colors">{item.desc}</p>
+                        <p className="text-sm text-slate-500 leading-relaxed">{item.desc}</p>
                       </motion.div>
                     ))}
                   </div>
@@ -244,9 +242,9 @@ export default function App() {
                         transition={{ delay: idx * 0.1 }}
                         className="relative group"
                       >
-                        <div className="flex flex-col md:flex-row gap-6 md:gap-10">
+                        <div className="flex flex-col md:flex-row gap-8 md:gap-16">
                           {/* Left Column: Date & Location */}
-                          <div className="md:w-[200px] shrink-0 md:text-right pt-2">
+                          <div className="md:w-1/4 shrink-0 md:text-right pt-2">
                             <div className="text-lg font-bold text-slate-900 mb-2">
                               {exp.period}
                             </div>
@@ -257,11 +255,11 @@ export default function App() {
                           </div>
 
                           {/* Right Column: Content */}
-                          <div className="flex-1 pb-4 relative">
+                          <div className="md:w-3/4 pb-4 relative">
                             {/* Timeline line */}
-                            <div className="hidden md:block absolute -left-5 top-4 bottom-0 w-px bg-slate-200 group-last:bg-transparent"></div>
+                            <div className="hidden md:block absolute -left-8 top-4 bottom-0 w-px bg-slate-200 group-last:bg-transparent"></div>
                             {/* Timeline dot */}
-                            <div className="hidden md:block absolute -left-[25px] top-3.5 w-3 h-3 rounded-full bg-slate-300 group-hover:bg-teal-500 group-hover:scale-125 transition-all duration-300"></div>
+                            <div className="hidden md:block absolute -left-[33px] top-3.5 w-3 h-3 rounded-full bg-slate-300 group-hover:bg-teal-500 group-hover:scale-125 transition-all duration-300"></div>
 
                             <h3 className="text-2xl font-extrabold text-slate-900 mb-2 group-hover:text-teal-600 transition-colors duration-300">{exp.title}</h3>
                             <div className="flex flex-wrap items-center gap-4 mb-6">
@@ -354,29 +352,18 @@ export default function App() {
                       <motion.div 
                         key={idx}
                         whileHover={{ y: -5 }}
-                        className="p-8 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col h-full hover:bg-slate-50 hover:shadow-md hover:border-teal-200 transition-all duration-500 group relative overflow-hidden"
+                        className="p-8 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col h-full hover:bg-white hover:shadow-md hover:border-teal-100 transition-all duration-500 group"
                       >
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-teal-50 rounded-bl-full -z-10 opacity-50 group-hover:scale-110 transition-transform duration-500"></div>
-                        <div className="text-xs font-bold text-teal-700 mb-6 bg-teal-50 border border-teal-100 px-4 py-1.5 rounded-full w-max shadow-sm tracking-wide">{edu.period}</div>
-                        <h3 className="text-2xl font-extrabold text-slate-900 mb-3 leading-tight group-hover:text-teal-700 transition-colors">{edu.degree}</h3>
-                        <p className="text-slate-600 font-medium mb-8 flex-1 text-lg flex items-center gap-2">
-                          <GraduationCap className="w-5 h-5 text-slate-400" />
-                          {edu.institution}
-                        </p>
+                        <div className="text-sm font-bold text-teal-600 mb-6 bg-white border border-slate-100 px-4 py-1.5 rounded-full w-max shadow-sm">{edu.period}</div>
+                        <h3 className="text-3xl font-extrabold text-slate-900 mb-3 leading-tight group-hover:text-teal-600 transition-colors">{edu.degree}</h3>
+                        <p className="text-slate-500 font-medium mb-10 flex-1 text-xl">{edu.institution}</p>
                         
-                        {edu.thesis && (
-                          <div className="mb-8 p-4 bg-white rounded-xl border border-slate-100 shadow-sm">
-                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5">Thesis Topic</span>
-                            <p className="text-slate-700 text-sm font-medium leading-relaxed">{edu.thesis}</p>
-                          </div>
-                        )}
-                        
-                        <div className="flex items-center justify-between pt-6 border-t border-slate-100 mt-auto">
-                          <div className="flex items-center gap-2 text-sm text-slate-500 font-medium">
-                            <MapPin className="w-4 h-4 text-slate-400" />
+                        <div className="flex items-center justify-between pt-8 border-t border-slate-200">
+                          <div className="flex items-center gap-2 text-sm text-slate-400 font-semibold">
+                            <MapPin className="w-5 h-5" />
                             <span>{edu.location}</span>
                           </div>
-                          <div className="bg-slate-800 text-white px-4 py-1.5 rounded-xl text-sm font-bold shadow-md">
+                          <div className="bg-slate-900 text-white px-5 py-2 rounded-2xl text-sm font-bold shadow-lg shadow-slate-900/20">
                             CGPA: {edu.cgpa}
                           </div>
                         </div>
@@ -459,14 +446,9 @@ export default function App() {
                         className="p-8 rounded-2xl border border-slate-100 bg-slate-50 hover:bg-white hover:shadow-md hover:border-teal-100 transition-all duration-500"
                       >
                         <h3 className="text-xs font-black text-teal-500 mb-6 uppercase tracking-[0.2em]">{skill.category}</h3>
-                        <ul className="space-y-3">
-                          {(Array.isArray(skill.details) ? skill.details : [skill.details]).map((detail, dIdx) => (
-                            <li key={dIdx} className="flex items-start gap-3 text-slate-700 text-base font-medium">
-                              <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-teal-400 shrink-0"></div>
-                              <span className="leading-relaxed">{detail}</span>
-                            </li>
-                          ))}
-                        </ul>
+                        <p className="text-slate-700 text-lg leading-relaxed font-medium">
+                          {skill.details}
+                        </p>
                       </motion.div>
                     ))}
                   </div>
@@ -532,10 +514,10 @@ export default function App() {
                                     href={course.certificateUrl} 
                                     target="_blank" 
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-50 border border-teal-100 text-teal-700 rounded-lg text-xs font-bold hover:bg-teal-600 hover:text-white hover:border-teal-600 transition-all shadow-sm"
+                                    className="inline-flex items-center gap-1.5 px-4 py-2 bg-white border border-slate-200 text-slate-600 rounded-lg text-xs font-bold hover:bg-teal-50 hover:text-teal-700 hover:border-teal-200 transition-all shadow-sm"
                                   >
                                     <FileText className="w-3.5 h-3.5" />
-                                    PDF Certificate
+                                    Verify
                                   </a>
                                 )}
                               </div>
