@@ -1,6 +1,6 @@
 export const cvData = {
   name: "Saqib Ali",
-  title: "Plant Pathologist & Bioinformatician",
+  title: "Plant Pathologist & Bioinformatician | Integrating wet-lab assays with genome-scale analysis",
   contact: {
     phone: "+92-347-1158-223",
     email: "saqibalilogan223@gmail.com",
@@ -8,7 +8,7 @@ export const cvData = {
     wechat: "saqibali01",
     location: "Chiniot, Punjab, Pakistan"
   },
-  about: "Plant pathologist and bioinformatician (M.Sc. Hons.) specializing in comparative genomics, phylogenomics, and molecular evolution. Combines advanced wet-lab skills (molecular diagnostics, SSR genotyping, marker-assisted selection, stress screening) with computational expertise in genome-wide analysis, synteny mapping, protein structure prediction, molecular dynamics simulations, and population genetics. Proficient in integrated R/Python workflows for plant-pathogen interaction studies and stress-responsive gene discovery.",
+  about: "<strong>Plant Pathologist and Bioinformatician (M.Sc. Hons.)</strong> specializing in comparative genomics, phylogenomics, and molecular evolution.<br/><br/>Combines <strong>advanced wet-lab skills</strong> (molecular diagnostics, SSR genotyping, marker-assisted selection, stress screening) with <strong>computational expertise</strong> in genome-wide analysis, synteny mapping, protein structure prediction, and population genetics.<br/><br/>Proficient in building integrated <strong>R/Python workflows</strong> to solve complex research problems in plant-pathogen interactions and stress-responsive gene discovery.",
   education: [
     {
       degree: "M.Sc. (Hons.) Agriculture Plant Pathology",

@@ -203,15 +203,14 @@ export default function App() {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2 }}
                     className="bg-slate-50 border-l-4 border-teal-500 p-6 md:p-8 rounded-r-2xl text-slate-700 font-medium italic shadow-sm mb-12 text-lg leading-relaxed"
-                  >
-                    {cvData.about}
-                  </motion.div>
+                    dangerouslySetInnerHTML={{ __html: cvData.about }}
+                  />
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
                     {[
-                      { icon: Sprout, title: "Wet-Lab Expertise", desc: "Molecular diagnostics, SSR genotyping, marker-assisted selection, and stress screening." },
-                      { icon: Dna, title: "Computational Skills", desc: "Genome-wide analysis, synteny mapping, protein structure prediction, and molecular dynamics." },
-                      { icon: Leaf, title: "Data Workflows", desc: "Proficient in integrated R/Python workflows for plant-pathogen interaction studies." }
+                      { icon: Sprout, title: "Wet-Lab Expertise", desc: ["Molecular diagnostics & PCR", "SSR genotyping & MAS", "Biochemical stress screening"] },
+                      { icon: Dna, title: "Computational Biology", desc: ["Genome-wide & synteny mapping", "Protein structure & dynamics", "Phylogenomics & evolution"] },
+                      { icon: Leaf, title: "Data Workflows", desc: ["R/Python pipelines", "Plant-pathogen interactions", "Stress-responsive gene discovery"] }
                     ].map((item, i) => (
                       <motion.div
                         key={i}
@@ -223,8 +222,15 @@ export default function App() {
                         <div className="w-14 h-14 bg-slate-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-white group-hover:shadow-sm transition-all duration-300">
                           <item.icon className="w-7 h-7 text-slate-400 group-hover:text-teal-500 transition-colors group-hover:scale-110 duration-300" />
                         </div>
-                        <h4 className="font-bold text-slate-900 mb-3 text-lg">{item.title}</h4>
-                        <p className="text-sm text-slate-500 leading-relaxed group-hover:text-slate-600 transition-colors">{item.desc}</p>
+                        <h4 className="font-extrabold text-slate-900 mb-4 text-[19px]">{item.title}</h4>
+                        <ul className="space-y-2">
+                          {item.desc.map((bullet, idx) => (
+                            <li key={idx} className="flex items-start gap-2.5 text-sm text-slate-500 leading-relaxed group-hover:text-slate-600 transition-colors">
+                              <div className="w-1.5 h-1.5 rounded-full bg-teal-400 mt-1.5 shrink-0"></div>
+                              <span>{bullet}</span>
+                            </li>
+                          ))}
+                        </ul>
                       </motion.div>
                     ))}
                   </div>
