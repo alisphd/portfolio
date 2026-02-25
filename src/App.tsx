@@ -305,7 +305,7 @@ export default function App() {
                                       </div>
                                       <div>
                                         <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">Thesis</div>
-                                        <div className="text-sm font-bold text-slate-700 truncate max-w-[200px]">{exp.thesis}</div>
+                                        <div className="text-sm font-bold text-slate-700">{exp.thesis}</div>
                                       </div>
                                     </div>
                                   )}
