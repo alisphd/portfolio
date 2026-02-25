@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import { cvData } from './data';
 
-type TabId = 'about' | 'experience' | 'education' | 'publications' | 'skills' | 'courses' | 'honors';
+type TabId = 'about' | 'experience' | 'education' | 'publications' | 'skills' | 'courses' | 'honors' | 'references';
 
 interface Punch {
   id: number;
@@ -31,6 +31,7 @@ const TABS: TabConfig[] = [
   { id: 'skills', label: 'Skills', icon: Binary },
   { id: 'courses', label: 'Courses', icon: Library },
   { id: 'honors', label: 'Honors & Awards', icon: Trophy },
+  { id: 'references', label: 'References', icon: Briefcase },
 ];
 
 // Clean, minimalist section heading
@@ -627,6 +628,41 @@ export default function App() {
                         </motion.div>
                       ))}
                     </div>
+                  </div>
+                </div>
+              )}
+
+              {/* REFERENCES TAB */}
+              {activeTab === 'references' && (
+                <div>
+                  <SectionHeading title="Professional References" icon={Briefcase} />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                    {cvData.recommendations.map((rec: any, idx) => (
+                      <motion.div
+                        key={idx}
+                        whileHover={{ y: -5 }}
+                        className="p-8 rounded-2xl border border-slate-100 bg-slate-50 hover:bg-white hover:shadow-md hover:border-teal-100 transition-all duration-500 relative overflow-hidden group"
+                      >
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-slate-200/20 rounded-bl-full -z-10 opacity-50 group-hover:bg-teal-50 transition-colors duration-500"></div>
+                        <div className="w-14 h-14 rounded-full bg-white border border-slate-100 flex items-center justify-center shadow-sm mb-6 group-hover:border-teal-200 transition-all duration-300">
+                          <User className="w-6 h-6 text-slate-400 group-hover:text-teal-500 transition-colors" />
+                        </div>
+                        <h3 className="text-xl font-extrabold text-slate-900 mb-2 leading-snug">{rec.name}</h3>
+                        <p className="text-sm font-bold text-teal-600 mb-1">{rec.title}</p>
+                        <p className="text-sm font-medium text-slate-500 mb-6">{rec.organization}</p>
+
+                        <div className="pt-6 border-t border-slate-200/60 flex flex-col gap-3">
+                          <div className="flex items-center gap-3">
+                            <Briefcase className="w-4 h-4 text-slate-400" />
+                            <span className="text-sm font-bold text-slate-700">{rec.relationship}</span>
+                          </div>
+                          <div className="flex items-center gap-3 bg-slate-100/50 p-3 rounded-xl border border-slate-200/50 mt-2">
+                            <Mail className="w-4 h-4 text-slate-400" />
+                            <span className="text-sm font-medium text-slate-500 italic">Contact info available upon request</span>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
                   </div>
                 </div>
               )}
