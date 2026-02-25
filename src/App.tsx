@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   Mail, Phone, MapPin, Linkedin, BookOpen, Briefcase,
-  Award, GraduationCap, Code, FileText, User, ChevronRight,
+  Award, GraduationCap, Code, FileText, User, ChevronRight, ChevronLeft,
   ArrowUpRight, Library, ShieldCheck, Microscope, Database,
   ExternalLink, Sprout, Dna, FlaskConical, Leaf, Trophy,
   Binary, Search, FileSearch
@@ -58,6 +58,34 @@ const getSpecColor = (spec: string) => {
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabId>('about');
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const checkScroll = useCallback(() => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+      setCanScrollLeft(scrollLeft > 2);
+      setCanScrollRight(Math.ceil(scrollLeft) < scrollWidth - clientWidth - 2);
+    }
+  }, []);
+
+  useEffect(() => {
+    checkScroll();
+    window.addEventListener('resize', checkScroll);
+    return () => window.removeEventListener('resize', checkScroll);
+  }, [checkScroll]);
+
+  const scrollMenu = (direction: 'left' | 'right') => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 250;
+      scrollContainerRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+      setTimeout(checkScroll, 350);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-600 font-sans pb-24 selection:bg-slate-900 selection:text-white">
@@ -151,32 +179,68 @@ export default function App() {
         </motion.div>
 
         {/* Interactive Tabs Navigation */}
-        <div className="mb-12 sticky top-6 z-30 flex justify-center">
-          <div className="bg-slate-900/90 backdrop-blur-xl rounded-full p-1.5 shadow-xl shadow-slate-900/10 border border-slate-800 flex overflow-x-auto hide-scrollbar gap-1 max-w-full">
-            {TABS.map((tab) => {
-              const Icon = tab.icon;
-              const isActive = activeTab === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`
-                    relative flex items-center gap-2 py-2.5 px-5 text-sm font-semibold rounded-full transition-all duration-300 whitespace-nowrap
-                    ${isActive ? 'text-white' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'}
-                  `}
+        <div className="mb-12 sticky top-6 z-30 flex justify-center w-full px-4 sm:px-0">
+          <div className="relative max-w-full group">
+            <AnimatePresence>
+              {canScrollLeft && (
+                <motion.button
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  onClick={() => scrollMenu('left')}
+                  className="absolute left-1 md:-left-4 top-1/2 -translate-y-1/2 z-40 bg-slate-800 text-white p-2 rounded-full shadow-[0_0_15px_rgba(0,0,0,0.5)] border border-slate-600/50 hover:bg-slate-700 hover:scale-110 focus:outline-none transition-all hidden sm:block"
+                  aria-label="Scroll left"
                 >
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeTab"
-                      className="absolute inset-0 bg-blue-600 rounded-full shadow-[0_0_16px_rgba(37,99,235,0.6)] border border-blue-400/30"
-                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                    />
-                  )}
-                  <Icon className={`w-4 h-4 relative z-10 ${isActive ? 'text-white' : 'text-slate-500 group-hover:text-slate-300'}`} />
-                  <span className="relative z-10">{tab.label}</span>
-                </button>
-              );
-            })}
+                  <ChevronLeft className="w-5 h-5" />
+                </motion.button>
+              )}
+            </AnimatePresence>
+
+            <div
+              ref={scrollContainerRef}
+              onScroll={checkScroll}
+              className="bg-slate-900/90 backdrop-blur-xl rounded-full p-1.5 shadow-xl shadow-slate-900/10 border border-slate-800 flex overflow-x-auto hide-scrollbar gap-1 w-full max-w-[88vw] md:max-w-4xl snap-x scroll-smooth"
+            >
+              {TABS.map((tab) => {
+                const Icon = tab.icon;
+                const isActive = activeTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`
+                      snap-start relative flex items-center gap-2 py-2.5 px-5 text-sm font-semibold rounded-full transition-all duration-300 whitespace-nowrap
+                      ${isActive ? 'text-white' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'}
+                    `}
+                  >
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeTab"
+                        className="absolute inset-0 bg-blue-600 rounded-full shadow-[0_0_16px_rgba(37,99,235,0.6)] border border-blue-400/30"
+                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                      />
+                    )}
+                    <Icon className={`w-4 h-4 relative z-10 ${isActive ? 'text-white' : 'text-slate-500 group-hover:text-slate-300'}`} />
+                    <span className="relative z-10">{tab.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            <AnimatePresence>
+              {canScrollRight && (
+                <motion.button
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  onClick={() => scrollMenu('right')}
+                  className="absolute right-1 md:-right-4 top-1/2 -translate-y-1/2 z-40 bg-slate-800 text-white p-2 rounded-full shadow-[0_0_15px_rgba(0,0,0,0.5)] border border-slate-600/50 hover:bg-slate-700 hover:scale-110 focus:outline-none transition-all hidden sm:block"
+                  aria-label="Scroll right"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </motion.button>
+              )}
+            </AnimatePresence>
           </div>
         </div>
 
