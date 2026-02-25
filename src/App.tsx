@@ -88,12 +88,11 @@ export default function App() {
               className="w-40 h-40 md:w-48 md:h-48 rounded-2xl overflow-hidden border-8 border-white shadow-[0_20px_50px_rgba(0,0,0,0.1)] bg-slate-100 cursor-pointer relative z-10"
             >
               <img
-                src="https://picsum.photos/seed/saqib/400/400"
+                src={`${import.meta.env.BASE_URL}portrait.jpg`}
                 alt={cvData.name}
-                className="w-full h-full object-cover object-top"
-                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover object-[center_20%]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </motion.div>
 
             {/* Decorative ring behind image */}
