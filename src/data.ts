@@ -1,6 +1,6 @@
 export const cvData = {
   name: "Saqib Ali",
-  title: "Plant Pathologist & Bioinformatician | Integrating wet-lab assays with genome-scale analysis",
+  title: "Plant Pathologist & Bioinformatician",
   contact: {
     phone: "+92-347-1158-223",
     email: "saqibalilogan223@gmail.com",

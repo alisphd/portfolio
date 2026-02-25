@@ -181,25 +181,30 @@ export default function App() {
         {/* Interactive Tabs Navigation */}
         <div className="mb-12 sticky top-6 z-30 flex justify-center w-full px-4 sm:px-0">
           <div className="relative max-w-full group">
+            {/* Left fade/button */}
             <AnimatePresence>
               {canScrollLeft && (
-                <motion.button
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  onClick={() => scrollMenu('left')}
-                  className="absolute left-1 md:-left-4 top-1/2 -translate-y-1/2 z-40 bg-slate-800 text-white p-2 rounded-full shadow-[0_0_15px_rgba(0,0,0,0.5)] border border-slate-600/50 hover:bg-slate-700 hover:scale-110 focus:outline-none transition-all hidden sm:block"
-                  aria-label="Scroll left"
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent z-40 rounded-l-full pointer-events-none flex items-center pl-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 >
-                  <ChevronLeft className="w-5 h-5" />
-                </motion.button>
+                  <button
+                    onClick={(e) => { e.preventDefault(); scrollMenu('left'); }}
+                    className="p-2 rounded-full bg-slate-800/80 text-white hover:bg-slate-700 hover:scale-110 pointer-events-auto backdrop-blur-sm transition-all shadow-lg"
+                    aria-label="Scroll left"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                </motion.div>
               )}
             </AnimatePresence>
 
             <div
               ref={scrollContainerRef}
               onScroll={checkScroll}
-              className="bg-slate-900/90 backdrop-blur-xl rounded-full p-1.5 shadow-xl shadow-slate-900/10 border border-slate-800 flex overflow-x-auto hide-scrollbar gap-1 w-full max-w-[88vw] md:max-w-4xl snap-x scroll-smooth"
+              className="bg-slate-900/90 backdrop-blur-xl rounded-full p-1.5 shadow-xl shadow-slate-900/10 border border-slate-800 flex overflow-x-auto hide-scrollbar gap-1 w-full max-w-[88vw] md:max-w-4xl snap-x scroll-smooth relative z-20"
             >
               {TABS.map((tab) => {
                 const Icon = tab.icon;
@@ -209,7 +214,7 @@ export default function App() {
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
                     className={`
-                      snap-start relative flex items-center gap-2 py-2.5 px-5 text-sm font-semibold rounded-full transition-all duration-300 whitespace-nowrap
+                      snap-start relative flex items-center gap-2 py-2.5 px-5 text-sm font-semibold rounded-full transition-all duration-300 whitespace-nowrap shrink-0
                       ${isActive ? 'text-white' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'}
                     `}
                   >
@@ -227,18 +232,23 @@ export default function App() {
               })}
             </div>
 
+            {/* Right fade/button */}
             <AnimatePresence>
               {canScrollRight && (
-                <motion.button
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  onClick={() => scrollMenu('right')}
-                  className="absolute right-1 md:-right-4 top-1/2 -translate-y-1/2 z-40 bg-slate-800 text-white p-2 rounded-full shadow-[0_0_15px_rgba(0,0,0,0.5)] border border-slate-600/50 hover:bg-slate-700 hover:scale-110 focus:outline-none transition-all hidden sm:block"
-                  aria-label="Scroll right"
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-slate-900 via-slate-900/80 to-transparent z-40 rounded-r-full pointer-events-none flex items-center justify-end pr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 >
-                  <ChevronRight className="w-5 h-5" />
-                </motion.button>
+                  <button
+                    onClick={(e) => { e.preventDefault(); scrollMenu('right'); }}
+                    className="p-2 rounded-full bg-slate-800/80 text-white hover:bg-slate-700 hover:scale-110 pointer-events-auto backdrop-blur-sm transition-all shadow-lg"
+                    aria-label="Scroll right"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </motion.div>
               )}
             </AnimatePresence>
           </div>
