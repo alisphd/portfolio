@@ -6,3 +6,5 @@ coverage/
 *.log
 .env*
 !.env.example
+Academic_CV_Saqib_Ali.docx
+extract_links.py

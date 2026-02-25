@@ -35,7 +35,7 @@ export const cvData = {
       period: "Sep 2025 – Present",
       supervisor: "Dr. Muhammad Rashid",
       supervisorUrl: "https://www.researchgate.net/profile/Muhammad-Rashid-66",
-      certificateUrl: "#",
+      certificateUrl: "https://drive.google.com/file/d/14XRTN_t0_nuX0CChL30IpVVl99rK-1Jl/view?usp=sharing",
       projects: [
         {
           name: "Project 1: In-Silico Analysis of WRKY Genes in Rice Subspecies (Sep–Oct 2025)",
@@ -71,7 +71,7 @@ export const cvData = {
       organization: "Department of Agriculture Extension, Government of Punjab",
       location: "Chiniot, Pakistan",
       period: "Sep 2024 – Sep 2025",
-      certificateUrl: "#",
+      certificateUrl: "https://drive.google.com/file/d/1S_3_cCsmE1y5IlFfzos1ZMRCgpGyKB9F/view?usp=sharing",
       details: [
         "Provided technical advisory support to 1,500+ farmers on integrated pest and disease management, translating research-based recommendations into practical, cost-effective control strategies to improve crop yields.",
         "Conducted field-based pest scouting and crop health assessments through regular farmer visits, diagnosing disease/pest issues and providing targeted intervention recommendations.",
@@ -83,7 +83,7 @@ export const cvData = {
       organization: "World Agriculture Forum",
       location: "Remote",
       period: "May 2025 – July 2025",
-      certificateUrl: "#",
+      certificateUrl: "https://drive.google.com/file/d/1Op6vncaxaS6arzUaQQqLErU3x19qTcJE/view?usp=sharing",
       details: [
         "Collaborated with policy research team to analyze global agricultural trends and compile technical reports promoting sustainable agricultural practices and stakeholder dialogue."
       ]
@@ -93,7 +93,7 @@ export const cvData = {
       organization: "PepsiCo Roshan Kal for Pakistan",
       location: "Faisalabad, Pakistan",
       period: "Jul 2024 – Aug 2024",
-      certificateUrl: "#",
+      certificateUrl: "https://drive.google.com/file/d/17638KT4E9XSE3il6wIrqHilzaScoLq-d/view?usp=sharing",
       details: [
         "Contributed to Bonsucro-certified model farm development by validating sustainable agriculture practices and conducting supply chain sustainability assessments in collaboration with industry and academic partners."
       ]
@@ -120,7 +120,7 @@ export const cvData = {
       organization: "Vegetable Research Institute, Ayub Agricultural Research Institute",
       location: "Faisalabad, Pakistan",
       period: "Feb 2022 – May 2022",
-      certificateUrl: "#",
+      certificateUrl: "https://drive.google.com/file/d/1k-T7AZJ7-r3PVWIZ6iuevXr8NTUSEZ6C/view?usp=sharing",
       details: [
         "Designed and conducted field trials in walk-in tunnels to study disease prevalence and fungicide efficacy in vegetable crops (tomatoes, cucumbers, watermelons, onions, garlic), with emphasis on tomato early blight and grey mold management.",
         "Performed plant pathology diagnostics including pathogen isolation, ELISA-based virus identification, and PCR-based detection for bacterial and nematode pathogens.",
@@ -133,11 +133,11 @@ export const cvData = {
     submitted: [
       { text: "Ali, S. (2026). Evolutionary Origins and Structural Mechanism of V2-Mediated Host Immunity Suppression in Soybean Stay-Green Associated Virus (SoSGV). Submitted to Archives of Virology (Springer Nature).", pdfUrl: "#" },
       { text: "Ali, S. (2026). Systematic Characterization of Glycine max IQD Genes Reveals Insights into Drought Stress Adaptation and Hormonal Regulation of Plant Architecture. Submitted to 3 Biotech (Springer Nature).", pdfUrl: "#" },
-      { text: "Ali, S., Hanjra, Z., Saeed, M., Fatima, T., Khalil, S., Iltaf, B., & Rashid, M. (2025). In-silico analysis of WRKY transcription factors (WRKY) gene family in rice. Submitted to BMC Plant Biology.", pdfUrl: "#" },
-      { text: "Hanjra, Z., Ali, S., Fatima, T., Saeed, M., Khalil, S., & Rashid, M. (2026). High-resolution comparative genomics and compositional analysis of WRKY transcription factors across seven cereal and model plant genomes. Submitted to BMC Plant Biology.", pdfUrl: "#" }
+      { text: "Ali, S., Hanjra, Z., Saeed, M., Fatima, T., Khalil, S., Iltaf, B., & Rashid, M. (2025). In-silico analysis of WRKY transcription factors (WRKY) gene family in rice. Submitted to BMC Plant Biology.", pdfUrl: "https://drive.google.com/file/d/1hvu9mAr3NKo9R_vdEHQMbZRJdTPizR2A/view?usp=sharing" },
+      { text: "Hanjra, Z., Ali, S., Fatima, T., Saeed, M., Khalil, S., & Rashid, M. (2026). High-resolution comparative genomics and compositional analysis of WRKY transcription factors across seven cereal and model plant genomes. Submitted to BMC Plant Biology.", pdfUrl: "https://drive.google.com/file/d/1SNoaF7h_k36Bh-VJJWGGI8VrhyyE_Zqx/view?usp=sharing" }
     ],
     published: [
-      { text: "Ali, S., Khan, S. A., Abbas, H., Khadim, U., Aslam, A. & Anwaar, M. (2025). Incidence of Meloidogyne Graminicola on Maize and Its Integrated Management. Accepted in Pakistan Journal of Zoology.", pdfUrl: "#" },
+      { text: "Ali, S., Khan, S. A., Abbas, H., Khadim, U., Aslam, A. & Anwaar, M. (2025). Incidence of Meloidogyne Graminicola on Maize and Its Integrated Management. Accepted in Pakistan Journal of Zoology.", pdfUrl: "https://drive.google.com/file/d/1PMEwPIcezsJeZNo-jJc00ADV5bfS7GJx/view?usp=sharing" },
       { text: "Tufail, M. M., Abbas, H., Khadim, U., Bashir, M. R., Kamran, M., Khan, S. A., Zafar, M., Shahbaz, M. U., ul Haq, M. E., & Ali, S. (2024). Management of Macrophomina phaseolina infecting sesame germplasm. Journal of Phytobiology, 4(1), 9–17.", pdfUrl: "#" }
     ],
     reviews: [
@@ -148,7 +148,7 @@ export const cvData = {
       { text: "Ali, S. (2025). Multi-Omics and Machine Learning for Predicting Biocontrol Efficacy under Climate-Driven Pathogen Shifts. [Abstract] 9th ICCPS PMAS UAAR, Pakistan", pdfUrl: "#" },
       { text: "Aslam, A., Khan, S. A., Ali, S., Abbas, H., Anwar, M., & Ul Haq, U. (2023). Plant growth-promoting rhizobacteria as a biocontrol tool for root-knot nematode killing in lab [Abstract]. 8th ICCPS IUB, Pakistan.", pdfUrl: "#" },
       { text: "Ali, S., Khan, S. A., Abbas, H., Aslam, A., Abbas, W., & Khadim, U. (2023). Evaluation of resistant sources of tomato against early blight under natural field conditions and its management through newly introduced chemicals [Abstract]—8th ICCPS IUB, Pakistan.", pdfUrl: "#" },
-      { text: "Ali, S. (2025). Harnessing Host-Induced and Exogenous RNAi for Precision Nematode Control. [Abstract] VIRTUAL NEMATOLOGY CONFERENCE 2025", pdfUrl: "#" }
+      { text: "Ali, S. (2025). Harnessing Host-Induced and Exogenous RNAi for Precision Nematode Control. [Abstract] VIRTUAL NEMATOLOGY CONFERENCE 2025", pdfUrl: "https://drive.google.com/file/d/1JtwWr3s0PDIMVvCwSUyenm9WfIB7CiVN/view?usp=sharing" }
     ]
   },
   professionalService: [
@@ -168,7 +168,7 @@ export const cvData = {
       organization: "Punjab Educational Endowment Fund",
       location: "Faisalabad, Pakistan",
       period: "Sep 2016 – Jun 2018",
-      certificateUrl: "#"
+      certificateUrl: "https://drive.google.com/file/d/1vZkw5w3QOklmocmlnXFDtsouMTCpcHnO/view?usp=sharing"
     }
   ],
   certifications: [
@@ -177,68 +177,68 @@ export const cvData = {
       organization: "PepsiCo Pakistan",
       location: "Lahore, Pakistan",
       period: "Aug 2024",
-      certificateUrl: "#"
+      certificateUrl: "https://drive.google.com/file/d/1tbeRnSPBed-8rdfZdN0rJ-IcpzxOoHdL/view?usp=sharing"
     },
     {
       title: "International Conference Climate-Smart Agriculture for Food Security",
       organization: "University of Poonch Rawalakot",
       location: "Azad Jamu Kashmir",
       period: "July 2024",
-      certificateUrl: "#"
+      certificateUrl: "https://drive.google.com/file/d/103W22-vA9QEfb5AQ5YLHAdUvkISUKjaS/view?usp=sharing"
     },
     {
       title: "Python for Everybody Specialization",
       organization: "University of Michigan (via Coursera)",
       period: "2025",
-      certificateUrl: "#"
+      certificateUrl: "https://coursera.org/share/6dff9895f8e78c384afcddf6e7557d7a"
     },
     {
       title: "Bioinformatic Specialization",
       organization: "University of California, San Diego (via Coursera)",
       period: "2025",
-      certificateUrl: "#"
+      certificateUrl: "https://coursera.org/share/9513e9ea12b12f5d664a21e8d88a0ad5"
     },
     {
       title: "Data Visualization & Dashboarding with R",
       organization: "Johns Hopkins University (via Coursera)",
       period: "2025",
-      certificateUrl: "#"
+      certificateUrl: "https://coursera.org/share/b6638b578f0563096d1580cba4f75ead"
     },
     {
       title: "Geographic Information Systems (GIS)",
       organization: "University of California, Davis (via Coursera)",
       period: "2025",
-      certificateUrl: "#"
+      certificateUrl: "https://coursera.org/share/b095d97a51149e4ff173d526c4fdf0cc"
     },
     {
       title: "Plant Bioinformatic Methods Specialization",
       organization: "University of Toronto (via Coursera)",
       period: "2025",
-      certificateUrl: "#"
+      certificateUrl: "https://coursera.org/share/1becc6d99aa5f81e554c4d2af9bbc5d9"
     },
     {
       title: "Agroforestry Specialization",
       organization: "University of Florida (via Coursera)",
       period: "2025",
-      certificateUrl: "#"
+      certificateUrl: "https://coursera.org/share/e5ad538e594e1f67e5374fdd92438ba7"
     },
     {
       title: "Agribusiness & Sustainable Food Production Economics Specialization",
       organization: "University of Illinois Urbana Champaign (via Coursera)",
       period: "2025",
-      certificateUrl: "#"
+      certificateUrl: "https://coursera.org/share/f17aa3949359c0018a2136455a9df3ee"
     },
     {
       title: "Agriculture, Economics and Nature",
       organization: "University of Western Australia (via Coursera)",
       period: "2025",
-      certificateUrl: "#"
+      certificateUrl: "https://coursera.org/share/8fa1a2bc7e9ee47610adee87ccc8994e"
     },
     {
       title: "DNA Decoded",
       organization: "McMaster University (via Coursera)",
       period: "2025",
-      certificateUrl: "#"
+      certificateUrl: "https://coursera.org/share/1c6c74e6ec718cbc4778bc09ae4782a3"
     }
   ],
   courses: [
@@ -567,7 +567,7 @@ export const cvData = {
     {
       "name": "Sustainable Agricultural Land Management",
       "provider": "Univ. of Florida",
-      "certificateUrl": "#",
+      "certificateUrl": "https://coursera.org/share/8e77cafde212ab78173daf60f79fded3",
       "grade": "94.68%",
       "spec": "Agriculture"
     },
@@ -616,7 +616,7 @@ export const cvData = {
     {
       "name": "Improving Crop Nutrition Practices: Foundation Level",
       "provider": "CABI Academy",
-      "certificateUrl": "#",
+      "certificateUrl": "https://drive.google.com/file/d/1cTjJ_VqE1qSqmdx9V-w7VaaaIr3A6CN6/view?usp=sharing",
       "grade": "Completed",
       "spec": "Agriculture"
     },
@@ -651,7 +651,7 @@ export const cvData = {
     {
       "name": "Crop Pest Diagnosis Foundation Certificate",
       "provider": "CABI Academy",
-      "certificateUrl": "#",
+      "certificateUrl": "https://drive.google.com/file/d/1TrFGvISY9DkGOZLQx6PSL8Erh5TJ2GVu/view?usp=sharing",
       "grade": "Completed",
       "spec": "Agriculture"
     },
@@ -683,21 +683,21 @@ export const cvData = {
       organization: "McKinsey.org",
       location: "Remote",
       period: "Mar 2025 – Jul 2025",
-      certificateUrl: "#"
+      certificateUrl: "https://drive.google.com/file/d/1gHQWFS0eSIpoDpS49-4UK-fXK4xKAgfB/view?usp=sharing"
     },
     {
       title: "Career-Prep Fellowship",
       organization: "Amal Academy (Stanford Seed-funded)",
       location: "Faisalabad, Pakistan",
       period: "Aug 2023 – Oct 2023",
-      certificateUrl: "#"
+      certificateUrl: "https://drive.google.com/file/d/1k2TFcaLD1GMe8QsNPv3LH1d7ge7Oa518/view?usp=sharing"
     },
     {
       title: "Foster Fellowship",
       organization: "Foster Learning Pakistan",
       location: "Faisalabad, Pakistan",
       period: "Mar 2019 – May 2019",
-      certificateUrl: "#"
+      certificateUrl: "https://drive.google.com/file/d/1ZXeBEfjK6ZLAYj5FXKaExYUwn3b7eD1Q/view?usp=sharing"
     }
   ],
   skills: [
