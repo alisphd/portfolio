@@ -34,6 +34,7 @@ export const cvData = {
       location: "Faisalabad, Pakistan",
       period: "Sep 2025 – Present",
       supervisor: "Dr. Muhammad Rashid",
+      supervisorUrl: "https://www.researchgate.net/profile/Muhammad-Rashid-66",
       certificateUrl: "#",
       projects: [
         {
@@ -103,6 +104,7 @@ export const cvData = {
       location: "Faisalabad, Pakistan",
       period: "Sept 2022 – Jul 2024",
       supervisor: "Prof. Dr. Sajid Aleem Khan",
+      supervisorUrl: "https://web.uaf.edu.pk/FacultyProfile/Profile/125",
       thesis: "Incidence of Meloidogyne graminicola in Maize Crops and Its Integrated Management",
       certificateUrl: "#",
       details: [

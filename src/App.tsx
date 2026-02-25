@@ -288,7 +288,13 @@ export default function App() {
                                       </div>
                                       <div>
                                         <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">Supervisor</div>
-                                        <div className="text-sm font-bold text-slate-700">{exp.supervisor}</div>
+                                        {(exp as any).supervisorUrl ? (
+                                          <a href={(exp as any).supervisorUrl} target="_blank" rel="noopener noreferrer" className="text-sm font-bold text-slate-700 hover:text-teal-600 hover:underline transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 rounded">
+                                            {exp.supervisor}
+                                          </a>
+                                        ) : (
+                                          <div className="text-sm font-bold text-slate-700">{exp.supervisor}</div>
+                                        )}
                                       </div>
                                     </div>
                                   )}
