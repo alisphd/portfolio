@@ -188,7 +188,7 @@ export default function App() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent z-40 rounded-l-full pointer-events-none flex items-center pl-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent z-40 rounded-l-full pointer-events-none hidden md:flex items-center pl-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 >
                   <button
                     onClick={(e) => { e.preventDefault(); scrollMenu('left'); }}
@@ -239,7 +239,7 @@ export default function App() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-slate-900 via-slate-900/80 to-transparent z-40 rounded-r-full pointer-events-none flex items-center justify-end pr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-slate-900 via-slate-900/80 to-transparent z-40 rounded-r-full pointer-events-none hidden md:flex items-center justify-end pr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 >
                   <button
                     onClick={(e) => { e.preventDefault(); scrollMenu('right'); }}
@@ -709,6 +709,27 @@ export default function App() {
                       ))}
                     </div>
                   </div>
+
+                  {/* Professional Service Section */}
+                  {cvData.professionalService && cvData.professionalService.length > 0 && (
+                    <div className="pt-10 border-t border-slate-200 mt-12">
+                      <SectionHeading title="Professional Service & Peer Review" icon={ShieldCheck} />
+                      <div className="grid grid-cols-1 gap-4 mt-8">
+                        {cvData.professionalService.map((service, idx) => (
+                          <motion.div
+                            key={idx}
+                            whileHover={{ scale: 1.01 }}
+                            className="flex items-start gap-4 p-5 sm:p-6 rounded-2xl bg-white border border-slate-100 shadow-sm hover:border-teal-200 hover:shadow-md transition-all duration-300 group"
+                          >
+                            <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center shrink-0 group-hover:bg-teal-50 transition-colors duration-300">
+                              <ShieldCheck className="w-5 h-5 text-slate-400 group-hover:text-teal-600 transition-colors" />
+                            </div>
+                            <span dangerouslySetInnerHTML={{ __html: service.replace(/Ad-hoc Reviewer,/g, '<strong class="text-slate-900 font-bold">Ad-hoc Reviewer,</strong>') }} className="text-slate-700 font-medium leading-relaxed mt-2" />
+                          </motion.div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
 
