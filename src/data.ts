@@ -13,6 +13,7 @@ export const cvData = {
     {
       degree: "M.Sc. (Hons.) Agriculture Plant Pathology",
       institution: "University of Agriculture Faisalabad",
+      institutionUrl: "https://web.uaf.edu.pk/",
       location: "Faisalabad, Pakistan",
       period: "Sep 2022 – Sep 2024",
       cgpa: "3.55/4.00"
@@ -20,6 +21,7 @@ export const cvData = {
     {
       degree: "B.Sc. (Hons.) Agriculture Plant Pathology",
       institution: "University of Agriculture Faisalabad",
+      institutionUrl: "https://web.uaf.edu.pk/",
       location: "Faisalabad, Pakistan",
       period: "Aug 2018 – Jul 2022",
       cgpa: "3.64/4.00"
@@ -238,440 +240,440 @@ export const cvData = {
     }
   ],
   courses: [
-      {
-          "name": "Bioinformatics I: Finding Hidden Messages in DNA",
-          "provider": "UC San Diego",
-          "certificateUrl": "#",
-          "grade": "97.00%",
-          "spec": "Bioinformatics"
-      },
-      {
-          "name": "Bioinformatics II: Genome Sequencing",
-          "provider": "UC San Diego",
-          "certificateUrl": "#",
-          "grade": "97.89%",
-          "spec": "Bioinformatics"
-      },
-      {
-          "name": "Bioinformatics III: Comparing Genes, Proteins, and Genomes",
-          "provider": "UC San Diego",
-          "certificateUrl": "#",
-          "grade": "100%",
-          "spec": "Bioinformatics"
-      },
-      {
-          "name": "Bioinformatics IV: Molecular Evolution",
-          "provider": "UC San Diego",
-          "certificateUrl": "#",
-          "grade": "97.60%",
-          "spec": "Bioinformatics"
-      },
-      {
-          "name": "Bioinformatics V: Genomic Data Science and Clustering",
-          "provider": "UC San Diego",
-          "certificateUrl": "#",
-          "grade": "88.00%",
-          "spec": "Bioinformatics"
-      },
-      {
-          "name": "Bioinformatics VI: Finding Mutations in DNA and Proteins",
-          "provider": "UC San Diego",
-          "certificateUrl": "#",
-          "grade": "97.60%",
-          "spec": "Bioinformatics"
-      },
-      {
-          "name": "Bioinformatics Capstone: Big Data in Biology",
-          "provider": "UC San Diego",
-          "certificateUrl": "#",
-          "grade": "95.57%",
-          "spec": "Bioinformatics"
-      },
-      {
-          "name": "Bioinformatic Methods I",
-          "provider": "Univ. of Toronto",
-          "certificateUrl": "#",
-          "grade": "91.50%",
-          "spec": "Plant Bioinformatic Methods"
-      },
-      {
-          "name": "Bioinformatic Methods II",
-          "provider": "Univ. of Toronto",
-          "certificateUrl": "#",
-          "grade": "94.50%",
-          "spec": "Plant Bioinformatic Methods"
-      },
-      {
-          "name": "Plant Bioinformatics",
-          "provider": "Univ. of Toronto",
-          "certificateUrl": "#",
-          "grade": "100%",
-          "spec": "Plant Bioinformatic Methods"
-      },
-      {
-          "name": "Plant Bioinformatics Capstone",
-          "provider": "Univ. of Toronto",
-          "certificateUrl": "#",
-          "grade": "100%",
-          "spec": "Plant Bioinformatic Methods"
-      },
-      {
-          "name": "Agroforestry I: Principles and Practices",
-          "provider": "Univ. of Florida",
-          "certificateUrl": "#",
-          "grade": "100%",
-          "spec": "Agroforestry"
-      },
-      {
-          "name": "Agroforestry II: Major Systems of the World",
-          "provider": "Univ. of Florida",
-          "certificateUrl": "#",
-          "grade": "100%",
-          "spec": "Agroforestry"
-      },
-      {
-          "name": "Agroforestry III: Principles of Plant and Soil Management",
-          "provider": "Univ. of Florida",
-          "certificateUrl": "#",
-          "grade": "100%",
-          "spec": "Agroforestry"
-      },
-      {
-          "name": "Agroforestry IV: Climate, Carbon Storage and Agroforestry",
-          "provider": "Univ. of Florida",
-          "certificateUrl": "#",
-          "grade": "100%",
-          "spec": "Agroforestry"
-      },
-      {
-          "name": "Agroforestry V: Ecosystem Services, Food and Sustainability",
-          "provider": "Univ. of Florida",
-          "certificateUrl": "#",
-          "grade": "100%",
-          "spec": "Agroforestry"
-      },
-      {
-          "name": "Supply Chain of Agriculture",
-          "provider": "Univ. of Illinois",
-          "certificateUrl": "#",
-          "grade": "91.50%",
-          "spec": "Agribusiness & Sustainable Food"
-      },
-      {
-          "name": "Agriculture as an Asset Class",
-          "provider": "Univ. of Illinois",
-          "certificateUrl": "#",
-          "grade": "93.75%",
-          "spec": "Agribusiness & Sustainable Food"
-      },
-      {
-          "name": "Strategies and Tools to Mitigate Agricultural Risk",
-          "provider": "Univ. of Illinois",
-          "certificateUrl": "#",
-          "grade": "95.50%",
-          "spec": "Agribusiness & Sustainable Food"
-      },
-      {
-          "name": "Modern Issues in Food & Agriculture",
-          "provider": "Univ. of Illinois",
-          "certificateUrl": "#",
-          "grade": "96.00%",
-          "spec": "Agribusiness & Sustainable Food"
-      },
-      {
-          "name": "Risks to Crop Production in Agriculture",
-          "provider": "Univ. of Illinois",
-          "certificateUrl": "#",
-          "grade": "95.50%",
-          "spec": "Agribusiness & Sustainable Food"
-      },
-      {
-          "name": "Issues in Supply Chain Management",
-          "provider": "Univ. of Illinois",
-          "certificateUrl": "#",
-          "grade": "88.00%",
-          "spec": "Agribusiness & Sustainable Food"
-      },
-      {
-          "name": "Pest & Disease Management",
-          "provider": "Univ. of Illinois",
-          "certificateUrl": "#",
-          "grade": "93.33%",
-          "spec": "Agribusiness & Sustainable Food"
-      },
-      {
-          "name": "Fundamentals of GIS",
-          "provider": "UC Davis",
-          "certificateUrl": "#",
-          "grade": "95.32%",
-          "spec": "GIS Specialization"
-      },
-      {
-          "name": "GIS Data Formats, Design and Quality",
-          "provider": "UC Davis",
-          "certificateUrl": "#",
-          "grade": "87.65%",
-          "spec": "GIS Specialization"
-      },
-      {
-          "name": "Geospatial Analysis with ArcGIS",
-          "provider": "UC Davis",
-          "certificateUrl": "#",
-          "grade": "86.31%",
-          "spec": "GIS Specialization"
-      },
-      {
-          "name": "GIS Applications Across Industries",
-          "provider": "UC Davis",
-          "certificateUrl": "#",
-          "grade": "97.50%",
-          "spec": "GIS Specialization"
-      },
-      {
-          "name": "Programming for Everybody (Getting Started with Python)",
-          "provider": "Univ. of Michigan",
-          "certificateUrl": "#",
-          "grade": "98.34%",
-          "spec": "Python for Everybody"
-      },
-      {
-          "name": "Python Data Structures",
-          "provider": "Univ. of Michigan",
-          "certificateUrl": "#",
-          "grade": "98.40%",
-          "spec": "Python for Everybody"
-      },
-      {
-          "name": "Using Python to Access Web Data",
-          "provider": "Univ. of Michigan",
-          "certificateUrl": "#",
-          "grade": "99.30%",
-          "spec": "Python for Everybody"
-      },
-      {
-          "name": "Using Databases with Python",
-          "provider": "Univ. of Michigan",
-          "certificateUrl": "#",
-          "grade": "97.88%",
-          "spec": "Python for Everybody"
-      },
-      {
-          "name": "Capstone: Retrieving, Processing, and Visualizing Data",
-          "provider": "Univ. of Michigan",
-          "certificateUrl": "#",
-          "grade": "92.00%",
-          "spec": "Python for Everybody"
-      },
-      {
-          "name": "Getting Started with Data Visualization in R",
-          "provider": "Johns Hopkins",
-          "certificateUrl": "#",
-          "grade": "92.49%",
-          "spec": "Data Visualization in R"
-      },
-      {
-          "name": "Data Visualization in R with ggplot2",
-          "provider": "Johns Hopkins",
-          "certificateUrl": "#",
-          "grade": "89.40%",
-          "spec": "Data Visualization in R"
-      },
-      {
-          "name": "Publishing Visualizations in R with Shiny and flexdashboard",
-          "provider": "Johns Hopkins",
-          "certificateUrl": "#",
-          "grade": "91.47%",
-          "spec": "Data Visualization in R"
-      },
-      {
-          "name": "Data Visualization Capstone",
-          "provider": "Johns Hopkins",
-          "certificateUrl": "#",
-          "grade": "100%",
-          "spec": "Data Visualization in R"
-      },
-      {
-          "name": "Foundations of Digital Marketing and E-commerce",
-          "provider": "Google",
-          "certificateUrl": "#",
-          "grade": "93.18%",
-          "spec": "Digital Marketing & E-commerce"
-      },
-      {
-          "name": "Attract and Engage Customers with Digital Marketing",
-          "provider": "Google",
-          "certificateUrl": "#",
-          "grade": "88.75%",
-          "spec": "Digital Marketing & E-commerce"
-      },
-      {
-          "name": "From Likes to Leads: Interact with Customers Online",
-          "provider": "Google",
-          "certificateUrl": "#",
-          "grade": "98.50%",
-          "spec": "Digital Marketing & E-commerce"
-      },
-      {
-          "name": "Think Outside the Inbox: Email Marketing",
-          "provider": "Google",
-          "certificateUrl": "#",
-          "grade": "88.00%",
-          "spec": "Digital Marketing & E-commerce"
-      },
-      {
-          "name": "Assess for Success: Marketing Analytics and Measurement",
-          "provider": "Google",
-          "certificateUrl": "#",
-          "grade": "95.62%",
-          "spec": "Digital Marketing & E-commerce"
-      },
-      {
-          "name": "Make the Sale: Build, Launch, and Manage E-commerce Stores",
-          "provider": "Google",
-          "certificateUrl": "#",
-          "grade": "99.37%",
-          "spec": "Digital Marketing & E-commerce"
-      },
-      {
-          "name": "Satisfaction Guaranteed: Develop Customer Loyalty Online",
-          "provider": "Google",
-          "certificateUrl": "#",
-          "grade": "95.83%",
-          "spec": "Digital Marketing & E-commerce"
-      },
-      {
-          "name": "Whole genome sequencing of bacterial genomes",
-          "provider": "DTU",
-          "certificateUrl": "#",
-          "grade": "90.16%",
-          "spec": "Genomics"
-      },
-      {
-          "name": "DNA Decoded",
-          "provider": "McMaster Univ.",
-          "certificateUrl": "#",
-          "grade": "85.22%",
-          "spec": "Genomics"
-      },
-      {
-          "name": "Agriculture, Economics and Nature",
-          "provider": "U. of W. Australia",
-          "certificateUrl": "#",
-          "grade": "94.00%",
-          "spec": "Agriculture"
-      },
-      {
-          "name": "Sustainable Agricultural Land Management",
-          "provider": "Univ. of Florida",
-          "certificateUrl": "#",
-          "grade": "94.68%",
-          "spec": "Agriculture"
-      },
-      {
-          "name": "IoT Enabled Farming",
-          "provider": "EDUCBA",
-          "certificateUrl": "#",
-          "grade": "85.00%",
-          "spec": "Technology"
-      },
-      {
-          "name": "HTML, CSS, and Javascript for Web Developers",
-          "provider": "Johns Hopkins",
-          "certificateUrl": "#",
-          "grade": "98.25%",
-          "spec": "Technology"
-      },
-      {
-          "name": "Excel Skills for Business: Essentials",
-          "provider": "Macquarie Univ.",
-          "certificateUrl": "#",
-          "grade": "87.65%",
-          "spec": "Technology"
-      },
-      {
-          "name": "Introduction to Social Media Marketing",
-          "provider": "Meta",
-          "certificateUrl": "#",
-          "grade": "94.40%",
-          "spec": "Business"
-      },
-      {
-          "name": "Accelerate Your Job Search with AI",
-          "provider": "Google",
-          "certificateUrl": "#",
-          "grade": "100%",
-          "spec": "Career"
-      },
-      {
-          "name": "Finding Purpose and Meaning In Life",
-          "provider": "Univ. of Michigan",
-          "certificateUrl": "#",
-          "grade": "91.49%",
-          "spec": "Personal Growth"
-      },
-      {
-          "name": "Improving Crop Nutrition Practices: Foundation Level",
-          "provider": "CABI Academy",
-          "certificateUrl": "#",
-          "grade": "Completed",
-          "spec": "Agriculture"
-      },
-      {
-          "name": "Entrepreneurship in Agribusiness: Practitioner Level",
-          "provider": "CABI Academy",
-          "certificateUrl": "#",
-          "grade": "Completed",
-          "spec": "Agribusiness"
-      },
-      {
-          "name": "Working with a national plant protection organization",
-          "provider": "FAO elearning Academy",
-          "certificateUrl": "#",
-          "grade": "Passed",
-          "spec": "Agriculture"
-      },
-      {
-          "name": "Using the Pesticide Registration Toolkit",
-          "provider": "FAO elearning Academy",
-          "certificateUrl": "#",
-          "grade": "Passed",
-          "spec": "Agriculture"
-      },
-      {
-          "name": "Reducing Pesticide Risk: Foundation Level",
-          "provider": "CABI Academy",
-          "certificateUrl": "#",
-          "grade": "Completed",
-          "spec": "Agriculture"
-      },
-      {
-          "name": "Crop Pest Diagnosis Foundation Certificate",
-          "provider": "CABI Academy",
-          "certificateUrl": "#",
-          "grade": "Completed",
-          "spec": "Agriculture"
-      },
-      {
-          "name": "Transforming dryland forests and agrosilvopastoral systems",
-          "provider": "FAO elearning Academy",
-          "certificateUrl": "#",
-          "grade": "Passed",
-          "spec": "Agriculture"
-      },
-      {
-          "name": "Introduction to Seed and Planting: Foundation Level",
-          "provider": "CABI Academy",
-          "certificateUrl": "#",
-          "grade": "Completed",
-          "spec": "Agriculture"
-      },
-      {
-          "name": "Introduction to Bioprotection Products: Foundation Level",
-          "provider": "CABI Academy",
-          "certificateUrl": "#",
-          "grade": "Completed",
-          "spec": "Agriculture"
-      }
+    {
+      "name": "Bioinformatics I: Finding Hidden Messages in DNA",
+      "provider": "UC San Diego",
+      "certificateUrl": "#",
+      "grade": "97.00%",
+      "spec": "Bioinformatics"
+    },
+    {
+      "name": "Bioinformatics II: Genome Sequencing",
+      "provider": "UC San Diego",
+      "certificateUrl": "#",
+      "grade": "97.89%",
+      "spec": "Bioinformatics"
+    },
+    {
+      "name": "Bioinformatics III: Comparing Genes, Proteins, and Genomes",
+      "provider": "UC San Diego",
+      "certificateUrl": "#",
+      "grade": "100%",
+      "spec": "Bioinformatics"
+    },
+    {
+      "name": "Bioinformatics IV: Molecular Evolution",
+      "provider": "UC San Diego",
+      "certificateUrl": "#",
+      "grade": "97.60%",
+      "spec": "Bioinformatics"
+    },
+    {
+      "name": "Bioinformatics V: Genomic Data Science and Clustering",
+      "provider": "UC San Diego",
+      "certificateUrl": "#",
+      "grade": "88.00%",
+      "spec": "Bioinformatics"
+    },
+    {
+      "name": "Bioinformatics VI: Finding Mutations in DNA and Proteins",
+      "provider": "UC San Diego",
+      "certificateUrl": "#",
+      "grade": "97.60%",
+      "spec": "Bioinformatics"
+    },
+    {
+      "name": "Bioinformatics Capstone: Big Data in Biology",
+      "provider": "UC San Diego",
+      "certificateUrl": "#",
+      "grade": "95.57%",
+      "spec": "Bioinformatics"
+    },
+    {
+      "name": "Bioinformatic Methods I",
+      "provider": "Univ. of Toronto",
+      "certificateUrl": "#",
+      "grade": "91.50%",
+      "spec": "Plant Bioinformatic Methods"
+    },
+    {
+      "name": "Bioinformatic Methods II",
+      "provider": "Univ. of Toronto",
+      "certificateUrl": "#",
+      "grade": "94.50%",
+      "spec": "Plant Bioinformatic Methods"
+    },
+    {
+      "name": "Plant Bioinformatics",
+      "provider": "Univ. of Toronto",
+      "certificateUrl": "#",
+      "grade": "100%",
+      "spec": "Plant Bioinformatic Methods"
+    },
+    {
+      "name": "Plant Bioinformatics Capstone",
+      "provider": "Univ. of Toronto",
+      "certificateUrl": "#",
+      "grade": "100%",
+      "spec": "Plant Bioinformatic Methods"
+    },
+    {
+      "name": "Agroforestry I: Principles and Practices",
+      "provider": "Univ. of Florida",
+      "certificateUrl": "#",
+      "grade": "100%",
+      "spec": "Agroforestry"
+    },
+    {
+      "name": "Agroforestry II: Major Systems of the World",
+      "provider": "Univ. of Florida",
+      "certificateUrl": "#",
+      "grade": "100%",
+      "spec": "Agroforestry"
+    },
+    {
+      "name": "Agroforestry III: Principles of Plant and Soil Management",
+      "provider": "Univ. of Florida",
+      "certificateUrl": "#",
+      "grade": "100%",
+      "spec": "Agroforestry"
+    },
+    {
+      "name": "Agroforestry IV: Climate, Carbon Storage and Agroforestry",
+      "provider": "Univ. of Florida",
+      "certificateUrl": "#",
+      "grade": "100%",
+      "spec": "Agroforestry"
+    },
+    {
+      "name": "Agroforestry V: Ecosystem Services, Food and Sustainability",
+      "provider": "Univ. of Florida",
+      "certificateUrl": "#",
+      "grade": "100%",
+      "spec": "Agroforestry"
+    },
+    {
+      "name": "Supply Chain of Agriculture",
+      "provider": "Univ. of Illinois",
+      "certificateUrl": "#",
+      "grade": "91.50%",
+      "spec": "Agribusiness & Sustainable Food"
+    },
+    {
+      "name": "Agriculture as an Asset Class",
+      "provider": "Univ. of Illinois",
+      "certificateUrl": "#",
+      "grade": "93.75%",
+      "spec": "Agribusiness & Sustainable Food"
+    },
+    {
+      "name": "Strategies and Tools to Mitigate Agricultural Risk",
+      "provider": "Univ. of Illinois",
+      "certificateUrl": "#",
+      "grade": "95.50%",
+      "spec": "Agribusiness & Sustainable Food"
+    },
+    {
+      "name": "Modern Issues in Food & Agriculture",
+      "provider": "Univ. of Illinois",
+      "certificateUrl": "#",
+      "grade": "96.00%",
+      "spec": "Agribusiness & Sustainable Food"
+    },
+    {
+      "name": "Risks to Crop Production in Agriculture",
+      "provider": "Univ. of Illinois",
+      "certificateUrl": "#",
+      "grade": "95.50%",
+      "spec": "Agribusiness & Sustainable Food"
+    },
+    {
+      "name": "Issues in Supply Chain Management",
+      "provider": "Univ. of Illinois",
+      "certificateUrl": "#",
+      "grade": "88.00%",
+      "spec": "Agribusiness & Sustainable Food"
+    },
+    {
+      "name": "Pest & Disease Management",
+      "provider": "Univ. of Illinois",
+      "certificateUrl": "#",
+      "grade": "93.33%",
+      "spec": "Agribusiness & Sustainable Food"
+    },
+    {
+      "name": "Fundamentals of GIS",
+      "provider": "UC Davis",
+      "certificateUrl": "#",
+      "grade": "95.32%",
+      "spec": "GIS Specialization"
+    },
+    {
+      "name": "GIS Data Formats, Design and Quality",
+      "provider": "UC Davis",
+      "certificateUrl": "#",
+      "grade": "87.65%",
+      "spec": "GIS Specialization"
+    },
+    {
+      "name": "Geospatial Analysis with ArcGIS",
+      "provider": "UC Davis",
+      "certificateUrl": "#",
+      "grade": "86.31%",
+      "spec": "GIS Specialization"
+    },
+    {
+      "name": "GIS Applications Across Industries",
+      "provider": "UC Davis",
+      "certificateUrl": "#",
+      "grade": "97.50%",
+      "spec": "GIS Specialization"
+    },
+    {
+      "name": "Programming for Everybody (Getting Started with Python)",
+      "provider": "Univ. of Michigan",
+      "certificateUrl": "#",
+      "grade": "98.34%",
+      "spec": "Python for Everybody"
+    },
+    {
+      "name": "Python Data Structures",
+      "provider": "Univ. of Michigan",
+      "certificateUrl": "#",
+      "grade": "98.40%",
+      "spec": "Python for Everybody"
+    },
+    {
+      "name": "Using Python to Access Web Data",
+      "provider": "Univ. of Michigan",
+      "certificateUrl": "#",
+      "grade": "99.30%",
+      "spec": "Python for Everybody"
+    },
+    {
+      "name": "Using Databases with Python",
+      "provider": "Univ. of Michigan",
+      "certificateUrl": "#",
+      "grade": "97.88%",
+      "spec": "Python for Everybody"
+    },
+    {
+      "name": "Capstone: Retrieving, Processing, and Visualizing Data",
+      "provider": "Univ. of Michigan",
+      "certificateUrl": "#",
+      "grade": "92.00%",
+      "spec": "Python for Everybody"
+    },
+    {
+      "name": "Getting Started with Data Visualization in R",
+      "provider": "Johns Hopkins",
+      "certificateUrl": "#",
+      "grade": "92.49%",
+      "spec": "Data Visualization in R"
+    },
+    {
+      "name": "Data Visualization in R with ggplot2",
+      "provider": "Johns Hopkins",
+      "certificateUrl": "#",
+      "grade": "89.40%",
+      "spec": "Data Visualization in R"
+    },
+    {
+      "name": "Publishing Visualizations in R with Shiny and flexdashboard",
+      "provider": "Johns Hopkins",
+      "certificateUrl": "#",
+      "grade": "91.47%",
+      "spec": "Data Visualization in R"
+    },
+    {
+      "name": "Data Visualization Capstone",
+      "provider": "Johns Hopkins",
+      "certificateUrl": "#",
+      "grade": "100%",
+      "spec": "Data Visualization in R"
+    },
+    {
+      "name": "Foundations of Digital Marketing and E-commerce",
+      "provider": "Google",
+      "certificateUrl": "#",
+      "grade": "93.18%",
+      "spec": "Digital Marketing & E-commerce"
+    },
+    {
+      "name": "Attract and Engage Customers with Digital Marketing",
+      "provider": "Google",
+      "certificateUrl": "#",
+      "grade": "88.75%",
+      "spec": "Digital Marketing & E-commerce"
+    },
+    {
+      "name": "From Likes to Leads: Interact with Customers Online",
+      "provider": "Google",
+      "certificateUrl": "#",
+      "grade": "98.50%",
+      "spec": "Digital Marketing & E-commerce"
+    },
+    {
+      "name": "Think Outside the Inbox: Email Marketing",
+      "provider": "Google",
+      "certificateUrl": "#",
+      "grade": "88.00%",
+      "spec": "Digital Marketing & E-commerce"
+    },
+    {
+      "name": "Assess for Success: Marketing Analytics and Measurement",
+      "provider": "Google",
+      "certificateUrl": "#",
+      "grade": "95.62%",
+      "spec": "Digital Marketing & E-commerce"
+    },
+    {
+      "name": "Make the Sale: Build, Launch, and Manage E-commerce Stores",
+      "provider": "Google",
+      "certificateUrl": "#",
+      "grade": "99.37%",
+      "spec": "Digital Marketing & E-commerce"
+    },
+    {
+      "name": "Satisfaction Guaranteed: Develop Customer Loyalty Online",
+      "provider": "Google",
+      "certificateUrl": "#",
+      "grade": "95.83%",
+      "spec": "Digital Marketing & E-commerce"
+    },
+    {
+      "name": "Whole genome sequencing of bacterial genomes",
+      "provider": "DTU",
+      "certificateUrl": "#",
+      "grade": "90.16%",
+      "spec": "Genomics"
+    },
+    {
+      "name": "DNA Decoded",
+      "provider": "McMaster Univ.",
+      "certificateUrl": "#",
+      "grade": "85.22%",
+      "spec": "Genomics"
+    },
+    {
+      "name": "Agriculture, Economics and Nature",
+      "provider": "U. of W. Australia",
+      "certificateUrl": "#",
+      "grade": "94.00%",
+      "spec": "Agriculture"
+    },
+    {
+      "name": "Sustainable Agricultural Land Management",
+      "provider": "Univ. of Florida",
+      "certificateUrl": "#",
+      "grade": "94.68%",
+      "spec": "Agriculture"
+    },
+    {
+      "name": "IoT Enabled Farming",
+      "provider": "EDUCBA",
+      "certificateUrl": "#",
+      "grade": "85.00%",
+      "spec": "Technology"
+    },
+    {
+      "name": "HTML, CSS, and Javascript for Web Developers",
+      "provider": "Johns Hopkins",
+      "certificateUrl": "#",
+      "grade": "98.25%",
+      "spec": "Technology"
+    },
+    {
+      "name": "Excel Skills for Business: Essentials",
+      "provider": "Macquarie Univ.",
+      "certificateUrl": "#",
+      "grade": "87.65%",
+      "spec": "Technology"
+    },
+    {
+      "name": "Introduction to Social Media Marketing",
+      "provider": "Meta",
+      "certificateUrl": "#",
+      "grade": "94.40%",
+      "spec": "Business"
+    },
+    {
+      "name": "Accelerate Your Job Search with AI",
+      "provider": "Google",
+      "certificateUrl": "#",
+      "grade": "100%",
+      "spec": "Career"
+    },
+    {
+      "name": "Finding Purpose and Meaning In Life",
+      "provider": "Univ. of Michigan",
+      "certificateUrl": "#",
+      "grade": "91.49%",
+      "spec": "Personal Growth"
+    },
+    {
+      "name": "Improving Crop Nutrition Practices: Foundation Level",
+      "provider": "CABI Academy",
+      "certificateUrl": "#",
+      "grade": "Completed",
+      "spec": "Agriculture"
+    },
+    {
+      "name": "Entrepreneurship in Agribusiness: Practitioner Level",
+      "provider": "CABI Academy",
+      "certificateUrl": "#",
+      "grade": "Completed",
+      "spec": "Agribusiness"
+    },
+    {
+      "name": "Working with a national plant protection organization",
+      "provider": "FAO elearning Academy",
+      "certificateUrl": "#",
+      "grade": "Passed",
+      "spec": "Agriculture"
+    },
+    {
+      "name": "Using the Pesticide Registration Toolkit",
+      "provider": "FAO elearning Academy",
+      "certificateUrl": "#",
+      "grade": "Passed",
+      "spec": "Agriculture"
+    },
+    {
+      "name": "Reducing Pesticide Risk: Foundation Level",
+      "provider": "CABI Academy",
+      "certificateUrl": "#",
+      "grade": "Completed",
+      "spec": "Agriculture"
+    },
+    {
+      "name": "Crop Pest Diagnosis Foundation Certificate",
+      "provider": "CABI Academy",
+      "certificateUrl": "#",
+      "grade": "Completed",
+      "spec": "Agriculture"
+    },
+    {
+      "name": "Transforming dryland forests and agrosilvopastoral systems",
+      "provider": "FAO elearning Academy",
+      "certificateUrl": "#",
+      "grade": "Passed",
+      "spec": "Agriculture"
+    },
+    {
+      "name": "Introduction to Seed and Planting: Foundation Level",
+      "provider": "CABI Academy",
+      "certificateUrl": "#",
+      "grade": "Completed",
+      "spec": "Agriculture"
+    },
+    {
+      "name": "Introduction to Bioprotection Products: Foundation Level",
+      "provider": "CABI Academy",
+      "certificateUrl": "#",
+      "grade": "Completed",
+      "spec": "Agriculture"
+    }
   ],
   fellowships: [
     {

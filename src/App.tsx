@@ -359,14 +359,20 @@ export default function App() {
                         <div className="text-xs font-bold text-teal-700 mb-6 bg-teal-50 border border-teal-100 px-4 py-1.5 rounded-full w-max shadow-sm tracking-wide">{edu.period}</div>
                         <h3 className="text-2xl font-extrabold text-slate-900 mb-3 leading-tight group-hover:text-teal-700 transition-colors">{edu.degree}</h3>
                         <p className="text-slate-600 font-medium mb-8 flex-1 text-lg flex items-center gap-2">
-                          <GraduationCap className="w-5 h-5 text-slate-400" />
-                          {edu.institution}
+                          <GraduationCap className="w-5 h-5 text-slate-400 shrink-0" />
+                          {(edu as any).institutionUrl ? (
+                            <a href={(edu as any).institutionUrl} target="_blank" rel="noopener noreferrer" className="hover:text-teal-600 hover:underline transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 rounded">
+                              {edu.institution}
+                            </a>
+                          ) : (
+                            <span>{edu.institution}</span>
+                          )}
                         </p>
 
-                        {edu.thesis && (
+                        {(edu as any).thesis && (
                           <div className="mb-8 p-4 bg-white rounded-xl border border-slate-100 shadow-sm">
                             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5">Thesis Topic</span>
-                            <p className="text-slate-700 text-sm font-medium leading-relaxed">{edu.thesis}</p>
+                            <p className="text-slate-700 text-sm font-medium leading-relaxed">{(edu as any).thesis}</p>
                           </div>
                         )}
 
