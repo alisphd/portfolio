@@ -152,8 +152,8 @@ export const cvData = {
     ]
   },
   professionalService: [
-    "Peer Reviewer, Journal of Plant Diseases and Protection | Springer Nature (2025).",
-    "Peer Reviewer, Journal of Advances in Biology & Biotechnology (2025)."
+    "Ad-hoc Reviewer, Journal of Plant Diseases and Protection | Springer Nature (2025).",
+    "Ad-hoc Reviewer, Journal of Advances in Biology & Biotechnology (2025)."
   ],
   honors: [
     {
