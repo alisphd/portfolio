@@ -5,11 +5,12 @@ import {
   Award, GraduationCap, Code, FileText, User, ChevronRight, ChevronLeft,
   ArrowUpRight, Library, ShieldCheck, Microscope, Database,
   ExternalLink, Sprout, Dna, FlaskConical, Leaf, Trophy,
-  Binary, Search, FileSearch
+  Binary, Search, FileSearch, Image, Layers, Sparkles, X,
+  Globe, Activity, Brain, FlaskRound, Atom
 } from 'lucide-react';
 import { cvData } from './data';
 
-type TabId = 'about' | 'experience' | 'education' | 'publications' | 'skills' | 'courses' | 'honors' | 'references';
+type TabId = 'about' | 'experience' | 'education' | 'publications' | 'skills' | 'courses' | 'honors' | 'references' | 'gallery';
 
 interface Punch {
   id: number;
@@ -32,6 +33,7 @@ const TABS: TabConfig[] = [
   { id: 'courses', label: 'Courses', icon: Library },
   { id: 'honors', label: 'Honors & Awards', icon: Trophy },
   { id: 'references', label: 'References', icon: Briefcase },
+  { id: 'gallery', label: 'Research Gallery', icon: Image },
 ];
 
 // Clean, minimalist section heading
@@ -56,8 +58,36 @@ const getSpecColor = (spec: string) => {
   return colors[spec] || "text-slate-600 bg-slate-100 border-slate-200";
 };
 
+const GALLERY_CATEGORY_ICONS: Record<string, React.ElementType> = {
+  protein: Atom,
+  dna: Dna,
+  search: Search,
+  flask: FlaskRound,
+  globe: Globe,
+  activity: Activity,
+  brain: Brain,
+  layers: Layers,
+  database: Database,
+  sparkles: Sparkles,
+};
+
+const GALLERY_CATEGORY_COLORS: Record<string, string> = {
+  "Protein Structure & Docking": "from-blue-500 to-indigo-600",
+  "Population Genetics": "from-emerald-500 to-teal-600",
+  "Promoter & Codon Analysis": "from-amber-500 to-orange-600",
+  "Wet-Lab & Field Research": "from-lime-500 to-green-600",
+  "GIS, Genomics & Networks": "from-violet-500 to-purple-600",
+  "Evolutionary Selection & RNA-seq": "from-rose-500 to-pink-600",
+  "Machine Learning & Multi-omics": "from-cyan-500 to-blue-600",
+  "Structural Biology & Deep Evolution": "from-fuchsia-500 to-purple-600",
+  "Pangenome, GWAS & SDM": "from-orange-500 to-red-600",
+  "Frontier & Emerging Methods": "from-teal-500 to-cyan-600",
+};
+
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabId>('about');
+  const [galleryCategory, setGalleryCategory] = useState<string>('All');
+  const [lightboxImage, setLightboxImage] = useState<{ file: string; title: string } | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -767,6 +797,173 @@ export default function App() {
                   </div>
                 </div>
               )}
+
+              {/* RESEARCH GALLERY TAB */}
+              {activeTab === 'gallery' && (
+                <div>
+                  {/* Header with count */}
+                  <div className="flex items-center justify-between mb-8 pb-6 border-b border-slate-200">
+                    <div className="flex items-center gap-4">
+                      <Image className="w-6 h-6 text-slate-400" />
+                      <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight">Research Gallery</h3>
+                    </div>
+                    <div className="bg-slate-900 text-white px-5 py-2 rounded-2xl text-sm font-bold shadow-lg shadow-slate-900/20">
+                      {cvData.gallery.reduce((sum, cat) => sum + cat.figures.length, 0)} Figures
+                    </div>
+                  </div>
+
+                  {/* Subtitle */}
+                  <p className="text-slate-500 mb-8 text-base font-medium leading-relaxed max-w-3xl">
+                    Publication-quality visualizations generated with <strong className="text-slate-700">R</strong> and <strong className="text-slate-700">Python</strong>,
+                    showcasing analytical skills across bioinformatics, genomics, machine learning, and field research.
+                  </p>
+
+                  {/* Category Filter Pills */}
+                  <div className="flex flex-wrap gap-2 mb-10">
+                    <button
+                      onClick={() => setGalleryCategory('All')}
+                      className={`px-4 py-2 rounded-full text-sm font-bold transition-all duration-300 border ${
+                        galleryCategory === 'All'
+                          ? 'bg-slate-900 text-white border-slate-900 shadow-lg shadow-slate-900/20'
+                          : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50 hover:text-slate-700 hover:border-slate-300'
+                      }`}
+                    >
+                      All
+                    </button>
+                    {cvData.gallery.map((cat) => {
+                      const CatIcon = GALLERY_CATEGORY_ICONS[cat.icon] || Layers;
+                      return (
+                        <button
+                          key={cat.category}
+                          onClick={() => setGalleryCategory(cat.category)}
+                          className={`px-4 py-2 rounded-full text-sm font-bold transition-all duration-300 border flex items-center gap-1.5 ${
+                            galleryCategory === cat.category
+                              ? 'bg-slate-900 text-white border-slate-900 shadow-lg shadow-slate-900/20'
+                              : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50 hover:text-slate-700 hover:border-slate-300'
+                          }`}
+                        >
+                          <CatIcon className="w-3.5 h-3.5" />
+                          {cat.category}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Gallery Content */}
+                  <div className="space-y-14">
+                    {cvData.gallery
+                      .filter(cat => galleryCategory === 'All' || cat.category === galleryCategory)
+                      .map((cat, catIdx) => {
+                        const CatIcon = GALLERY_CATEGORY_ICONS[cat.icon] || Layers;
+                        const gradientClass = GALLERY_CATEGORY_COLORS[cat.category] || 'from-slate-500 to-slate-600';
+                        return (
+                          <motion.div
+                            key={cat.category}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: catIdx * 0.08 }}
+                          >
+                            {/* Category Header */}
+                            <div className="flex items-center gap-3 mb-6">
+                              <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${gradientClass} flex items-center justify-center shadow-md`}>
+                                <CatIcon className="w-5 h-5 text-white" />
+                              </div>
+                              <div>
+                                <h4 className="text-lg font-extrabold text-slate-900">{cat.category}</h4>
+                                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">{cat.figures.length} Figures</p>
+                              </div>
+                            </div>
+
+                            {/* Figures Grid */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                              {cat.figures.map((fig, figIdx) => (
+                                <motion.div
+                                  key={fig.id}
+                                  initial={{ opacity: 0, scale: 0.95 }}
+                                  animate={{ opacity: 1, scale: 1 }}
+                                  transition={{ delay: catIdx * 0.08 + figIdx * 0.05 }}
+                                  whileHover={{ y: -6, scale: 1.02 }}
+                                  onClick={() => setLightboxImage({ file: fig.file, title: fig.title })}
+                                  className="group cursor-pointer bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-xl hover:border-teal-200 transition-all duration-500"
+                                >
+                                  {/* Image Container */}
+                                  <div className="relative aspect-[16/10] bg-slate-50 overflow-hidden">
+                                    <img
+                                      src={`${import.meta.env.BASE_URL}gallery/${fig.file}`}
+                                      alt={fig.title}
+                                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                                      loading="lazy"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                                      <span className="text-white text-xs font-bold flex items-center gap-1.5">
+                                        <Search className="w-3.5 h-3.5" />
+                                        Click to expand
+                                      </span>
+                                    </div>
+                                    {/* Figure number badge */}
+                                    <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-slate-700 text-[10px] font-black px-2 py-1 rounded-lg shadow-sm border border-white/50">
+                                      Fig. {fig.id}
+                                    </div>
+                                  </div>
+
+                                  {/* Card Body */}
+                                  <div className="p-4">
+                                    <h5 className="font-bold text-slate-900 text-sm mb-1.5 leading-snug group-hover:text-teal-600 transition-colors">{fig.title}</h5>
+                                    <p className="text-slate-500 text-xs leading-relaxed mb-3">{fig.desc}</p>
+                                    <div className="flex flex-wrap gap-1.5">
+                                      {fig.tags.map((tag, tIdx) => (
+                                        <span key={tIdx} className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-50 text-slate-500 border border-slate-100">
+                                          {tag}
+                                        </span>
+                                      ))}
+                                    </div>
+                                  </div>
+                                </motion.div>
+                              ))}
+                            </div>
+                          </motion.div>
+                        );
+                      })}
+                  </div>
+                </div>
+              )}
+
+              {/* Lightbox Modal */}
+              <AnimatePresence>
+                {lightboxImage && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 z-[999] bg-slate-900/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-8"
+                    onClick={() => setLightboxImage(null)}
+                  >
+                    <motion.div
+                      initial={{ scale: 0.8, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0.8, opacity: 0 }}
+                      transition={{ type: 'spring', bounce: 0.2 }}
+                      className="relative max-w-6xl w-full max-h-[90vh] flex flex-col items-center"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <div className="flex items-center justify-between w-full mb-4">
+                        <h4 className="text-white font-bold text-lg">{lightboxImage.title}</h4>
+                        <button
+                          onClick={() => setLightboxImage(null)}
+                          className="p-2 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+                        >
+                          <X className="w-5 h-5" />
+                        </button>
+                      </div>
+                      <img
+                        src={`${import.meta.env.BASE_URL}gallery/${lightboxImage.file}`}
+                        alt={lightboxImage.title}
+                        className="max-h-[80vh] w-auto max-w-full rounded-2xl shadow-2xl border border-white/10 object-contain bg-white"
+                      />
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
             </motion.div>
           </AnimatePresence>

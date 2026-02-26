@@ -8,3 +8,6 @@ coverage/
 !.env.example
 Academic_CV_Saqib_Ali.docx
 extract_links.py
+samples/
+New_Potrait.jpg
+directory_map_*.csv

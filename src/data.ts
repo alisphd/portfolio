@@ -798,5 +798,103 @@ export const cvData = {
       phone: "+92-345-7886980",
       relationship: "Bachelors and Master Instructor"
     }
+  ],
+  gallery: [
+    {
+      category: "Protein Structure & Docking",
+      icon: "protein",
+      figures: [
+        { id: 9, file: "output_09_colabfold_plddt.png", title: "ColabFold pLDDT Confidence", desc: "Per-residue confidence scores from AlphaFold2/ColabFold structure prediction", tags: ["ColabFold", "AlphaFold2", "Python"] },
+        { id: 10, file: "output_10_hdock_docking.png", title: "HDOCK Protein–Protein Docking", desc: "Binding energy heatmap from HDOCK docking simulations", tags: ["HDOCK", "Docking", "R/ggplot2"] },
+        { id: 11, file: "output_11_gromacs_md.png", title: "GROMACS Molecular Dynamics", desc: "RMSD, RMSF, Rg and H-bond trajectories from MD simulation", tags: ["GROMACS", "MD Simulation", "R/ggplot2"] },
+      ]
+    },
+    {
+      category: "Population Genetics",
+      icon: "dna",
+      figures: [
+        { id: 12, file: "output_12_nucleotide_diversity.png", title: "Nucleotide Diversity (π)", desc: "Sliding-window nucleotide diversity across gene family", tags: ["DnaSP", "R/ggplot2", "PopGen"] },
+        { id: 13, file: "output_13_tajimas_d.png", title: "Tajima's D Neutrality Test", desc: "Selection pressure analysis with significance thresholds", tags: ["Tajima's D", "DnaSP", "R/ggplot2"] },
+        { id: 14, file: "output_14_recombination.png", title: "Recombination Breakpoints", desc: "Detection of recombination events across aligned sequences", tags: ["RDP5", "Recombination", "R/ggplot2"] },
+      ]
+    },
+    {
+      category: "Promoter & Codon Analysis",
+      icon: "search",
+      figures: [
+        { id: 15, file: "output_15_plantcare_ciselements.png", title: "PlantCARE Cis-Elements", desc: "Heatmap of cis-regulatory elements in promoter regions", tags: ["PlantCARE", "ComplexHeatmap", "R"] },
+        { id: 16, file: "output_16_subcellular_localization.png", title: "Subcellular Localization", desc: "WoLF PSORT prediction results for protein compartments", tags: ["WoLF PSORT", "R/ggplot2"] },
+        { id: 17, file: "output_17_codon_usage_rscu.png", title: "Codon Usage Bias (RSCU)", desc: "Relative synonymous codon usage heatmap", tags: ["seqinr", "RSCU", "R"] },
+      ]
+    },
+    {
+      category: "Wet-Lab & Field Research",
+      icon: "flask",
+      figures: [
+        { id: 18, file: "output_18_nematode_rcbd.png", title: "Nematode RCBD Trial", desc: "Randomized complete block design for nematode management", tags: ["ANOVA", "RCBD", "R/ggplot2"] },
+        { id: 19, file: "output_19_stress_physiology.png", title: "Stress Physiology Panel", desc: "SPAD, IRGA, and porometer readings under stress", tags: ["Physiology", "Stress", "R/ggplot2"] },
+        { id: 20, file: "output_20_biochemical_mda_pod.png", title: "Biochemical MDA & POD", desc: "Malondialdehyde and peroxidase activity under stress", tags: ["Biochemistry", "Spectrophotometry", "R/ggplot2"] },
+        { id: 21, file: "output_21_ssr_genotyping.png", title: "SSR Marker Genotyping", desc: "Microsatellite allele scoring and diversity analysis", tags: ["SSR", "MAS", "R/ggplot2"] },
+      ]
+    },
+    {
+      category: "GIS, Genomics & Networks",
+      icon: "globe",
+      figures: [
+        { id: 22, file: "output_22_gis_nematode_map.png", title: "GIS Nematode Distribution", desc: "Geospatial mapping of nematode survey sites", tags: ["GIS", "Matplotlib", "Python"] },
+        { id: 23, file: "output_23_genome_wide_distribution.png", title: "Genome-wide Gene Distribution", desc: "Chromosomal distribution of gene family members", tags: ["Genomics", "Matplotlib", "Python"] },
+        { id: 24, file: "output_24_ppi_network.png", title: "Protein–Protein Interaction Network", desc: "STRING-based PPI network with community detection", tags: ["STRING", "NetworkX", "Python"] },
+        { id: 25, file: "output_25_blast_similarity.png", title: "BLAST Sequence Similarity", desc: "Pairwise sequence identity matrix across species", tags: ["BLAST", "Matplotlib", "Python"] },
+      ]
+    },
+    {
+      category: "Evolutionary Selection & RNA-seq",
+      icon: "activity",
+      figures: [
+        { id: 26, file: "output_26_positive_selection_meme.png", title: "Positive Selection (MEME)", desc: "Site-specific dN/dS analysis for adaptive evolution", tags: ["MEME", "HyPhy", "R/ggplot2"] },
+        { id: 27, file: "output_27_rnaseq_volcano.png", title: "RNA-seq Volcano Plot", desc: "Differential gene expression with log₂FC vs −log₁₀(p)", tags: ["RNA-seq", "DESeq2", "R/ggplot2"] },
+        { id: 28, file: "output_28_skills_dashboard.png", title: "Research Skills Profile", desc: "Self-assessed proficiency dashboard across research domains", tags: ["Dashboard", "R/ggplot2"] },
+      ]
+    },
+    {
+      category: "Machine Learning & Multi-omics",
+      icon: "brain",
+      figures: [
+        { id: 29, file: "output_29_rf_shap_biocontrol.png", title: "RF + SHAP Biocontrol", desc: "Random Forest feature importance with SHAP beeswarm", tags: ["Random Forest", "SHAP", "scikit-learn"] },
+        { id: 30, file: "output_30_multiomics_integration.png", title: "Multi-omics Integration", desc: "Integrated heatmap of transcriptomic, proteomic and metabolomic data", tags: ["Multi-omics", "Matplotlib", "Python"] },
+        { id: 31, file: "output_31_wgcna_modules.png", title: "WGCNA Co-expression Modules", desc: "Weighted gene co-expression network analysis", tags: ["WGCNA", "NetworkX", "Python"] },
+        { id: 32, file: "output_32_roc_confusion.png", title: "ROC Curve & Confusion Matrix", desc: "Classifier performance evaluation with AUC metrics", tags: ["ROC", "scikit-learn", "Python"] },
+      ]
+    },
+    {
+      category: "Structural Biology & Deep Evolution",
+      icon: "layers",
+      figures: [
+        { id: 33, file: "output_33_contact_map.png", title: "Protein Contact Map", desc: "Residue–residue distance matrix from 3D structure", tags: ["Contact Map", "R/ggplot2"] },
+        { id: 34, file: "output_34_ramachandran.png", title: "Ramachandran Plot", desc: "Backbone dihedral angles (φ/ψ) for structure validation", tags: ["Ramachandran", "R/ggplot2"] },
+        { id: 35, file: "output_35_molecular_clock.png", title: "Molecular Clock Tree", desc: "Time-calibrated phylogenetic tree with divergence dates", tags: ["Molecular Clock", "R/ggplot2"] },
+        { id: 36, file: "output_36_ancestral_reconstruction.png", title: "Ancestral State Reconstruction", desc: "Discrete trait evolution along phylogeny", tags: ["Ancestral Recon", "R/ggplot2"] },
+      ]
+    },
+    {
+      category: "Pangenome, GWAS & SDM",
+      icon: "database",
+      figures: [
+        { id: 37, file: "output_37_pangenome.png", title: "Pan-genome Analysis", desc: "Core, accessory and dispensable gene partitions", tags: ["Pangenome", "Matplotlib", "Python"] },
+        { id: 38, file: "output_38_te_landscape.png", title: "Transposable Element Landscape", desc: "TE family distribution across Kimura distances", tags: ["RepeatMasker", "Matplotlib", "Python"] },
+        { id: 39, file: "output_39_gwas_manhattan.png", title: "GWAS Manhattan Plot", desc: "Genome-wide association scan with significance peaks", tags: ["GWAS", "Manhattan", "Python"] },
+        { id: 40, file: "output_40_species_distribution_model.png", title: "MaxEnt Species Distribution", desc: "Climate niche modeling with current and future projections", tags: ["MaxEnt", "SDM", "Python"] },
+      ]
+    },
+    {
+      category: "Frontier & Emerging Methods",
+      icon: "sparkles",
+      figures: [
+        { id: 41, file: "output_41_hic_tad.png", title: "Hi-C TAD Boundaries", desc: "Topologically associated domain visualization", tags: ["Hi-C", "TAD", "R/ggplot2"] },
+        { id: 42, file: "output_42_attention_map.png", title: "Transformer Attention Map", desc: "Self-attention weights on WRKY promoter sequence", tags: ["Transformer", "Deep Learning", "R/ggplot2"] },
+        { id: 43, file: "output_43_ld_decay.png", title: "LD Decay Curves", desc: "Linkage disequilibrium decay across Oryza species", tags: ["LD Decay", "PopLDdecay", "R/ggplot2"] },
+        { id: 44, file: "output_44_genome_dotplot.png", title: "Genome Synteny Dot Plot", desc: "MUMmer alignment between indica and japonica Chr11", tags: ["MUMmer", "Synteny", "R/ggplot2"] },
+      ]
+    }
   ]
 };
