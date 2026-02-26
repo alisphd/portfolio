@@ -801,6 +801,32 @@ export const cvData = {
   ],
   gallery: [
     {
+      category: "Phylogenomics & Molecular Evolution",
+      icon: "dna",
+      figures: [
+        { id: 1, file: "output_01_phylo_tree.png", title: "Phylogenetic Tree", desc: "Maximum likelihood cladogram showing evolutionary distance", tags: ["MEGA11", "Phylogenomics", "R/ggplot2"] },
+        { id: 2, file: "output_02_kaks_heatmap.png", title: "Ka/Ks Evolutionary Selection", desc: "Heatmap of non-synonymous to synonymous substitution rates", tags: ["Ka/Ks", "Selection", "R/ggplot2"] },
+      ]
+    },
+    {
+      category: "Transcriptomics & Network Analysis",
+      icon: "activity",
+      figures: [
+        { id: 3, file: "output_03_expression_heatmap.png", title: "Expression Profiling Heatmap", desc: "Spatiotemporal gene expression clustering across tissues", tags: ["RNA-seq", "Heatmap", "R"] },
+        { id: 7, file: "output_07_coexpression_network.png", title: "Co-expression Network", desc: "Gene–gene interaction network visualization", tags: ["NetworkX", "Co-expression", "Python"] },
+        { id: 8, file: "output_08_pca_tsne.png", title: "PCA & t-SNE Clustering", desc: "High-dimensional dimensionality reduction", tags: ["PCA", "t-SNE", "Python"] },
+      ]
+    },
+    {
+      category: "Comparative Genomics & Synteny",
+      icon: "globe",
+      figures: [
+        { id: 4, file: "output_04_synteny_circos.png", title: "Synteny Circos Plot", desc: "Chromosomal mapping of orthologous gene pairs", tags: ["Circos", "Synteny", "R"] },
+        { id: 5, file: "output_05_gene_structure.png", title: "Gene Structure Architecture", desc: "Exon-intron organization combined with phylogenetic tree", tags: ["GSDS", "Genomics", "R"] },
+        { id: 6, file: "output_06_motif_distribution.png", title: "Conserved Motif Distribution", desc: "MEME predicted protein motifs mapped to sequences", tags: ["MEME Suite", "Motifs", "R/ggplot2"] },
+      ]
+    },
+    {
       category: "Protein Structure & Docking",
       icon: "protein",
       figures: [

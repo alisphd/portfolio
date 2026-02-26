@@ -72,6 +72,9 @@ const GALLERY_CATEGORY_ICONS: Record<string, React.ElementType> = {
 };
 
 const GALLERY_CATEGORY_COLORS: Record<string, string> = {
+  "Phylogenomics & Molecular Evolution": "from-sky-500 to-blue-600",
+  "Comparative Genomics & Synteny": "from-indigo-500 to-purple-600",
+  "Transcriptomics & Network Analysis": "from-pink-500 to-rose-600",
   "Protein Structure & Docking": "from-blue-500 to-indigo-600",
   "Population Genetics": "from-emerald-500 to-teal-600",
   "Promoter & Codon Analysis": "from-amber-500 to-orange-600",
