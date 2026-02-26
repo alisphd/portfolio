@@ -30,10 +30,10 @@ const TABS: TabConfig[] = [
   { id: 'education', label: 'Education', icon: GraduationCap },
   { id: 'publications', label: 'Publications', icon: FileSearch },
   { id: 'skills', label: 'Skills', icon: Binary },
+  { id: 'gallery', label: 'Research Gallery', icon: Image },
   { id: 'courses', label: 'Courses', icon: Library },
   { id: 'honors', label: 'Honors & Awards', icon: Trophy },
   { id: 'references', label: 'References', icon: Briefcase },
-  { id: 'gallery', label: 'Research Gallery', icon: Image },
 ];
 
 // Clean, minimalist section heading
@@ -90,7 +90,7 @@ const GALLERY_CATEGORY_COLORS: Record<string, string> = {
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabId>('about');
   const [galleryCategory, setGalleryCategory] = useState<string>('All');
-  const [lightboxImage, setLightboxImage] = useState<{ file: string; title: string } | null>(null);
+  const [lightboxImage, setLightboxImage] = useState<{ file: string; title: string, desc: string, tags: string[] } | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -825,11 +825,10 @@ export default function App() {
                   <div className="flex flex-wrap gap-2 mb-10">
                     <button
                       onClick={() => setGalleryCategory('All')}
-                      className={`px-4 py-2 rounded-full text-sm font-bold transition-all duration-300 border ${
-                        galleryCategory === 'All'
-                          ? 'bg-slate-900 text-white border-slate-900 shadow-lg shadow-slate-900/20'
-                          : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50 hover:text-slate-700 hover:border-slate-300'
-                      }`}
+                      className={`px-4 py-2 rounded-full text-sm font-bold transition-all duration-300 border ${galleryCategory === 'All'
+                        ? 'bg-slate-900 text-white border-slate-900 shadow-lg shadow-slate-900/20'
+                        : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50 hover:text-slate-700 hover:border-slate-300'
+                        }`}
                     >
                       All
                     </button>
@@ -839,11 +838,10 @@ export default function App() {
                         <button
                           key={cat.category}
                           onClick={() => setGalleryCategory(cat.category)}
-                          className={`px-4 py-2 rounded-full text-sm font-bold transition-all duration-300 border flex items-center gap-1.5 ${
-                            galleryCategory === cat.category
-                              ? 'bg-slate-900 text-white border-slate-900 shadow-lg shadow-slate-900/20'
-                              : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50 hover:text-slate-700 hover:border-slate-300'
-                          }`}
+                          className={`px-4 py-2 rounded-full text-sm font-bold transition-all duration-300 border flex items-center gap-1.5 ${galleryCategory === cat.category
+                            ? 'bg-slate-900 text-white border-slate-900 shadow-lg shadow-slate-900/20'
+                            : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50 hover:text-slate-700 hover:border-slate-300'
+                            }`}
                         >
                           <CatIcon className="w-3.5 h-3.5" />
                           {cat.category}
@@ -886,7 +884,7 @@ export default function App() {
                                   animate={{ opacity: 1, scale: 1 }}
                                   transition={{ delay: catIdx * 0.08 + figIdx * 0.05 }}
                                   whileHover={{ y: -6, scale: 1.02 }}
-                                  onClick={() => setLightboxImage({ file: fig.file, title: fig.title })}
+                                  onClick={() => setLightboxImage(fig)}
                                   className="group cursor-pointer bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-xl hover:border-teal-200 transition-all duration-500"
                                 >
                                   {/* Image Container */}
@@ -961,8 +959,18 @@ export default function App() {
                       <img
                         src={`${import.meta.env.BASE_URL}gallery/${lightboxImage.file}`}
                         alt={lightboxImage.title}
-                        className="max-h-[80vh] w-auto max-w-full rounded-2xl shadow-2xl border border-white/10 object-contain bg-white"
+                        className="max-h-[75vh] w-auto max-w-full rounded-t-2xl shadow-2xl border border-white/10 object-contain bg-slate-50"
                       />
+                      <div className="w-full bg-white rounded-b-2xl p-6 shadow-2xl border border-white/10">
+                        <p className="text-slate-700 text-sm md:text-base leading-relaxed mb-4">{lightboxImage.desc}</p>
+                        <div className="flex flex-wrap gap-2">
+                          {lightboxImage.tags.map((tag, tIdx) => (
+                            <span key={tIdx} className="text-xs font-bold px-3 py-1 rounded-lg bg-teal-50 text-teal-700 border border-teal-100">
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
                     </motion.div>
                   </motion.div>
                 )}
