@@ -936,42 +936,53 @@ export default function App() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="fixed inset-0 z-[999] bg-slate-900/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-8"
+                    className="fixed inset-0 z-[999] bg-slate-900/95 backdrop-blur-sm p-4 sm:p-8 overflow-y-auto"
                     onClick={() => setLightboxImage(null)}
                   >
-                    <motion.div
-                      initial={{ scale: 0.8, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      exit={{ scale: 0.8, opacity: 0 }}
-                      transition={{ type: 'spring', bounce: 0.2 }}
-                      className="relative max-w-6xl w-full max-h-[90vh] flex flex-col items-center"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <div className="flex items-center justify-between w-full mb-4">
-                        <h4 className="text-white font-bold text-lg">{lightboxImage.title}</h4>
-                        <button
-                          onClick={() => setLightboxImage(null)}
-                          className="p-2 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
-                        >
-                          <X className="w-5 h-5" />
-                        </button>
-                      </div>
-                      <img
-                        src={`${import.meta.env.BASE_URL}gallery/${lightboxImage.file}`}
-                        alt={lightboxImage.title}
-                        className="max-h-[75vh] w-auto max-w-full rounded-t-2xl shadow-2xl border border-white/10 object-contain bg-slate-50"
-                      />
-                      <div className="w-full bg-white rounded-b-2xl p-6 shadow-2xl border border-white/10">
-                        <p className="text-slate-700 text-sm md:text-base leading-relaxed mb-4">{lightboxImage.desc}</p>
-                        <div className="flex flex-wrap gap-2">
-                          {lightboxImage.tags.map((tag, tIdx) => (
-                            <span key={tIdx} className="text-xs font-bold px-3 py-1 rounded-lg bg-teal-50 text-teal-700 border border-teal-100">
-                              {tag}
-                            </span>
-                          ))}
+                    <div className="min-h-full flex items-center justify-center pointer-events-none">
+                      <motion.div
+                        initial={{ scale: 0.95, opacity: 0, y: 20 }}
+                        animate={{ scale: 1, opacity: 1, y: 0 }}
+                        exit={{ scale: 0.95, opacity: 0, y: 20 }}
+                        transition={{ type: 'spring', bounce: 0, duration: 0.3 }}
+                        className="relative w-full max-w-5xl bg-white rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-white/10 flex flex-col overflow-hidden pointer-events-auto"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        {/* Top Bar */}
+                        <div className="flex items-center justify-between bg-slate-900 px-6 py-4 border-b border-slate-800">
+                          <h4 className="text-white font-bold text-lg">{lightboxImage.title}</h4>
+                          <button
+                            onClick={() => setLightboxImage(null)}
+                            className="p-1.5 rounded-full bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
+                          >
+                            <X className="w-5 h-5" />
+                          </button>
                         </div>
-                      </div>
-                    </motion.div>
+
+                        {/* Image Viewer relative max-h */}
+                        <div className="w-full bg-slate-100 flex items-center justify-center border-b border-slate-200">
+                          {/* Force image to scale correctly using absolute positioning if needed, or flex */}
+                          <img
+                            src={`${import.meta.env.BASE_URL}gallery/${lightboxImage.file}`}
+                            alt={lightboxImage.title}
+                            className="max-w-full"
+                            style={{ maxHeight: 'calc(80vh - 160px)', objectFit: 'contain' }}
+                          />
+                        </div>
+
+                        {/* Legend */}
+                        <div className="w-full bg-white p-6 sm:p-8">
+                          <p className="text-slate-700 text-sm sm:text-base leading-relaxed mb-5">{lightboxImage.desc}</p>
+                          <div className="flex flex-wrap gap-2">
+                            {lightboxImage.tags.map((tag, tIdx) => (
+                              <span key={tIdx} className="text-xs font-bold px-3 py-1.5 rounded-lg bg-teal-50 text-teal-700 border border-teal-100 shadow-sm">
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </motion.div>
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
