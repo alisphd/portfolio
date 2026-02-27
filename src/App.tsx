@@ -184,29 +184,45 @@ export default function App() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-xl font-medium text-slate-500 mb-8"
+              className="text-xl font-medium text-slate-500 mb-3"
             >
               {cvData.title}
             </motion.h2>
 
             <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.35 }}
+              className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full bg-teal-50 border border-teal-100 text-teal-800 text-sm font-bold shadow-sm"
+            >
+              <Sparkles className="w-4 h-4 text-teal-600" />
+              Open to Postdoc & Research Scientist positions 2026
+            </motion.div>
+
+            <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="flex flex-wrap justify-center md:justify-start gap-4"
+              className="flex flex-wrap items-center justify-center md:justify-start gap-4"
             >
+              <a href={`${import.meta.env.BASE_URL}Academic_CV_Saqib_Ali.docx`} download className="flex items-center gap-2 px-6 py-2.5 bg-teal-600 text-white hover:bg-teal-700 rounded-2xl transition-all shadow-lg shadow-teal-600/20 text-sm font-bold group">
+                <FileText className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
+                Download CV (Docx)
+              </a>
               <a href={`mailto:${cvData.contact.email}`} className="flex items-center gap-2.5 px-5 py-2.5 bg-slate-900 text-white hover:bg-slate-800 rounded-2xl transition-all shadow-lg shadow-slate-900/20 text-sm font-medium group">
                 <Mail className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors" />
-                {cvData.contact.email}
+                Email
               </a>
-              <a href={`tel:${cvData.contact.phone}`} className="flex items-center gap-2.5 px-5 py-2.5 bg-white hover:bg-slate-50 text-slate-700 rounded-2xl border border-slate-200 transition-all shadow-sm text-sm font-medium">
-                <Phone className="w-4 h-4 text-slate-400" />
-                {cvData.contact.phone}
-              </a>
-              <a href={`https://linkedin.com/in/${cvData.contact.linkedin}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 px-5 py-2.5 bg-white hover:bg-slate-50 text-slate-700 rounded-2xl border border-slate-200 transition-all shadow-sm text-sm font-medium">
-                <Linkedin className="w-4 h-4 text-slate-400" />
+              <a href={`https://linkedin.com/in/${cvData.contact.linkedin}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 px-5 py-2.5 bg-white hover:bg-slate-50 text-slate-700 rounded-2xl border border-slate-200 transition-all shadow-sm text-sm font-medium hover:border-blue-200 hover:text-blue-700 group">
+                <Linkedin className="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors" />
                 LinkedIn
               </a>
+              {cvData.contact.github && (
+                <a href={`https://github.com/${cvData.contact.github}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 px-5 py-2.5 bg-white hover:bg-slate-50 text-slate-700 rounded-2xl border border-slate-200 transition-all shadow-sm text-sm font-medium hover:border-slate-400 group">
+                  <Code className="w-4 h-4 text-slate-400 group-hover:text-slate-800 transition-colors" />
+                  GitHub
+                </a>
+              )}
             </motion.div>
           </div>
         </motion.div>
@@ -556,9 +572,9 @@ export default function App() {
                                     href={pub.pdfUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-200 text-slate-600 rounded-xl text-xs font-bold hover:bg-teal-600 hover:text-white hover:border-teal-600 transition-all shadow-sm"
+                                    className="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-50 border border-teal-100 text-teal-700 rounded-lg text-xs font-bold hover:bg-teal-600 hover:text-white hover:border-teal-600 transition-all shadow-sm"
                                   >
-                                    <FileText className="w-3 h-3" />
+                                    <FileText className="w-3.5 h-3.5" />
                                     View PDF Attachment
                                   </a>
                                 </div>
@@ -991,6 +1007,17 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
+      <footer className="mt-16 py-8 border-t border-slate-200 bg-slate-50 text-center relative z-10">
+        <div className="max-w-5xl mx-auto px-4 md:flex items-center justify-between">
+          <p className="text-slate-500 text-sm font-medium mb-2 md:mb-0">
+            © 2026 {cvData.name}. All rights reserved.
+          </p>
+          <div className="flex flex-col items-center md:items-end text-xs text-slate-400 font-medium">
+            <span className="mb-1">Last updated: February 2026</span>
+            <span>Developed with React & Tailwind CSS</span>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
