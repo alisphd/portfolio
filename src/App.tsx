@@ -1006,10 +1006,7 @@ export default function App() {
           <p className="text-slate-500 text-sm font-medium">
             © 2026 {cvData.name}. All rights reserved.
           </p>
-          <div className="flex flex-col items-center md:items-end text-xs text-slate-400 font-medium">
-            <span className="mb-1">Last updated: February 28, 2026</span>
-            <span>Developed with React & Tailwind CSS</span>
-          </div>
+          <span className="text-xs text-slate-400 font-medium">Last updated: February 28, 2026</span>
         </div>
       </footer>
     </div>
