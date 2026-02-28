@@ -1002,10 +1002,6 @@ export default function App() {
           <p className="text-slate-500 text-sm font-medium">
             © 2026 {cvData.name}. All rights reserved.
           </p>
-          <a href={`${import.meta.env.BASE_URL}Academic_CV_Saqib_Ali.pdf`} download className="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-600 text-white hover:bg-teal-700 rounded-xl transition-all shadow-sm text-xs font-bold">
-            <FileText className="w-3.5 h-3.5" />
-            Download CV (PDF)
-          </a>
           <div className="flex flex-col items-center md:items-end text-xs text-slate-400 font-medium">
             <span className="mb-1">Last updated: February 28, 2026</span>
             <span>Developed with React & Tailwind CSS</span>
