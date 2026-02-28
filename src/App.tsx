@@ -196,7 +196,7 @@ export default function App() {
               className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full bg-teal-50 border border-teal-100 text-teal-800 text-sm font-bold shadow-sm"
             >
               <Sparkles className="w-4 h-4 text-teal-600" />
-              Open to PhD & Research Assistant / Associate positions 2026
+              Seeking PhD & Research positions | Available 2026
             </motion.div>
 
             <motion.div
@@ -208,6 +208,10 @@ export default function App() {
               <a href={`mailto:${cvData.contact.email}`} className="flex items-center gap-2.5 px-5 py-2.5 bg-slate-900 text-white hover:bg-slate-800 rounded-2xl transition-all shadow-lg shadow-slate-900/20 text-sm font-medium group">
                 <Mail className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors" />
                 {cvData.contact.email}
+              </a>
+              <a href={`tel:${cvData.contact.phone}`} className="flex items-center gap-2.5 px-5 py-2.5 bg-white hover:bg-slate-50 text-slate-700 rounded-2xl border border-slate-200 transition-all shadow-sm text-sm font-medium">
+                <Phone className="w-4 h-4 text-slate-400" />
+                {cvData.contact.phone}
               </a>
               <a href={`https://linkedin.com/in/${cvData.contact.linkedin}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 px-5 py-2.5 bg-white hover:bg-slate-50 text-slate-700 rounded-2xl border border-slate-200 transition-all shadow-sm text-sm font-medium hover:border-blue-200 hover:text-blue-700 group">
                 <Linkedin className="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors" />
