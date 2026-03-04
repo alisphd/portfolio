@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
+import { useReactToPrint } from 'react-to-print';
 import {
   Mail, Phone, MapPin, Linkedin, BookOpen, Briefcase,
   Award, GraduationCap, Code, FileText, User, ChevronRight, ChevronLeft,
-  ArrowUpRight, Library, ShieldCheck, Microscope, Database,
-  ExternalLink, Sprout, Dna, FlaskConical, Leaf, Trophy,
-  Binary, Search, FileSearch, Image, Layers, Sparkles, X,
-  Globe, Activity, Brain, FlaskRound, Atom
+  Search, ExternalLink, Image, Layers, Sparkles, Building, PlayCircle, Binary, Library, Trophy, ShieldCheck, Sun, Moon, ArrowUpRight, Github, Code2, Globe, Cpu, Database, Fingerprint, Activity, Terminal, Layout, Share2, Workflow, MessageSquare, Mic, FileAudio, Youtube, Podcast, Zap, MonitorPlay, Focus, Printer, X, Microscope, Sprout, Dna, FlaskConical, Leaf, FileSearch, Brain, FlaskRound, Atom
 } from 'lucide-react';
 import { cvData } from './data';
 import { logVisit } from './analytics';
@@ -39,9 +38,9 @@ const TABS: TabConfig[] = [
 
 // Clean, minimalist section heading
 const SectionHeading = ({ title, icon: Icon }: { title: string, icon?: React.ElementType }) => (
-  <div className="flex items-center gap-3 mb-8 pb-4 border-b border-slate-200">
-    {Icon && <Icon className="w-5 h-5 text-slate-400" />}
-    <h3 className="text-2xl font-bold text-slate-800 tracking-tight">{title}</h3>
+  <div className="flex items-center gap-3 mb-8 pb-4 border-b border-slate-200 dark:border-slate-800">
+    {Icon && <Icon className="w-5 h-5 text-slate-400 dark:text-slate-500" />}
+    <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-100 tracking-tight">{title}</h3>
   </div>
 );
 
@@ -95,6 +94,35 @@ export default function App() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [darkMode, setDarkMode] = useState(false);
+
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
+  const componentRef = useRef<HTMLDivElement>(null);
+  const handlePrint = useReactToPrint({
+    contentRef: componentRef,
+    documentTitle: `${cvData.name.replace(/\s+/g, '_')}_Portfolio`,
+  });
+
+  useEffect(() => {
+    // Check initial preference
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      setDarkMode(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
 
   const checkScroll = useCallback(() => {
     if (scrollContainerRef.current) {
@@ -127,16 +155,42 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-600 font-sans pb-24 selection:bg-slate-900 selection:text-white">
+    <div className={`min-h-screen text-slate-600 font-sans pb-24 selection:bg-slate-900 selection:text-white transition-colors duration-300 ${darkMode ? 'dark bg-slate-950 text-slate-300' : 'bg-slate-50'}`}>
+      <Helmet>
+        <title>{cvData.name} - {cvData.title}</title>
+        <meta name="description" content={cvData.about.substring(0, 160) + '...'} />
+        <meta name="keywords" content={cvData.skills.map(s => s.category.toLowerCase()).join(', ')} />
+        <meta property="og:title" content={`${cvData.name} - ${cvData.title}`} />
+        <meta property="og:description" content={cvData.about.substring(0, 160) + '...'} />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${cvData.name} - ${cvData.title}`} />
+        <meta name="twitter:description" content={cvData.about.substring(0, 160) + '...'} />
+      </Helmet>
+
+      {/* Reading Progress Bar */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-1 bg-teal-500 origin-left z-[1000] shadow-[0_0_10px_rgba(20,184,166,0.5)] dark:shadow-[0_0_15px_rgba(20,184,166,0.8)]"
+        style={{ scaleX }}
+      />
 
       {/* Static Hero Background for better performance */}
-      <div className="h-64 bg-slate-900 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#27272a_1px,transparent_1px),linear-gradient(to_bottom,#27272a_1px,transparent_1px)] bg-[size:3rem_3rem] opacity-20"></div>
+      <div className="h-64 bg-slate-900 dark:bg-slate-950 relative overflow-hidden transition-colors duration-300">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#27272a_1px,transparent_1px),linear-gradient(to_bottom,#27272a_1px,transparent_1px)] bg-[size:3rem_3rem] opacity-20 dark:opacity-10"></div>
+        <div className="absolute top-4 right-4 z-50">
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            className="p-2.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 transition-all shadow-lg"
+            aria-label="Toggle Dark Mode"
+          >
+            {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+          </button>
+        </div>
         <div className="absolute -top-24 -right-24 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl"></div>
         <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-slate-500/10 rounded-full blur-3xl"></div>
       </div>
 
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-32 relative z-10">
+      <main ref={componentRef} className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-32 relative z-10 print:mt-0 print:p-0">
 
         {/* Profile Card - Solid Background */}
         <motion.div
@@ -153,7 +207,7 @@ export default function App() {
                 x: [0, -2, 2, -2, 2, 0]
               }}
               transition={{ duration: 0.4 }}
-              className="w-40 h-40 md:w-48 md:h-48 rounded-2xl overflow-hidden border-8 border-white shadow-[0_20px_50px_rgba(0,0,0,0.1)] bg-slate-100 cursor-pointer relative z-10"
+              className="w-40 h-40 md:w-48 md:h-48 rounded-2xl overflow-hidden border-8 border-white dark:border-slate-900 shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:shadow-none bg-slate-100 dark:bg-slate-800 cursor-pointer relative z-10"
             >
               <img
                 src={`${import.meta.env.BASE_URL}portrait.jpg`}
@@ -182,7 +236,7 @@ export default function App() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-2 tracking-tight"
+              className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-2 tracking-tight"
             >
               {cvData.name}
             </motion.h1>
@@ -190,7 +244,7 @@ export default function App() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-xl font-medium text-slate-500 mb-3"
+              className="text-xl font-medium text-slate-500 dark:text-slate-400 mb-3"
             >
               {cvData.title}
             </motion.h2>
@@ -199,9 +253,9 @@ export default function App() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.35 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full bg-teal-50 border border-teal-100 text-teal-800 text-sm font-bold shadow-sm"
+              className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full bg-teal-50 dark:bg-teal-900/40 border border-teal-100 dark:border-teal-800/60 text-teal-800 dark:text-teal-300 text-sm font-bold shadow-sm"
             >
-              <Sparkles className="w-4 h-4 text-teal-600" />
+              <Sparkles className="w-4 h-4 text-teal-600 dark:text-teal-400" />
               Seeking PhD & Research positions | Available 2026
             </motion.div>
 
@@ -211,24 +265,31 @@ export default function App() {
               transition={{ delay: 0.4 }}
               className="flex flex-wrap items-center justify-center md:justify-start gap-3"
             >
-              <a href={`mailto:${cvData.contact.email}`} className="flex items-center gap-2.5 px-5 py-2.5 bg-slate-900 text-white hover:bg-slate-800 rounded-2xl transition-all shadow-lg shadow-slate-900/20 text-sm font-medium group">
-                <Mail className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors" />
+              <a href={`mailto:${cvData.contact.email}`} className="flex items-center gap-2.5 px-5 py-2.5 bg-slate-900 dark:bg-teal-500 text-white hover:bg-slate-800 dark:hover:bg-teal-400 rounded-2xl transition-all shadow-lg shadow-slate-900/20 dark:shadow-teal-500/20 text-sm font-medium group">
+                <Mail className="w-4 h-4 text-slate-400 dark:text-teal-100 group-hover:text-white transition-colors" />
                 {cvData.contact.email}
               </a>
-              <a href={`tel:${cvData.contact.phone}`} className="flex items-center gap-2.5 px-5 py-2.5 bg-white hover:bg-slate-50 text-slate-700 rounded-2xl border border-slate-200 transition-all shadow-sm text-sm font-medium">
-                <Phone className="w-4 h-4 text-slate-400" />
+              <a href={`tel:${cvData.contact.phone}`} className="flex items-center gap-2.5 px-5 py-2.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-2xl border border-slate-200 dark:border-slate-700 transition-all shadow-sm text-sm font-medium">
+                <Phone className="w-4 h-4 text-slate-400 dark:text-slate-400" />
                 {cvData.contact.phone}
               </a>
-              <a href={`https://linkedin.com/in/${cvData.contact.linkedin}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 px-5 py-2.5 bg-white hover:bg-slate-50 text-slate-700 rounded-2xl border border-slate-200 transition-all shadow-sm text-sm font-medium hover:border-blue-200 hover:text-blue-700 group">
-                <Linkedin className="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors" />
+              <a href={`https://linkedin.com/in/${cvData.contact.linkedin}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 px-5 py-2.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-2xl border border-slate-200 dark:border-slate-700 transition-all shadow-sm text-sm font-medium hover:border-blue-200 dark:hover:border-blue-700/50 hover:text-blue-700 dark:hover:text-blue-400 group">
+                <Linkedin className="w-4 h-4 text-slate-400 dark:text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors" />
                 LinkedIn
               </a>
+              <button
+                onClick={handlePrint}
+                className="flex items-center gap-2.5 px-5 py-2.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-2xl border border-slate-200 dark:border-slate-700 transition-all shadow-sm text-sm font-medium hover:border-teal-200 dark:hover:border-teal-700/50 hover:text-teal-700 dark:hover:text-teal-400 group print:hidden"
+              >
+                <Printer className="w-4 h-4 text-slate-400 dark:text-slate-400 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors" />
+                Download PDF
+              </button>
             </motion.div>
           </div>
         </motion.div>
 
         {/* Interactive Tabs Navigation */}
-        <div className="mb-12 sticky top-6 z-30 flex justify-center w-full px-4 sm:px-0">
+        <div className="mb-12 sticky top-6 z-30 flex justify-center w-full px-4 sm:px-0 print:hidden">
           <div className="relative max-w-full group">
             {/* Left fade/button */}
             <AnimatePresence>
@@ -312,10 +373,10 @@ export default function App() {
               animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
               exit={{ opacity: 0, scale: 1.02, filter: 'blur(10px)' }}
               transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-              className="bg-white rounded-2xl shadow-2xl shadow-slate-200/50 border border-slate-100 p-8 md:p-14 relative overflow-hidden"
+              className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 p-8 md:p-14 relative overflow-hidden transition-colors duration-300"
             >
               {/* Subtle background graphic for content area */}
-              <div className="absolute top-0 right-0 w-96 h-96 bg-slate-50 rounded-full blur-3xl -z-10 opacity-50 translate-x-1/2 -translate-y-1/2"></div>
+              <div className="absolute top-0 right-0 w-96 h-96 bg-slate-50 dark:bg-slate-800/20 rounded-full blur-3xl -z-10 opacity-50 translate-x-1/2 -translate-y-1/2 transition-colors duration-300"></div>
 
               {/* ABOUT TAB */}
               {activeTab === 'about' && (
@@ -325,7 +386,7 @@ export default function App() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2 }}
-                    className="bg-slate-50 border-l-4 border-teal-500 p-6 md:p-8 rounded-r-2xl text-slate-700 font-medium italic shadow-sm mb-12 text-lg leading-relaxed"
+                    className="bg-slate-50 dark:bg-slate-800/50 border-l-4 border-teal-500 p-6 md:p-8 rounded-r-2xl text-slate-700 dark:text-slate-300 font-medium italic shadow-sm mb-12 text-lg leading-relaxed transition-colors duration-300"
                     dangerouslySetInnerHTML={{ __html: cvData.about }}
                   />
 
@@ -340,16 +401,16 @@ export default function App() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3 + i * 0.1 }}
-                        className="p-8 rounded-2xl bg-white border border-slate-200 shadow-sm hover:bg-teal-50 hover:shadow-md hover:border-teal-200 transition-all duration-300 group"
+                        className="p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:bg-teal-50 dark:hover:bg-slate-800/80 hover:shadow-md hover:border-teal-200 dark:hover:border-teal-500/50 transition-all duration-300 group"
                       >
-                        <div className="w-14 h-14 bg-slate-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-white group-hover:shadow-sm transition-all duration-300">
-                          <item.icon className="w-7 h-7 text-slate-400 group-hover:text-teal-500 transition-colors group-hover:scale-110 duration-300" />
+                        <div className="w-14 h-14 bg-slate-50 dark:bg-slate-800/50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-white dark:group-hover:bg-slate-800 group-hover:shadow-sm transition-all duration-300">
+                          <item.icon className="w-7 h-7 text-slate-400 dark:text-slate-500 group-hover:text-teal-500 transition-colors group-hover:scale-110 duration-300" />
                         </div>
-                        <h4 className="font-extrabold text-slate-900 mb-4 text-[19px]">{item.title}</h4>
+                        <h4 className="font-extrabold text-slate-900 dark:text-slate-100 mb-4 text-[19px]">{item.title}</h4>
                         <ul className="space-y-2">
                           {item.desc.map((bullet, idx) => (
-                            <li key={idx} className="flex items-start gap-2.5 text-sm text-slate-500 leading-relaxed group-hover:text-slate-600 transition-colors">
-                              <div className="w-1.5 h-1.5 rounded-full bg-teal-400 mt-1.5 shrink-0"></div>
+                            <li key={idx} className="flex items-start gap-2.5 text-sm text-slate-500 dark:text-slate-400 leading-relaxed group-hover:text-slate-600 dark:group-hover:text-slate-300 transition-colors">
+                              <div className="w-1.5 h-1.5 rounded-full bg-teal-400 dark:bg-teal-500 mt-1.5 shrink-0"></div>
                               <span>{bullet}</span>
                             </li>
                           ))}
@@ -388,19 +449,19 @@ export default function App() {
                           {/* Right Column: Content */}
                           <div className="flex-1 pb-4 relative">
                             {/* Timeline line */}
-                            <div className="hidden md:block absolute -left-5 top-4 bottom-0 w-px bg-slate-200 group-last:bg-transparent"></div>
+                            <div className="hidden md:block absolute -left-5 top-4 bottom-0 w-px bg-slate-200 dark:bg-slate-700 group-last:bg-transparent"></div>
                             {/* Timeline dot */}
-                            <div className="hidden md:block absolute -left-[25px] top-3.5 w-3 h-3 rounded-full bg-slate-300 group-hover:bg-teal-500 group-hover:scale-125 transition-all duration-300"></div>
+                            <div className="hidden md:block absolute -left-[25px] top-3.5 w-3 h-3 rounded-full bg-slate-300 dark:bg-slate-600 group-hover:bg-teal-500 dark:group-hover:bg-teal-400 group-hover:scale-125 transition-all duration-300"></div>
 
-                            <h3 className="text-2xl font-extrabold text-slate-900 mb-2 group-hover:text-teal-600 transition-colors duration-300">{exp.title}</h3>
+                            <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white mb-2 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-300">{exp.title}</h3>
                             <div className="flex flex-wrap items-center gap-4 mb-6">
-                              <p className="text-slate-500 font-semibold text-lg">{exp.organization}</p>
+                              <p className="text-slate-500 dark:text-slate-400 font-semibold text-lg">{exp.organization}</p>
                               {exp.certificateUrl && (
                                 <a
                                   href={exp.certificateUrl}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="flex items-center gap-1.5 px-3 py-1 bg-teal-50 text-teal-600 rounded-lg text-xs font-bold hover:bg-teal-100 transition-colors"
+                                  className="flex items-center gap-1.5 px-3 py-1 bg-teal-50 dark:bg-teal-900/40 text-teal-600 dark:text-teal-400 rounded-lg text-xs font-bold hover:bg-teal-100 dark:hover:bg-teal-800/60 transition-colors"
                                 >
                                   <FileText className="w-3 h-3" />
                                   View PDF
@@ -412,30 +473,30 @@ export default function App() {
                               {(exp.supervisor || exp.thesis) && (
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                   {exp.supervisor && (
-                                    <div className="bg-slate-50 p-5 rounded-2xl border border-slate-100 flex items-center gap-4">
-                                      <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm">
-                                        <User className="w-5 h-5 text-slate-400" />
+                                    <div className="bg-slate-50 dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-700/50 flex items-center gap-4">
+                                      <div className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center shadow-sm">
+                                        <User className="w-5 h-5 text-slate-400 dark:text-slate-500" />
                                       </div>
                                       <div>
-                                        <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">Supervisor</div>
+                                        <div className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Supervisor</div>
                                         {(exp as any).supervisorUrl ? (
-                                          <a href={(exp as any).supervisorUrl} target="_blank" rel="noopener noreferrer" className="text-sm font-bold text-slate-700 hover:text-teal-600 hover:underline transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 rounded">
+                                          <a href={(exp as any).supervisorUrl} target="_blank" rel="noopener noreferrer" className="text-sm font-bold text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:underline transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 rounded">
                                             {exp.supervisor}
                                           </a>
                                         ) : (
-                                          <div className="text-sm font-bold text-slate-700">{exp.supervisor}</div>
+                                          <div className="text-sm font-bold text-slate-700 dark:text-slate-300">{exp.supervisor}</div>
                                         )}
                                       </div>
                                     </div>
                                   )}
                                   {exp.thesis && (
-                                    <div className="bg-slate-50 p-5 rounded-2xl border border-slate-100 flex items-center gap-4">
-                                      <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm">
-                                        <BookOpen className="w-5 h-5 text-slate-400" />
+                                    <div className="bg-slate-50 dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-700/50 flex items-center gap-4">
+                                      <div className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center shadow-sm">
+                                        <BookOpen className="w-5 h-5 text-slate-400 dark:text-slate-500" />
                                       </div>
                                       <div>
-                                        <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">Thesis</div>
-                                        <div className="text-sm font-bold text-slate-700">{exp.thesis}</div>
+                                        <div className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Thesis</div>
+                                        <div className="text-sm font-bold text-slate-700 dark:text-slate-300">{exp.thesis}</div>
                                       </div>
                                     </div>
                                   )}
@@ -445,14 +506,14 @@ export default function App() {
                               {exp.projects ? (
                                 <div className="space-y-8">
                                   {exp.projects.map((proj, pIdx) => (
-                                    <div key={pIdx} className="bg-slate-50/50 rounded-2xl p-8 border border-slate-100 hover:bg-white hover:shadow-md transition-all duration-300">
-                                      <h4 className="font-bold text-slate-900 mb-6 text-xl flex items-center gap-3">
+                                    <div key={pIdx} className="bg-slate-50/50 dark:bg-slate-800/30 rounded-2xl p-8 border border-slate-100 dark:border-slate-800 hover:bg-white dark:hover:bg-slate-800 hover:shadow-md transition-all duration-300">
+                                      <h4 className="font-bold text-slate-900 dark:text-slate-100 mb-6 text-xl flex items-center gap-3">
                                         <div className="w-2 h-8 bg-teal-500 rounded-full"></div>
                                         {proj.name}
                                       </h4>
                                       <ul className="space-y-4">
                                         {proj.details.map((detail, dIdx) => (
-                                          <li key={dIdx} className="flex items-start gap-4 text-slate-600 text-base">
+                                          <li key={dIdx} className="flex items-start gap-4 text-slate-600 dark:text-slate-300 text-base">
                                             <ChevronRight className="w-5 h-5 text-teal-400 mt-1 shrink-0" />
                                             <span className="leading-relaxed">{detail}</span>
                                           </li>
@@ -489,15 +550,15 @@ export default function App() {
                       <motion.div
                         key={idx}
                         whileHover={{ y: -5 }}
-                        className="p-8 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col h-full hover:bg-slate-50 hover:shadow-md hover:border-teal-200 transition-all duration-500 group relative overflow-hidden"
+                        className="p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col h-full hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:shadow-md hover:border-teal-200 dark:hover:border-teal-500/50 transition-all duration-500 group relative overflow-hidden"
                       >
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-teal-50 rounded-bl-full -z-10 opacity-50 group-hover:scale-110 transition-transform duration-500"></div>
-                        <div className="text-xs font-bold text-teal-700 mb-6 bg-teal-50 border border-teal-100 px-4 py-1.5 rounded-full w-max shadow-sm tracking-wide">{edu.period}</div>
-                        <h3 className="text-2xl font-extrabold text-slate-900 mb-3 leading-tight group-hover:text-teal-700 transition-colors">{edu.degree}</h3>
-                        <p className="text-slate-600 font-medium mb-8 flex-1 text-lg flex items-center gap-2">
-                          <GraduationCap className="w-5 h-5 text-slate-400 shrink-0" />
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-teal-50 dark:bg-teal-900/20 rounded-bl-full -z-10 opacity-50 group-hover:scale-110 transition-transform duration-500"></div>
+                        <div className="text-xs font-bold text-teal-700 dark:text-teal-300 mb-6 bg-teal-50 dark:bg-teal-900/40 border border-teal-100 dark:border-teal-800/50 px-4 py-1.5 rounded-full w-max shadow-sm tracking-wide">{edu.period}</div>
+                        <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white mb-3 leading-tight group-hover:text-teal-700 dark:group-hover:text-teal-400 transition-colors">{edu.degree}</h3>
+                        <p className="text-slate-600 dark:text-slate-300 font-medium mb-8 flex-1 text-lg flex items-center gap-2">
+                          <GraduationCap className="w-5 h-5 text-slate-400 dark:text-slate-500 shrink-0" />
                           {(edu as any).institutionUrl ? (
-                            <a href={(edu as any).institutionUrl} target="_blank" rel="noopener noreferrer" className="hover:text-teal-600 hover:underline transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 rounded">
+                            <a href={(edu as any).institutionUrl} target="_blank" rel="noopener noreferrer" className="hover:text-teal-600 dark:hover:text-teal-400 hover:underline transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 rounded">
                               {edu.institution}
                             </a>
                           ) : (
@@ -506,18 +567,18 @@ export default function App() {
                         </p>
 
                         {(edu as any).thesis && (
-                          <div className="mb-8 p-4 bg-white rounded-xl border border-slate-100 shadow-sm">
-                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5">Thesis Topic</span>
-                            <p className="text-slate-700 text-sm font-medium leading-relaxed">{(edu as any).thesis}</p>
+                          <div className="mb-8 p-4 bg-white dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-700/50 shadow-sm">
+                            <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider block mb-1.5">Thesis Topic</span>
+                            <p className="text-slate-700 dark:text-slate-300 text-sm font-medium leading-relaxed">{(edu as any).thesis}</p>
                           </div>
                         )}
 
-                        <div className="flex items-center justify-between pt-6 border-t border-slate-100 mt-auto">
-                          <div className="flex items-center gap-2 text-sm text-slate-500 font-medium">
-                            <MapPin className="w-4 h-4 text-slate-400" />
+                        <div className="flex items-center justify-between pt-6 border-t border-slate-100 dark:border-slate-800 mt-auto">
+                          <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 font-medium">
+                            <MapPin className="w-4 h-4 text-slate-400 dark:text-slate-500" />
                             <span>{edu.location}</span>
                           </div>
-                          <div className="bg-slate-800 text-white px-4 py-1.5 rounded-xl text-sm font-bold shadow-md">
+                          <div className="bg-slate-800 dark:bg-teal-500/20 text-white dark:text-teal-300 px-4 py-1.5 rounded-xl text-sm font-bold shadow-md">
                             CGPA: {edu.cgpa}
                           </div>
                         </div>
@@ -532,9 +593,9 @@ export default function App() {
                 <div>
                   <SectionHeading title="Research Publications" icon={FileSearch} />
                   <div className="mb-12">
-                    <div className="inline-flex items-center gap-4 px-6 py-4 bg-teal-50 text-teal-700 rounded-2xl text-lg font-bold border border-teal-100 shadow-sm">
-                      <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm">
-                        <FileText className="w-5 h-5 text-teal-500" />
+                    <div className="inline-flex items-center gap-4 px-6 py-4 bg-teal-50 dark:bg-teal-900/40 text-teal-700 dark:text-teal-300 rounded-2xl text-lg font-bold border border-teal-100 dark:border-teal-800 shadow-sm">
+                      <div className="w-10 h-10 bg-white dark:bg-teal-900/60 rounded-xl flex items-center justify-center shadow-sm">
+                        <FileText className="w-5 h-5 text-teal-500 dark:text-teal-400" />
                       </div>
                       {cvData.publications.summary}
                     </div>
@@ -553,18 +614,18 @@ export default function App() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: gIdx * 0.1 }}
                       >
-                        <h3 className="text-xl font-extrabold text-slate-900 mb-8 flex items-center gap-3">
-                          <div className="w-1.5 h-6 bg-slate-900 rounded-full"></div>
+                        <h3 className="text-xl font-extrabold text-slate-900 dark:text-white mb-8 flex items-center gap-3">
+                          <div className="w-1.5 h-6 bg-slate-900 dark:bg-slate-200 rounded-full"></div>
                           {group.title}
                         </h3>
                         <ul className="space-y-6">
                           {group.items.map((pub: any, idx) => (
-                            <li key={idx} className="flex flex-col gap-3 group bg-slate-50 p-6 rounded-2xl border border-slate-100 hover:bg-white hover:shadow-md hover:border-teal-100 transition-all duration-300">
-                              <div className="flex items-start gap-4 text-slate-600 text-base leading-relaxed">
-                                <div className="mt-1 w-8 h-8 rounded-xl bg-white border border-slate-200 flex items-center justify-center shrink-0 group-hover:bg-teal-50 group-hover:border-teal-100 transition-all duration-300">
-                                  <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-teal-500 transition-colors" />
+                            <li key={idx} className="flex flex-col gap-3 group bg-slate-50 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 hover:bg-white dark:hover:bg-slate-800 hover:shadow-md hover:border-teal-100 dark:hover:border-teal-500/50 transition-all duration-300">
+                              <div className="flex items-start gap-4 text-slate-600 dark:text-slate-300 text-base leading-relaxed">
+                                <div className="mt-1 w-8 h-8 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 flex items-center justify-center shrink-0 group-hover:bg-teal-50 dark:group-hover:bg-teal-900/40 group-hover:border-teal-100 dark:group-hover:border-teal-800 transition-all duration-300">
+                                  <ArrowUpRight className="w-4 h-4 text-slate-400 dark:text-slate-500 group-hover:text-teal-500 dark:group-hover:text-teal-400 transition-colors" />
                                 </div>
-                                <span dangerouslySetInnerHTML={{ __html: (typeof pub === 'string' ? pub : pub.text).replace(/Ali, S\./g, '<strong class="text-slate-900 font-bold">Ali, S.</strong>') }} />
+                                <span dangerouslySetInnerHTML={{ __html: (typeof pub === 'string' ? pub : pub.text).replace(/Ali, S\./g, '<strong class="text-slate-900 dark:text-white font-bold">Ali, S.</strong>') }} />
                               </div>
                               {pub.pdfUrl && (
                                 <div className="ml-12">
@@ -597,17 +658,21 @@ export default function App() {
                       <motion.div
                         key={idx}
                         whileHover={{ scale: 1.02 }}
-                        className="p-8 rounded-2xl border border-slate-100 bg-slate-50 hover:bg-white hover:shadow-md hover:border-teal-100 transition-all duration-500"
+                        className="p-8 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 hover:shadow-md hover:border-teal-100 dark:hover:border-teal-500/50 transition-all duration-500"
                       >
-                        <h3 className="text-xs font-black text-teal-500 mb-6 uppercase tracking-[0.2em]">{skill.category}</h3>
-                        <ul className="space-y-3">
+                        <h3 className="text-xs font-black text-teal-500 dark:text-teal-400 mb-6 uppercase tracking-[0.2em]">{skill.category}</h3>
+                        <div className="flex flex-wrap gap-2.5">
                           {(Array.isArray(skill.details) ? skill.details : [skill.details]).map((detail, dIdx) => (
-                            <li key={dIdx} className="flex items-start gap-3 text-slate-700 text-base font-medium">
-                              <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-teal-400 shrink-0"></div>
-                              <span className="leading-relaxed">{detail}</span>
-                            </li>
+                            <motion.span
+                              key={dIdx}
+                              whileHover={{ y: -2, scale: 1.05 }}
+                              className="px-3 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm font-bold rounded-lg shadow-sm hover:border-teal-400 dark:hover:border-teal-500 hover:text-teal-600 dark:hover:text-teal-400 hover:shadow transition-all duration-300 cursor-default flex items-center gap-2"
+                            >
+                              <div className="w-1.5 h-1.5 rounded-full bg-teal-400 dark:bg-teal-500"></div>
+                              {detail}
+                            </motion.span>
                           ))}
-                        </ul>
+                        </div>
                       </motion.div>
                     ))}
                   </div>
@@ -617,12 +682,12 @@ export default function App() {
               {/* COURSES TAB */}
               {activeTab === 'courses' && (
                 <div>
-                  <div className="flex items-center justify-between mb-8 pb-6 border-b border-slate-200">
+                  <div className="flex items-center justify-between mb-8 pb-6 border-b border-slate-200 dark:border-slate-800">
                     <div className="flex items-center gap-4">
-                      <Library className="w-6 h-6 text-slate-400" />
-                      <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight">Completed Courses</h3>
+                      <Library className="w-6 h-6 text-slate-400 dark:text-slate-500" />
+                      <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">Completed Courses</h3>
                     </div>
-                    <div className="bg-slate-900 text-white px-5 py-2 rounded-2xl text-sm font-bold shadow-lg shadow-slate-900/20">
+                    <div className="bg-slate-900 dark:bg-slate-800 text-white dark:text-slate-200 px-5 py-2 rounded-2xl text-sm font-bold shadow-lg shadow-slate-900/20 dark:shadow-none">
                       {cvData.courses.length} Total
                     </div>
                   </div>
@@ -641,31 +706,31 @@ export default function App() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: specIdx * 0.1 }}
-                        className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm"
+                        className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm"
                       >
                         <div className={`px-6 py-4 border-b flex items-center justify-between ${getSpecColor(spec).split(' ')[1]} ${getSpecColor(spec).split(' ')[0]}`}>
                           <h4 className="font-bold text-sm uppercase tracking-wider flex items-center gap-2">
                             <Library className="w-4 h-4" />
                             {spec}
                           </h4>
-                          <span className="text-xs font-bold px-2 py-1 rounded-full bg-white/60 backdrop-blur-sm border border-white/20 shadow-sm">
+                          <span className="text-xs font-bold px-2 py-1 rounded-full bg-white/60 dark:bg-slate-900/80 backdrop-blur-sm border border-white/20 dark:border-slate-700/50 shadow-sm">
                             {courses.length} Courses
                           </span>
                         </div>
-                        <div className="divide-y divide-slate-100">
+                        <div className="divide-y divide-slate-100 dark:divide-slate-800/50">
                           {courses.map((course, idx) => (
-                            <div key={idx} className="p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-slate-50 transition-colors group">
+                            <div key={idx} className="p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
                               <div className="flex-1">
-                                <h5 className="font-bold text-slate-900 text-base mb-1 group-hover:text-teal-600 transition-colors">{course.name}</h5>
-                                <div className="flex items-center gap-3 text-sm text-slate-500">
+                                <h5 className="font-bold text-slate-900 dark:text-slate-100 text-base mb-1 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">{course.name}</h5>
+                                <div className="flex items-center gap-3 text-sm text-slate-500 dark:text-slate-400">
                                   <span className="flex items-center gap-1.5">
-                                    <ShieldCheck className="w-4 h-4 text-slate-400" />
+                                    <ShieldCheck className="w-4 h-4 text-slate-400 dark:text-slate-500" />
                                     {course.provider}
                                   </span>
                                 </div>
                               </div>
                               <div className="flex items-center gap-4 sm:justify-end">
-                                <span className="text-xs font-mono font-bold bg-slate-100 text-slate-600 px-3 py-1.5 rounded-lg">
+                                <span className="text-xs font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-3 py-1.5 rounded-lg border border-transparent dark:border-slate-700">
                                   {(course as any).grade || 'Completed'}
                                 </span>
                                 {course.certificateUrl && course.certificateUrl !== '#' && (
@@ -673,7 +738,7 @@ export default function App() {
                                     href={course.certificateUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-50 border border-teal-100 text-teal-700 rounded-lg text-xs font-bold hover:bg-teal-600 hover:text-white hover:border-teal-600 transition-all shadow-sm"
+                                    className="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-50 dark:bg-teal-900/40 border border-teal-100 dark:border-teal-800/50 text-teal-700 dark:text-teal-300 rounded-lg text-xs font-bold hover:bg-teal-600 dark:hover:bg-teal-500 hover:text-white dark:hover:text-slate-900 hover:border-teal-600 dark:hover:border-teal-500 transition-all shadow-sm"
                                   >
                                     <FileText className="w-3.5 h-3.5" />
                                     PDF Certificate
@@ -699,28 +764,28 @@ export default function App() {
                         <motion.div
                           key={idx}
                           whileHover={{ x: 10 }}
-                          className="flex gap-6 p-8 rounded-2xl border border-slate-100 bg-slate-50 hover:bg-white hover:shadow-md hover:border-teal-100 transition-all duration-300"
+                          className="flex gap-6 p-8 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 hover:shadow-md hover:border-teal-100 dark:hover:border-teal-500/50 transition-all duration-300"
                         >
-                          <div className="w-14 h-14 rounded-2xl bg-white border border-slate-100 flex items-center justify-center shrink-0 shadow-sm">
-                            <Award className="w-7 h-7 text-teal-500" />
+                          <div className="w-14 h-14 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-700 flex items-center justify-center shrink-0 shadow-sm">
+                            <Award className="w-7 h-7 text-teal-500 dark:text-teal-400" />
                           </div>
                           <div>
                             <div className="flex items-center justify-between gap-4 mb-1">
-                              <h4 className="font-extrabold text-slate-900 text-xl">{item.title}</h4>
+                              <h4 className="font-extrabold text-slate-900 dark:text-white text-xl">{item.title}</h4>
                               {item.certificateUrl && (
                                 <a
                                   href={item.certificateUrl}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="shrink-0 p-2 bg-white border border-slate-100 rounded-xl text-slate-400 hover:text-teal-600 hover:border-teal-100 transition-all shadow-sm"
+                                  className="shrink-0 p-2 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl text-slate-400 dark:text-slate-500 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-100 dark:hover:border-teal-500/50 transition-all shadow-sm"
                                   title="View PDF"
                                 >
                                   <FileText className="w-4 h-4" />
                                 </a>
                               )}
                             </div>
-                            <p className="text-slate-500 font-semibold text-base">{item.organization}</p>
-                            <div className="text-xs font-black text-slate-400 mt-3 uppercase tracking-widest">{item.period}</div>
+                            <p className="text-slate-500 dark:text-slate-400 font-semibold text-base">{item.organization}</p>
+                            <div className="text-xs font-black text-slate-400 dark:text-slate-500 mt-3 uppercase tracking-widest">{item.period}</div>
                           </div>
                         </motion.div>
                       ))}
@@ -734,25 +799,25 @@ export default function App() {
                         <motion.div
                           key={idx}
                           whileHover={{ y: -5 }}
-                          className="p-8 rounded-2xl border border-slate-100 bg-slate-50 hover:bg-white hover:shadow-md hover:border-teal-100 transition-all duration-500 flex flex-col h-full group"
+                          className="p-8 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 hover:shadow-md hover:border-teal-100 dark:hover:border-teal-500/50 transition-all duration-500 flex flex-col h-full group"
                         >
                           <div className="flex items-start justify-between gap-4 mb-6">
-                            <h4 className="font-bold text-slate-900 text-lg leading-snug flex-1 group-hover:text-teal-600 transition-colors">{cert.title}</h4>
+                            <h4 className="font-bold text-slate-900 dark:text-white text-lg leading-snug flex-1 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">{cert.title}</h4>
                             {cert.certificateUrl && (
                               <a
                                 href={cert.certificateUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="shrink-0 p-2 bg-white border border-slate-100 rounded-xl text-slate-400 hover:text-teal-600 hover:border-teal-100 transition-all shadow-sm"
+                                className="shrink-0 p-2 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl text-slate-400 dark:text-slate-500 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-100 dark:hover:border-teal-500/50 transition-all shadow-sm"
                                 title="View PDF"
                               >
                                 <FileText className="w-4 h-4" />
                               </a>
                             )}
                           </div>
-                          <div className="pt-6 border-t border-slate-100 flex items-center justify-between mt-auto">
-                            <span className="text-slate-400 text-xs font-bold uppercase tracking-wider truncate pr-4">{cert.organization}</span>
-                            <span className="shrink-0 font-black text-slate-900 text-xs bg-slate-100 px-3 py-1 rounded-lg">{cert.period}</span>
+                          <div className="pt-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between mt-auto">
+                            <span className="text-slate-400 dark:text-slate-500 text-xs font-bold uppercase tracking-wider truncate pr-4">{cert.organization}</span>
+                            <span className="shrink-0 font-black text-slate-900 dark:text-white text-xs bg-slate-100 dark:bg-slate-700 px-3 py-1 rounded-lg">{cert.period}</span>
                           </div>
                         </motion.div>
                       ))}
@@ -768,12 +833,12 @@ export default function App() {
                           <motion.div
                             key={idx}
                             whileHover={{ scale: 1.01 }}
-                            className="flex items-start gap-4 p-5 sm:p-6 rounded-2xl bg-white border border-slate-100 shadow-sm hover:border-teal-200 hover:shadow-md transition-all duration-300 group"
+                            className="flex items-start gap-4 p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 shadow-sm hover:border-teal-200 dark:hover:border-teal-500/50 hover:shadow-md transition-all duration-300 group"
                           >
-                            <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center shrink-0 group-hover:bg-teal-50 transition-colors duration-300">
-                              <ShieldCheck className="w-5 h-5 text-slate-400 group-hover:text-teal-600 transition-colors" />
+                            <div className="w-10 h-10 rounded-full bg-slate-50 dark:bg-slate-900 flex items-center justify-center shrink-0 group-hover:bg-teal-50 dark:group-hover:bg-teal-900/40 transition-colors duration-300">
+                              <ShieldCheck className="w-5 h-5 text-slate-400 dark:text-slate-500 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors" />
                             </div>
-                            <span dangerouslySetInnerHTML={{ __html: service.replace(/Ad-hoc Reviewer,/g, '<strong class="text-slate-900 font-bold">Ad-hoc Reviewer,</strong>') }} className="text-slate-700 font-medium leading-relaxed mt-2" />
+                            <span dangerouslySetInnerHTML={{ __html: service.replace(/Ad-hoc Reviewer,/g, '<strong class="text-slate-900 dark:text-white font-bold">Ad-hoc Reviewer,</strong>') }} className="text-slate-700 dark:text-slate-300 font-medium leading-relaxed mt-2" />
                           </motion.div>
                         ))}
                       </div>
@@ -791,24 +856,24 @@ export default function App() {
                       <motion.div
                         key={idx}
                         whileHover={{ y: -5 }}
-                        className="p-8 rounded-2xl border border-slate-100 bg-slate-50 hover:bg-white hover:shadow-md hover:border-teal-100 transition-all duration-500 relative overflow-hidden group"
+                        className="p-8 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 hover:shadow-md hover:border-teal-100 dark:hover:border-teal-500/50 transition-all duration-500 relative overflow-hidden group"
                       >
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-slate-200/20 rounded-bl-full -z-10 opacity-50 group-hover:bg-teal-50 transition-colors duration-500"></div>
-                        <div className="w-14 h-14 rounded-full bg-white border border-slate-100 flex items-center justify-center shadow-sm mb-6 group-hover:border-teal-200 transition-all duration-300">
-                          <User className="w-6 h-6 text-slate-400 group-hover:text-teal-500 transition-colors" />
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-slate-200/20 dark:bg-slate-900/40 rounded-bl-full -z-10 opacity-50 group-hover:bg-teal-50 dark:group-hover:bg-teal-900/40 transition-colors duration-500"></div>
+                        <div className="w-14 h-14 rounded-full bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-700 flex items-center justify-center shadow-sm mb-6 group-hover:border-teal-200 dark:group-hover:border-teal-500/50 transition-all duration-300">
+                          <User className="w-6 h-6 text-slate-400 dark:text-slate-500 group-hover:text-teal-500 dark:group-hover:text-teal-400 transition-colors" />
                         </div>
-                        <h3 className="text-xl font-extrabold text-slate-900 mb-2 leading-snug">{rec.name}</h3>
-                        <p className="text-sm font-bold text-teal-600 mb-1">{rec.title}</p>
-                        <p className="text-sm font-medium text-slate-500 mb-6">{rec.organization}</p>
+                        <h3 className="text-xl font-extrabold text-slate-900 dark:text-white mb-2 leading-snug">{rec.name}</h3>
+                        <p className="text-sm font-bold text-teal-600 dark:text-teal-400 mb-1">{rec.title}</p>
+                        <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-6">{rec.organization}</p>
 
-                        <div className="pt-6 border-t border-slate-200/60 flex flex-col gap-3">
+                        <div className="pt-6 border-t border-slate-200/60 dark:border-slate-800 flex flex-col gap-3">
                           <div className="flex items-center gap-3">
-                            <Briefcase className="w-4 h-4 text-slate-400" />
-                            <span className="text-sm font-bold text-slate-700">{rec.relationship}</span>
+                            <Briefcase className="w-4 h-4 text-slate-400 dark:text-slate-500" />
+                            <span className="text-sm font-bold text-slate-700 dark:text-slate-300">{rec.relationship}</span>
                           </div>
-                          <div className="flex items-center gap-3 bg-slate-100/50 p-3 rounded-xl border border-slate-200/50 mt-2">
-                            <Mail className="w-4 h-4 text-slate-400" />
-                            <span className="text-sm font-medium text-slate-500 italic">Contact info available upon request</span>
+                          <div className="flex items-center gap-3 bg-slate-100/50 dark:bg-slate-900/50 p-3 rounded-xl border border-slate-200/50 dark:border-slate-700/50 mt-2">
+                            <Mail className="w-4 h-4 text-slate-400 dark:text-slate-500" />
+                            <span className="text-sm font-medium text-slate-500 dark:text-slate-400 italic">Contact info available upon request</span>
                           </div>
                         </div>
                       </motion.div>
@@ -821,19 +886,19 @@ export default function App() {
               {activeTab === 'gallery' && (
                 <div>
                   {/* Header with count */}
-                  <div className="flex items-center justify-between mb-8 pb-6 border-b border-slate-200">
+                  <div className="flex items-center justify-between mb-8 pb-6 border-b border-slate-200 dark:border-slate-800">
                     <div className="flex items-center gap-4">
-                      <Image className="w-6 h-6 text-slate-400" />
-                      <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight">Research Gallery</h3>
+                      <Image className="w-6 h-6 text-slate-400 dark:text-slate-500" />
+                      <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">Research Gallery</h3>
                     </div>
-                    <div className="bg-slate-900 text-white px-5 py-2 rounded-2xl text-sm font-bold shadow-lg shadow-slate-900/20">
+                    <div className="bg-slate-900 dark:bg-slate-800 text-white dark:text-slate-200 px-5 py-2 rounded-2xl text-sm font-bold shadow-lg shadow-slate-900/20 dark:shadow-none">
                       {cvData.gallery.reduce((sum, cat) => sum + cat.figures.length, 0)} Figures
                     </div>
                   </div>
 
                   {/* Subtitle */}
-                  <p className="text-slate-500 mb-8 text-base font-medium leading-relaxed max-w-3xl">
-                    Publication-quality visualizations generated with <strong className="text-slate-700">R</strong> and <strong className="text-slate-700">Python</strong>,
+                  <p className="text-slate-500 dark:text-slate-400 mb-8 text-base font-medium leading-relaxed max-w-3xl">
+                    Publication-quality visualizations generated with <strong className="text-slate-700 dark:text-slate-200">R</strong> and <strong className="text-slate-700 dark:text-slate-200">Python</strong>,
                     showcasing analytical skills across bioinformatics, genomics, machine learning, and field research.
                   </p>
 
@@ -842,8 +907,8 @@ export default function App() {
                     <button
                       onClick={() => setGalleryCategory('All')}
                       className={`px-4 py-2 rounded-full text-sm font-bold transition-all duration-300 border ${galleryCategory === 'All'
-                        ? 'bg-slate-900 text-white border-slate-900 shadow-lg shadow-slate-900/20'
-                        : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50 hover:text-slate-700 hover:border-slate-300'
+                        ? 'bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 border-slate-900 dark:border-slate-100 shadow-lg shadow-slate-900/20'
+                        : 'bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 hover:border-slate-300 dark:hover:border-slate-600'
                         }`}
                     >
                       All
@@ -855,8 +920,8 @@ export default function App() {
                           key={cat.category}
                           onClick={() => setGalleryCategory(cat.category)}
                           className={`px-4 py-2 rounded-full text-sm font-bold transition-all duration-300 border flex items-center gap-1.5 ${galleryCategory === cat.category
-                            ? 'bg-slate-900 text-white border-slate-900 shadow-lg shadow-slate-900/20'
-                            : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50 hover:text-slate-700 hover:border-slate-300'
+                            ? 'bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 border-slate-900 dark:border-slate-100 shadow-lg shadow-slate-900/20'
+                            : 'bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 hover:border-slate-300 dark:hover:border-slate-600'
                             }`}
                         >
                           <CatIcon className="w-3.5 h-3.5" />
@@ -886,8 +951,8 @@ export default function App() {
                                 <CatIcon className="w-5 h-5 text-white" />
                               </div>
                               <div>
-                                <h4 className="text-lg font-extrabold text-slate-900">{cat.category}</h4>
-                                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">{cat.figures.length} Figures</p>
+                                <h4 className="text-lg font-extrabold text-slate-900 dark:text-white">{cat.category}</h4>
+                                <p className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">{cat.figures.length} Figures</p>
                               </div>
                             </div>
 
@@ -901,10 +966,10 @@ export default function App() {
                                   transition={{ delay: catIdx * 0.08 + figIdx * 0.05 }}
                                   whileHover={{ y: -6, scale: 1.02 }}
                                   onClick={() => setLightboxImage(fig)}
-                                  className="group cursor-pointer bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-xl hover:border-teal-200 transition-all duration-500"
+                                  className="group cursor-pointer bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl hover:border-teal-200 dark:hover:border-teal-500/50 transition-all duration-500"
                                 >
                                   {/* Image Container */}
-                                  <div className="relative aspect-[16/10] bg-slate-50 overflow-hidden">
+                                  <div className="relative aspect-[16/10] bg-slate-50 dark:bg-slate-800 overflow-hidden">
                                     <img
                                       src={`${import.meta.env.BASE_URL}gallery/${fig.file}`}
                                       alt={fig.title}
@@ -918,18 +983,18 @@ export default function App() {
                                       </span>
                                     </div>
                                     {/* Figure number badge */}
-                                    <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-slate-700 text-[10px] font-black px-2 py-1 rounded-lg shadow-sm border border-white/50">
+                                    <div className="absolute top-3 left-3 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm text-slate-700 dark:text-slate-200 text-[10px] font-black px-2 py-1 rounded-lg shadow-sm border border-white/50 dark:border-slate-700/50">
                                       Fig. {fig.id}
                                     </div>
                                   </div>
 
                                   {/* Card Body */}
                                   <div className="p-4">
-                                    <h5 className="font-bold text-slate-900 text-sm mb-1.5 leading-snug group-hover:text-teal-600 transition-colors">{fig.title}</h5>
-                                    <p className="text-slate-500 text-xs leading-relaxed mb-3">{fig.desc}</p>
+                                    <h5 className="font-bold text-slate-900 dark:text-slate-100 text-sm mb-1.5 leading-snug group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">{fig.title}</h5>
+                                    <p className="text-slate-500 dark:text-slate-400 text-xs leading-relaxed mb-3">{fig.desc}</p>
                                     <div className="flex flex-wrap gap-1.5">
                                       {fig.tags.map((tag, tIdx) => (
-                                        <span key={tIdx} className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-50 text-slate-500 border border-slate-100">
+                                        <span key={tIdx} className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-100 dark:border-slate-700">
                                           {tag}
                                         </span>
                                       ))}
@@ -981,7 +1046,7 @@ export default function App() {
                 </div>
 
                 {/* Image Viewer relative max-h */}
-                <div className="w-full bg-slate-100 flex items-center justify-center border-b border-slate-200">
+                <div className="w-full bg-slate-100 dark:bg-slate-950 flex items-center justify-center border-b border-slate-200 dark:border-slate-800">
                   {/* Force image to scale correctly using absolute positioning if needed, or flex */}
                   <img
                     src={`${import.meta.env.BASE_URL}gallery/${lightboxImage.file}`}
@@ -992,11 +1057,11 @@ export default function App() {
                 </div>
 
                 {/* Legend */}
-                <div className="w-full bg-white p-6 sm:p-8">
-                  <p className="text-slate-700 text-sm sm:text-base leading-relaxed mb-5">{lightboxImage.desc}</p>
+                <div className="w-full bg-white dark:bg-slate-900 p-6 sm:p-8">
+                  <p className="text-slate-700 dark:text-slate-300 text-sm sm:text-base leading-relaxed mb-5">{lightboxImage.desc}</p>
                   <div className="flex flex-wrap gap-2">
                     {lightboxImage.tags.map((tag, tIdx) => (
-                      <span key={tIdx} className="text-xs font-bold px-3 py-1.5 rounded-lg bg-teal-50 text-teal-700 border border-teal-100 shadow-sm">
+                      <span key={tIdx} className="text-xs font-bold px-3 py-1.5 rounded-lg bg-teal-50 dark:bg-teal-900/40 text-teal-700 dark:text-teal-400 border border-teal-100 dark:border-teal-800/50 shadow-sm">
                         {tag}
                       </span>
                     ))}
@@ -1007,12 +1072,12 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
-      <footer className="mt-16 py-8 border-t border-slate-200 bg-slate-50 text-center relative z-10">
+      <footer className="mt-16 py-8 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 text-center relative z-10 transition-colors duration-300">
         <div className="max-w-5xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-slate-500 text-sm font-medium">
+          <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">
             © 2026 {cvData.name}. All rights reserved.
           </p>
-          <span className="text-xs text-slate-400 font-medium">Last updated: March 4, 2026</span>
+          <span className="text-xs text-slate-400 dark:text-slate-500 font-medium">Last updated: March 4, 2026</span>
         </div>
       </footer>
     </div>
