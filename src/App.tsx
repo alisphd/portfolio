@@ -1012,7 +1012,7 @@ export default function App() {
           <p className="text-slate-500 text-sm font-medium">
             © 2026 {cvData.name}. All rights reserved.
           </p>
-          <span className="text-xs text-slate-400 font-medium">Last updated: February 28, 2026</span>
+          <span className="text-xs text-slate-400 font-medium">Last updated: March 4, 2026</span>
         </div>
       </footer>
     </div>
