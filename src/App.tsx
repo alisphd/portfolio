@@ -9,6 +9,7 @@ import {
   Globe, Activity, Brain, FlaskRound, Atom
 } from 'lucide-react';
 import { cvData } from './data';
+import { logVisit } from './analytics';
 
 type TabId = 'about' | 'experience' | 'education' | 'publications' | 'skills' | 'courses' | 'honors' | 'references' | 'gallery';
 
@@ -108,6 +109,11 @@ export default function App() {
     window.addEventListener('resize', checkScroll);
     return () => window.removeEventListener('resize', checkScroll);
   }, [checkScroll]);
+
+  // Log visitor analytics on first page load
+  useEffect(() => {
+    logVisit();
+  }, []);
 
   const scrollMenu = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
