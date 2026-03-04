@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
-import { useReactToPrint } from 'react-to-print';
 import {
   Mail, Phone, MapPin, Linkedin, BookOpen, Briefcase,
   Award, GraduationCap, Code, FileText, User, ChevronRight, ChevronLeft,
-  Search, ExternalLink, Image, Layers, Sparkles, Building, PlayCircle, Binary, Library, Trophy, ShieldCheck, Sun, Moon, ArrowUpRight, Github, Code2, Globe, Cpu, Database, Fingerprint, Activity, Terminal, Layout, Share2, Workflow, MessageSquare, Mic, FileAudio, Youtube, Podcast, Zap, MonitorPlay, Focus, Printer, X, Microscope, Sprout, Dna, FlaskConical, Leaf, FileSearch, Brain, FlaskRound, Atom
+  Search, ExternalLink, Image, Layers, Sparkles, Building, PlayCircle, Binary, Library, Trophy, ShieldCheck, Sun, Moon, ArrowUpRight, Github, Code2, Globe, Cpu, Database, Fingerprint, Activity, Terminal, Layout, Share2, Workflow, MessageSquare, Mic, FileAudio, Youtube, Podcast, Zap, MonitorPlay, Focus, X, Microscope, Sprout, Dna, FlaskConical, Leaf, FileSearch, Brain, FlaskRound, Atom
 } from 'lucide-react';
 import { cvData } from './data';
 import { logVisit } from './analytics';
@@ -103,12 +102,6 @@ export default function App() {
     restDelta: 0.001
   });
 
-  const componentRef = useRef<HTMLDivElement>(null);
-  const handlePrint = useReactToPrint({
-    contentRef: componentRef,
-    documentTitle: `${cvData.name.replace(/\s+/g, '_')}_Portfolio`,
-  });
-
   useEffect(() => {
     // Check initial preference
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -190,14 +183,14 @@ export default function App() {
         <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-slate-500/10 rounded-full blur-3xl"></div>
       </div>
 
-      <main ref={componentRef} className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-32 relative z-10 print:mt-0 print:p-0">
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-32 relative z-10">
 
         {/* Profile Card - Solid Background */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 p-8 sm:p-8 mb-10 flex flex-col md:flex-row gap-8 items-center md:items-start"
+          className="bg-white dark:bg-slate-900 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 p-8 sm:p-8 mb-10 flex flex-col md:flex-row gap-8 items-center md:items-start transition-colors duration-300"
         >
           {/* Picture - Modern Frame with Shake Effect */}
           <div className="shrink-0 relative group">
@@ -277,19 +270,12 @@ export default function App() {
                 <Linkedin className="w-4 h-4 text-slate-400 dark:text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors" />
                 LinkedIn
               </a>
-              <button
-                onClick={handlePrint}
-                className="flex items-center gap-2.5 px-5 py-2.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-2xl border border-slate-200 dark:border-slate-700 transition-all shadow-sm text-sm font-medium hover:border-teal-200 dark:hover:border-teal-700/50 hover:text-teal-700 dark:hover:text-teal-400 group print:hidden"
-              >
-                <Printer className="w-4 h-4 text-slate-400 dark:text-slate-400 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors" />
-                Download PDF
-              </button>
             </motion.div>
           </div>
         </motion.div>
 
         {/* Interactive Tabs Navigation */}
-        <div className="mb-12 sticky top-6 z-30 flex justify-center w-full px-4 sm:px-0 print:hidden">
+        <div className="mb-12 sticky top-6 z-30 flex justify-center w-full px-4 sm:px-0">
           <div className="relative max-w-full group">
             {/* Left fade/button */}
             <AnimatePresence>
