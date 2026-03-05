@@ -467,7 +467,7 @@ export default function App() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2 }}
-                    className="bg-slate-50 dark:bg-slate-800/50 border-l-4 border-teal-500 p-6 md:p-8 rounded-r-2xl text-slate-700 dark:text-slate-300 font-medium italic shadow-sm mb-12 text-lg leading-relaxed transition-colors duration-300"
+                    className="bg-slate-50 dark:bg-slate-700/40 border-l-4 border-teal-500 p-6 md:p-8 rounded-r-2xl text-slate-700 dark:text-slate-300 font-medium italic shadow-sm mb-12 text-lg leading-relaxed transition-colors duration-300"
                     dangerouslySetInnerHTML={{ __html: cvData.about }}
                   />
 
@@ -477,7 +477,7 @@ export default function App() {
                       { icon: Dna, title: "Computational Biology", desc: ["Genome-wide & synteny mapping", "Protein structure & dynamics", "Phylogenomics & evolution"] },
                       { icon: Leaf, title: "Data Workflows", desc: ["R/Python pipelines", "Plant-pathogen interactions", "Stress-responsive gene discovery"] }
                     ].map((item, i) => (
-                      <div key={i} className="p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-sm hover:bg-teal-50 dark:hover:bg-slate-800/80 hover:shadow-md hover:border-teal-200 dark:hover:border-teal-500/50 transition-all duration-300 group">
+                      <div key={i} className="p-8 rounded-2xl bg-white dark:bg-slate-700/40 border border-slate-200 dark:border-slate-600/50 shadow-sm hover:bg-teal-50 dark:hover:bg-slate-700/60 hover:shadow-md hover:border-teal-200 dark:hover:border-teal-500/50 transition-all duration-300 group">
                         <div className="w-14 h-14 bg-slate-50 dark:bg-slate-800/50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-white dark:group-hover:bg-slate-800 group-hover:shadow-sm transition-all duration-300">
                           <item.icon className="w-7 h-7 text-slate-400 dark:text-slate-500 group-hover:text-teal-500 transition-colors group-hover:scale-110 duration-300" />
                         </div>
@@ -642,7 +642,7 @@ export default function App() {
                         </p>
 
                         {(edu as any).thesis && (
-                          <div className="mb-8 p-4 bg-white dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-700/50 shadow-sm">
+                          <div className="mb-8 p-4 bg-white dark:bg-slate-700/40 rounded-xl border border-slate-100 dark:border-slate-600/50 shadow-sm">
                             <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider block mb-1.5">Thesis Topic</span>
                             <p className="text-slate-700 dark:text-slate-300 text-sm font-medium leading-relaxed">{(edu as any).thesis}</p>
                           </div>
@@ -837,7 +837,7 @@ export default function App() {
                         <motion.div
                           key={idx}
                           whileHover={{ x: 10 }}
-                          className="flex gap-6 p-8 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 hover:shadow-md hover:border-teal-100 dark:hover:border-teal-500/50 transition-all duration-300"
+                          className="flex gap-6 p-8 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-700/40 hover:bg-white dark:hover:bg-slate-700/60 hover:shadow-md hover:border-teal-100 dark:hover:border-teal-500/50 transition-all duration-300"
                         >
                           <div className="w-14 h-14 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-700 flex items-center justify-center shrink-0 shadow-sm">
                             <Award className="w-7 h-7 text-teal-500 dark:text-teal-400" />
@@ -872,7 +872,7 @@ export default function App() {
                         <motion.div
                           key={idx}
                           whileHover={{ y: -5 }}
-                          className="p-8 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 hover:shadow-md hover:border-teal-100 dark:hover:border-teal-500/50 transition-all duration-500 flex flex-col h-full group"
+                          className="p-8 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-700/40 hover:bg-white dark:hover:bg-slate-700/60 hover:shadow-md hover:border-teal-100 dark:hover:border-teal-500/50 transition-all duration-500 flex flex-col h-full group"
                         >
                           <div className="flex items-start justify-between gap-4 mb-6">
                             <h4 className="font-bold text-slate-900 dark:text-white text-lg leading-snug flex-1 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">{cert.title}</h4>
@@ -906,7 +906,7 @@ export default function App() {
                           <motion.div
                             key={idx}
                             whileHover={{ scale: 1.01 }}
-                            className="flex items-start gap-4 p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 shadow-sm hover:border-teal-200 dark:hover:border-teal-500/50 hover:shadow-md transition-all duration-300 group"
+                            className="flex items-start gap-4 p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-700/40 border border-slate-100 dark:border-slate-600/50 shadow-sm hover:border-teal-200 dark:hover:border-teal-500/50 hover:shadow-md transition-all duration-300 group"
                           >
                             <div className="w-10 h-10 rounded-full bg-slate-50 dark:bg-slate-900 flex items-center justify-center shrink-0 group-hover:bg-teal-50 dark:group-hover:bg-teal-900/40 transition-colors duration-300">
                               <ShieldCheck className="w-5 h-5 text-slate-400 dark:text-slate-500 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors" />
@@ -929,7 +929,7 @@ export default function App() {
                       <motion.div
                         key={idx}
                         whileHover={{ y: -5 }}
-                        className="p-8 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 hover:shadow-md hover:border-teal-100 dark:hover:border-teal-500/50 transition-all duration-500 relative overflow-hidden group"
+                        className="p-8 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-700/40 hover:bg-white dark:hover:bg-slate-700/60 hover:shadow-md hover:border-teal-100 dark:hover:border-teal-500/50 transition-all duration-500 relative overflow-hidden group"
                       >
                         <div className="absolute top-0 right-0 w-32 h-32 bg-slate-200/20 dark:bg-slate-900/40 rounded-bl-full -z-10 opacity-50 group-hover:bg-teal-50 dark:group-hover:bg-teal-900/40 transition-colors duration-500"></div>
                         <div className="w-14 h-14 rounded-full bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-700 flex items-center justify-center shadow-sm mb-6 group-hover:border-teal-200 dark:group-hover:border-teal-500/50 transition-all duration-300">
