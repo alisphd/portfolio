@@ -121,6 +121,7 @@ export default function App() {
   const [filterOpen, setFilterOpen] = useState(false);
   const [tabDirection, setTabDirection] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [moonPhase, setMoonPhase] = useState(0); // 0-7 random moon phase
   const prevTabIndexRef = useRef(0);
 
   const handleTabChange = useCallback((newTab: TabId) => {
@@ -268,13 +269,60 @@ export default function App() {
         {/* Dark mode toggle */}
         <div className="absolute top-4 right-4 z-50">
           <button
-            onClick={() => setDarkMode(!darkMode)}
+            onClick={() => {
+              setDarkMode(!darkMode);
+              setMoonPhase(Math.floor(Math.random() * 8));
+            }}
             className="p-2.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 transition-all shadow-lg"
             aria-label="Toggle Dark Mode"
           >
             {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
           </button>
         </div>
+
+        {/* Moon with glow (dark mode only) */}
+        {darkMode && (
+          <div className="absolute top-6 left-12 z-10" style={{ opacity: 0.9 }}>
+            {/* Moonlight glow */}
+            <div className="absolute -inset-10 rounded-full" style={{
+              background: 'radial-gradient(circle, rgba(226,232,240,0.15) 0%, rgba(226,232,240,0.05) 40%, transparent 70%)',
+              width: '160px',
+              height: '160px',
+              top: '-40px',
+              left: '-40px',
+            }}></div>
+            {/* Moon body */}
+            <div className="relative" style={{ width: '48px', height: '48px' }}>
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-slate-100 via-slate-200 to-slate-300" style={{
+                boxShadow: '0 0 20px 4px rgba(226,232,240,0.3), 0 0 60px 10px rgba(226,232,240,0.1)',
+              }}></div>
+              {/* Surface texture */}
+              <div className="absolute rounded-full" style={{ width: '8px', height: '8px', top: '12px', left: '16px', background: 'rgba(148,163,184,0.3)' }}></div>
+              <div className="absolute rounded-full" style={{ width: '5px', height: '5px', top: '28px', left: '10px', background: 'rgba(148,163,184,0.2)' }}></div>
+              <div className="absolute rounded-full" style={{ width: '6px', height: '6px', top: '18px', left: '30px', background: 'rgba(148,163,184,0.25)' }}></div>
+              {/* Phase shadow overlay */}
+              {moonPhase < 7 && (
+                <div className="absolute inset-0 rounded-full" style={{
+                  background: '#020617',
+                  clipPath: moonPhase === 0
+                    ? 'inset(0 0 0 85%)' // thin crescent
+                    : moonPhase === 1
+                      ? 'inset(0 0 0 70%)' // waxing crescent
+                      : moonPhase === 2
+                        ? 'inset(0 0 0 50%)' // first quarter
+                        : moonPhase === 3
+                          ? 'inset(0 0 0 30%)' // waxing gibbous
+                          : moonPhase === 4
+                            ? 'inset(0 30% 0 0)' // waning gibbous
+                            : moonPhase === 5
+                              ? 'inset(0 50% 0 0)' // last quarter
+                              : 'inset(0 70% 0 0)', // waning crescent
+                }}></div>
+              )}
+              {/* moonPhase 7 = full moon, no overlay */}
+            </div>
+          </div>
+        )}
       </div>
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-32 relative z-10">
