@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import {
   Mail, Phone, MapPin, Linkedin, BookOpen, Briefcase,
   Award, GraduationCap, Code, FileText, User, ChevronRight, ChevronLeft, ChevronDown,
-  Search, ExternalLink, Image, Layers, Sparkles, Building, PlayCircle, Binary, Library, Trophy, ShieldCheck, Sun, Moon, ArrowUpRight, Github, Code2, Globe, Cpu, Database, Fingerprint, Activity, Terminal, Layout, Share2, Workflow, MessageSquare, Mic, FileAudio, Youtube, Podcast, Zap, MonitorPlay, Focus, X, Microscope, Sprout, Dna, FlaskConical, Leaf, FileSearch, Brain, FlaskRound, Atom, Filter
+  Search, ExternalLink, Image, Layers, Sparkles, Building, PlayCircle, Binary, Library, Trophy, ShieldCheck, Sun, Moon, ArrowUpRight, ArrowUp, Github, Code2, Globe, Cpu, Database, Fingerprint, Activity, Terminal, Layout, Share2, Workflow, MessageSquare, Mic, FileAudio, Youtube, Podcast, Zap, MonitorPlay, Focus, X, Microscope, Sprout, Dna, FlaskConical, Leaf, FileSearch, Brain, FlaskRound, Atom, Filter
 } from 'lucide-react';
 import { cvData } from './data';
 import { logVisit } from './analytics';
@@ -120,6 +120,7 @@ export default function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
   const [tabDirection, setTabDirection] = useState(0);
+  const [showBackToTop, setShowBackToTop] = useState(false);
   const prevTabIndexRef = useRef(0);
 
   const handleTabChange = useCallback((newTab: TabId) => {
@@ -169,6 +170,13 @@ export default function App() {
     };
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
+  }, []);
+
+  // Show/hide back-to-top button
+  useEffect(() => {
+    const onScroll = () => setShowBackToTop(window.scrollY > 400);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   const { scrollYProgress } = useScroll();
@@ -1150,12 +1158,30 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Back to Top Button */}
+      <AnimatePresence>
+        {showBackToTop && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 20 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full bg-teal-500 dark:bg-teal-600 text-white shadow-lg shadow-teal-500/30 dark:shadow-teal-600/30 hover:bg-teal-600 dark:hover:bg-teal-500 hover:shadow-xl hover:scale-110 transition-all duration-300 flex items-center justify-center"
+            aria-label="Back to top"
+          >
+            <ArrowUp className="w-5 h-5" />
+          </motion.button>
+        )}
+      </AnimatePresence>
+
       <footer className="mt-16 py-8 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 text-center relative z-10 transition-colors duration-300">
         <div className="max-w-5xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">
             © 2026 {cvData.name}. All rights reserved.
           </p>
-          <span className="text-xs text-slate-400 dark:text-slate-500 font-medium">Last updated: March 4, 2026</span>
+          <span className="text-xs text-slate-400 dark:text-slate-500 font-medium">Last updated: March 5, 2026</span>
         </div>
       </footer>
     </div>
