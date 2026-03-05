@@ -281,48 +281,98 @@ export default function App() {
         </div>
 
         {/* Moon with glow (dark mode only) */}
-        {darkMode && (
-          <div className="absolute top-6 left-12 z-10" style={{ opacity: 0.9 }}>
-            {/* Moonlight glow */}
-            <div className="absolute -inset-10 rounded-full" style={{
-              background: 'radial-gradient(circle, rgba(226,232,240,0.15) 0%, rgba(226,232,240,0.05) 40%, transparent 70%)',
-              width: '160px',
-              height: '160px',
-              top: '-40px',
-              left: '-40px',
-            }}></div>
-            {/* Moon body */}
-            <div className="relative" style={{ width: '48px', height: '48px' }}>
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-slate-100 via-slate-200 to-slate-300" style={{
-                boxShadow: '0 0 20px 4px rgba(226,232,240,0.3), 0 0 60px 10px rgba(226,232,240,0.1)',
+        {darkMode && (() => {
+          const size = 64;
+          const r = size / 2;
+          // Overlapping circle offset for each phase - creates curved shadow
+          const phases: Record<number, { cx: number; r: number } | null> = {
+            0: { cx: r * 0.6, r: r * 0.9 },     // thin crescent (shadow covers most)
+            1: { cx: r * 0.35, r: r * 0.85 },    // waxing crescent
+            2: { cx: 0, r: r },                   // first quarter (shadow is half)
+            3: { cx: -r * 0.35, r: r * 0.85 },   // waxing gibbous
+            4: { cx: r * 0.35, r: r * 0.85 },    // waning gibbous (flipped)
+            5: { cx: 0, r: r },                   // last quarter (flipped)
+            6: { cx: -r * 0.35, r: r * 0.85 },   // waning crescent (flipped)
+            7: null,                               // full moon
+          };
+          const phase = phases[moonPhase];
+          const isWaning = moonPhase >= 4 && moonPhase <= 6;
+          return (
+            <div className="absolute top-4 left-8 z-10">
+              {/* Outer moonlight glow */}
+              <div className="absolute rounded-full" style={{
+                width: '200px', height: '200px',
+                top: '-68px', left: '-68px',
+                background: 'radial-gradient(circle, rgba(226,232,240,0.12) 0%, rgba(186,230,253,0.06) 30%, transparent 65%)',
               }}></div>
-              {/* Surface texture */}
-              <div className="absolute rounded-full" style={{ width: '8px', height: '8px', top: '12px', left: '16px', background: 'rgba(148,163,184,0.3)' }}></div>
-              <div className="absolute rounded-full" style={{ width: '5px', height: '5px', top: '28px', left: '10px', background: 'rgba(148,163,184,0.2)' }}></div>
-              <div className="absolute rounded-full" style={{ width: '6px', height: '6px', top: '18px', left: '30px', background: 'rgba(148,163,184,0.25)' }}></div>
-              {/* Phase shadow overlay */}
-              {moonPhase < 7 && (
-                <div className="absolute inset-0 rounded-full" style={{
-                  background: '#020617',
-                  clipPath: moonPhase === 0
-                    ? 'inset(0 0 0 85%)' // thin crescent
-                    : moonPhase === 1
-                      ? 'inset(0 0 0 70%)' // waxing crescent
-                      : moonPhase === 2
-                        ? 'inset(0 0 0 50%)' // first quarter
-                        : moonPhase === 3
-                          ? 'inset(0 0 0 30%)' // waxing gibbous
-                          : moonPhase === 4
-                            ? 'inset(0 30% 0 0)' // waning gibbous
-                            : moonPhase === 5
-                              ? 'inset(0 50% 0 0)' // last quarter
-                              : 'inset(0 70% 0 0)', // waning crescent
-                }}></div>
-              )}
-              {/* moonPhase 7 = full moon, no overlay */}
+              {/* Inner halo */}
+              <div className="absolute rounded-full" style={{
+                width: '100px', height: '100px',
+                top: '-18px', left: '-18px',
+                background: 'radial-gradient(circle, rgba(226,232,240,0.2) 0%, transparent 70%)',
+              }}></div>
+              {/* Moon SVG */}
+              <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="drop-shadow-[0_0_15px_rgba(226,232,240,0.4)]">
+                <defs>
+                  <radialGradient id="moonGrad" cx="40%" cy="35%">
+                    <stop offset="0%" stopColor="#f1f5f9" />
+                    <stop offset="50%" stopColor="#e2e8f0" />
+                    <stop offset="100%" stopColor="#cbd5e1" />
+                  </radialGradient>
+                  <clipPath id="moonClip">
+                    <circle cx={r} cy={r} r={r} />
+                  </clipPath>
+                </defs>
+                {/* Moon surface */}
+                <circle cx={r} cy={r} r={r} fill="url(#moonGrad)" />
+                {/* Craters */}
+                <circle cx={r * 0.55} cy={r * 0.4} r={4} fill="rgba(148,163,184,0.25)" />
+                <circle cx={r * 1.2} cy={r * 0.6} r={3} fill="rgba(148,163,184,0.2)" />
+                <circle cx={r * 0.7} cy={r * 1.3} r={5} fill="rgba(148,163,184,0.18)" />
+                <circle cx={r * 1.4} cy={r * 1.1} r={2.5} fill="rgba(148,163,184,0.22)" />
+                <circle cx={r * 0.35} cy={r * 1.0} r={3.5} fill="rgba(148,163,184,0.15)" />
+                <circle cx={r * 1.1} cy={r * 0.3} r={2} fill="rgba(148,163,184,0.2)" />
+                {/* Shadow overlay for phase (curved via circle) */}
+                {phase && (
+                  <g clipPath="url(#moonClip)">
+                    <rect
+                      x={isWaning ? 0 : r}
+                      y={0}
+                      width={r}
+                      height={size}
+                      fill="#020617"
+                    />
+                    <ellipse
+                      cx={r}
+                      cy={r}
+                      rx={Math.abs(phase.cx) > 0 ? phase.r : r}
+                      ry={r}
+                      fill={
+                        (isWaning ? (moonPhase === 5) : (moonPhase === 2))
+                          ? '#020617'
+                          : (isWaning
+                            ? (moonPhase === 4 ? 'url(#moonGrad)' : '#020617')
+                            : (moonPhase === 3 ? 'url(#moonGrad)' : '#020617'))
+                      }
+                      transform={`translate(${isWaning ? -phase.cx : phase.cx}, 0)`}
+                      style={{ mixBlendMode: 'normal' }}
+                    />
+                    {/* Center ellipse to carve out or fill the curved part */}
+                    {moonPhase !== 2 && moonPhase !== 5 && (
+                      <ellipse
+                        cx={r + (isWaning ? -phase.cx : phase.cx)}
+                        cy={r}
+                        rx={phase.r}
+                        ry={r}
+                        fill={moonPhase === 3 || moonPhase === 4 ? 'url(#moonGrad)' : '#020617'}
+                      />
+                    )}
+                  </g>
+                )}
+              </svg>
             </div>
-          </div>
-        )}
+          );
+        })()}
       </div>
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-32 relative z-10">
