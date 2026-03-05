@@ -179,30 +179,6 @@ export default function App() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Shooting star burst effect on click in dark mode
-  useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      if (!darkMode) return;
-      const count = 3 + Math.floor(Math.random() * 3); // 3-5 stars
-      for (let i = 0; i < count; i++) {
-        const star = document.createElement('div');
-        star.className = 'shooting-star';
-        star.style.left = `${e.clientX}px`;
-        star.style.top = `${e.clientY}px`;
-        // Random angle and distance for each star
-        const angle = Math.random() * 360;
-        const dist = 80 + Math.random() * 120;
-        star.style.setProperty('--shoot-x', `${Math.cos(angle * Math.PI / 180) * dist}px`);
-        star.style.setProperty('--shoot-y', `${Math.sin(angle * Math.PI / 180) * dist}px`);
-        star.style.animationDelay = `${i * 0.05}s`;
-        document.body.appendChild(star);
-        setTimeout(() => star.remove(), 900);
-      }
-    };
-    window.addEventListener('click', handleClick);
-    return () => window.removeEventListener('click', handleClick);
-  }, [darkMode]);
-
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -256,7 +232,7 @@ export default function App() {
   };
 
   return (
-    <div className={`min-h-screen text-slate-600 font-sans pb-24 selection:bg-slate-900 selection:text-white transition-colors duration-300 ${darkMode ? 'dark bg-slate-950 text-slate-300 starry-sky' : 'bg-slate-50'}`}>
+    <div className={`min-h-screen text-slate-600 font-sans pb-24 selection:bg-slate-900 selection:text-white transition-colors duration-300 ${darkMode ? 'dark bg-slate-950 text-slate-300' : 'bg-slate-50'}`}>
       <Helmet>
         <title>{cvData.name} - {cvData.title}</title>
         <meta name="description" content={cvData.about.substring(0, 160) + '...'} />
@@ -282,10 +258,10 @@ export default function App() {
         {/* Stars layer (dark mode) */}
         <div className="absolute inset-0 starry-sky opacity-0 dark:opacity-100 transition-opacity duration-300"></div>
         {/* Nebula clouds (dark mode) */}
-        <div className="absolute -top-20 -right-20 w-80 h-80 bg-purple-600/20 rounded-full blur-[100px] opacity-0 dark:opacity-100 transition-opacity duration-500"></div>
-        <div className="absolute top-10 left-1/4 w-60 h-60 bg-blue-500/15 rounded-full blur-[80px] opacity-0 dark:opacity-100 transition-opacity duration-500"></div>
-        <div className="absolute -bottom-10 right-1/3 w-72 h-72 bg-teal-500/10 rounded-full blur-[90px] opacity-0 dark:opacity-100 transition-opacity duration-500"></div>
-        <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-indigo-500/15 rounded-full blur-[80px] opacity-0 dark:opacity-100 transition-opacity duration-500"></div>
+        <div className="absolute -top-20 -right-20 w-80 h-80 bg-purple-600/20 rounded-full blur-3xl opacity-0 dark:opacity-100 transition-opacity duration-500"></div>
+        <div className="absolute top-10 left-1/4 w-60 h-60 bg-blue-500/15 rounded-full blur-3xl opacity-0 dark:opacity-100 transition-opacity duration-500"></div>
+        <div className="absolute -bottom-10 right-1/3 w-72 h-72 bg-teal-500/10 rounded-full blur-3xl opacity-0 dark:opacity-100 transition-opacity duration-500"></div>
+        <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-indigo-500/15 rounded-full blur-3xl opacity-0 dark:opacity-100 transition-opacity duration-500"></div>
         {/* Original gradient blobs */}
         <div className="absolute -top-24 -right-24 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl"></div>
         <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-slate-500/10 rounded-full blur-3xl"></div>
@@ -501,25 +477,20 @@ export default function App() {
                       { icon: Dna, title: "Computational Biology", desc: ["Genome-wide & synteny mapping", "Protein structure & dynamics", "Phylogenomics & evolution"] },
                       { icon: Leaf, title: "Data Workflows", desc: ["R/Python pipelines", "Plant-pathogen interactions", "Stress-responsive gene discovery"] }
                     ].map((item, i) => (
-                      <RevealOnScroll key={i}>
-                        <motion.div
-                          whileHover={{ y: -4 }}
-                          className="p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:bg-teal-50 dark:hover:bg-slate-800/80 hover:shadow-md hover:border-teal-200 dark:hover:border-teal-500/50 transition-all duration-300 group"
-                        >
-                          <motion.div whileHover={{ rotate: [0, -10, 10, -10, 0] }} transition={{ duration: 0.5 }} className="w-14 h-14 bg-slate-50 dark:bg-slate-800/50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-white dark:group-hover:bg-slate-800 group-hover:shadow-sm transition-all duration-300">
-                            <item.icon className="w-7 h-7 text-slate-400 dark:text-slate-500 group-hover:text-teal-500 transition-colors group-hover:scale-110 duration-300" />
-                          </motion.div>
-                          <h4 className="font-extrabold text-slate-900 dark:text-slate-100 mb-4 text-[19px]">{item.title}</h4>
-                          <ul className="space-y-2">
-                            {item.desc.map((bullet, idx) => (
-                              <li key={idx} className="flex items-start gap-2.5 text-sm text-slate-500 dark:text-slate-400 leading-relaxed group-hover:text-slate-600 dark:group-hover:text-slate-300 transition-colors">
-                                <div className="w-1.5 h-1.5 rounded-full bg-teal-400 dark:bg-teal-500 mt-1.5 shrink-0"></div>
-                                <span>{bullet}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </motion.div>
-                      </RevealOnScroll>
+                      <div key={i} className="p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-sm hover:bg-teal-50 dark:hover:bg-slate-800/80 hover:shadow-md hover:border-teal-200 dark:hover:border-teal-500/50 transition-all duration-300 group">
+                        <div className="w-14 h-14 bg-slate-50 dark:bg-slate-800/50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-white dark:group-hover:bg-slate-800 group-hover:shadow-sm transition-all duration-300">
+                          <item.icon className="w-7 h-7 text-slate-400 dark:text-slate-500 group-hover:text-teal-500 transition-colors group-hover:scale-110 duration-300" />
+                        </div>
+                        <h4 className="font-extrabold text-slate-900 dark:text-slate-100 mb-4 text-[19px]">{item.title}</h4>
+                        <ul className="space-y-2">
+                          {item.desc.map((bullet, idx) => (
+                            <li key={idx} className="flex items-start gap-2.5 text-sm text-slate-500 dark:text-slate-400 leading-relaxed group-hover:text-slate-600 dark:group-hover:text-slate-300 transition-colors">
+                              <div className="w-1.5 h-1.5 rounded-full bg-teal-400 dark:bg-teal-500 mt-1.5 shrink-0"></div>
+                              <span>{bullet}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -577,7 +548,7 @@ export default function App() {
                               {(exp.supervisor || exp.thesis) && (
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                   {exp.supervisor && (
-                                    <div className="bg-slate-50 dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-700/50 flex items-center gap-4">
+                                    <div className="bg-slate-50 dark:bg-slate-700/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-600/50 flex items-center gap-4">
                                       <div className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center shadow-sm">
                                         <User className="w-5 h-5 text-slate-400 dark:text-slate-500" />
                                       </div>
@@ -594,7 +565,7 @@ export default function App() {
                                     </div>
                                   )}
                                   {exp.thesis && (
-                                    <div className="bg-slate-50 dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-700/50 flex items-center gap-4">
+                                    <div className="bg-slate-50 dark:bg-slate-700/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-600/50 flex items-center gap-4">
                                       <div className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center shadow-sm">
                                         <BookOpen className="w-5 h-5 text-slate-400 dark:text-slate-500" />
                                       </div>
@@ -610,7 +581,7 @@ export default function App() {
                               {exp.projects ? (
                                 <div className="space-y-8">
                                   {exp.projects.map((proj, pIdx) => (
-                                    <div key={pIdx} className="bg-slate-50/50 dark:bg-slate-800/30 rounded-2xl p-8 border border-slate-100 dark:border-slate-800 hover:bg-white dark:hover:bg-slate-800 hover:shadow-md transition-all duration-300">
+                                    <div key={pIdx} className="bg-slate-50/50 dark:bg-slate-700/40 rounded-2xl p-8 border border-slate-100 dark:border-slate-600/50 hover:bg-white dark:hover:bg-slate-700/60 hover:shadow-md transition-all duration-300">
                                       <h4 className="font-bold text-slate-900 dark:text-slate-100 mb-6 text-xl flex items-center gap-3">
                                         <div className="w-2 h-8 bg-teal-500 rounded-full"></div>
                                         {proj.name}
@@ -724,7 +695,7 @@ export default function App() {
                         </h3>
                         <ul className="space-y-6">
                           {group.items.map((pub: any, idx) => (
-                            <li key={idx} className="flex flex-col gap-3 group bg-slate-50 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 hover:bg-white dark:hover:bg-slate-800 hover:shadow-md hover:border-teal-100 dark:hover:border-teal-500/50 transition-all duration-300">
+                            <li key={idx} className="flex flex-col gap-3 group bg-slate-50 dark:bg-slate-700/40 p-6 rounded-2xl border border-slate-100 dark:border-slate-600/50 hover:bg-white dark:hover:bg-slate-700/60 hover:shadow-md hover:border-teal-100 dark:hover:border-teal-500/50 transition-all duration-300">
                               <div className="flex items-start gap-4 text-slate-600 dark:text-slate-300 text-base leading-relaxed">
                                 <div className="mt-1 w-8 h-8 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 flex items-center justify-center shrink-0 group-hover:bg-teal-50 dark:group-hover:bg-teal-900/40 group-hover:border-teal-100 dark:group-hover:border-teal-800 transition-all duration-300">
                                   <ArrowUpRight className="w-4 h-4 text-slate-400 dark:text-slate-500 group-hover:text-teal-500 dark:group-hover:text-teal-400 transition-colors" />
@@ -759,26 +730,23 @@ export default function App() {
                   <SectionHeading title="Technical Skills" icon={Binary} />
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
                     {cvData.skills.map((skill, idx) => (
-                      <RevealOnScroll key={idx}>
-                        <motion.div
-                          whileHover={{ scale: 1.02 }}
-                          className="p-8 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 hover:shadow-md hover:border-teal-100 dark:hover:border-teal-500/50 transition-all duration-500"
-                        >
-                          <h3 className="text-xs font-black text-teal-500 dark:text-teal-400 mb-6 uppercase tracking-[0.2em]">{skill.category}</h3>
-                          <div className="flex flex-wrap gap-2.5">
-                            {(Array.isArray(skill.details) ? skill.details : [skill.details]).map((detail, dIdx) => (
-                              <motion.span
-                                key={dIdx}
-                                whileHover={{ y: -2, scale: 1.05 }}
-                                className="px-3 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm font-bold rounded-lg shadow-sm hover:border-teal-400 dark:hover:border-teal-500 hover:text-teal-600 dark:hover:text-teal-400 hover:shadow transition-all duration-300 cursor-default flex items-center gap-2"
-                              >
-                                <div className="w-1.5 h-1.5 rounded-full bg-teal-400 dark:bg-teal-500"></div>
-                                {detail}
-                              </motion.span>
-                            ))}
-                          </div>
-                        </motion.div>
-                      </RevealOnScroll>
+                      <div
+                        key={idx}
+                        className="p-8 rounded-2xl border border-slate-100 dark:border-slate-600/50 bg-slate-50 dark:bg-slate-700/40 hover:bg-white dark:hover:bg-slate-700/60 hover:shadow-md hover:border-teal-100 dark:hover:border-teal-500/50 transition-all duration-500"
+                      >
+                        <h3 className="text-xs font-black text-teal-500 dark:text-teal-400 mb-6 uppercase tracking-[0.2em]">{skill.category}</h3>
+                        <div className="flex flex-wrap gap-2.5">
+                          {(Array.isArray(skill.details) ? skill.details : [skill.details]).map((detail, dIdx) => (
+                            <span
+                              key={dIdx}
+                              className="px-3 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-300 text-sm font-bold rounded-lg shadow-sm hover:border-teal-400 dark:hover:border-teal-500 hover:text-teal-600 dark:hover:text-teal-400 hover:shadow transition-all duration-300 cursor-default flex items-center gap-2"
+                            >
+                              <div className="w-1.5 h-1.5 rounded-full bg-teal-400 dark:bg-teal-500"></div>
+                              {detail}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
                     ))}
                   </div>
                 </div>
