@@ -74,3 +74,51 @@
     radial-gradient(1px 1px at 650px 90px, #e2e8f0, transparent);
   background-size: 700px 180px;
 }
+
+/* Sparkle star with cross rays */
+.sparkle-star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: white;
+  border-radius: 50%;
+}
+
+.sparkle-star::before,
+.sparkle-star::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.sparkle-star::before {
+  width: 1px;
+  height: 16px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.8), transparent);
+}
+
+.sparkle-star::after {
+  width: 16px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.8), transparent);
+}
+
+.sparkle-star-lg::before {
+  height: 28px;
+  width: 2px;
+}
+
+.sparkle-star-lg::after {
+  width: 28px;
+  height: 2px;
+}
+
+.sparkle-star-sm::before {
+  height: 10px;
+}
+
+.sparkle-star-sm::after {
+  width: 10px;
+}
