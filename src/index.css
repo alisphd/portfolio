@@ -12,7 +12,13 @@
   body {
     @apply bg-slate-50 text-slate-600 font-sans antialiased overflow-x-hidden;
   }
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-display text-slate-900 tracking-tight;
   }
 }
@@ -21,6 +27,7 @@
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
 .hide-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -28,13 +35,11 @@
 
 /* Custom graphic patterns */
 .bg-striped-pattern {
-  background-image: repeating-linear-gradient(
-    45deg,
-    currentColor,
-    currentColor 2px,
-    transparent 2px,
-    transparent 6px
-  );
+  background-image: repeating-linear-gradient(45deg,
+      currentColor,
+      currentColor 2px,
+      transparent 2px,
+      transparent 6px);
 }
 
 .glass {
@@ -72,8 +77,13 @@
 }
 
 @keyframes twinkle {
-  0% { opacity: 0.85; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 0.85;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 /* Shooting star */
@@ -98,7 +108,7 @@
   right: 100%;
   width: 60px;
   height: 1px;
-  background: linear-gradient(to left, rgba(255,255,255,0.8), transparent);
+  background: linear-gradient(to left, rgba(255, 255, 255, 0.8), transparent);
   transform: translateY(-50%);
 }
 
@@ -107,9 +117,9 @@
     transform: translate(0, 0) scale(1);
     opacity: 1;
   }
+
   100% {
-    transform: translate(120px, -80px) scale(0);
+    transform: translate(var(--shoot-x, 120px), var(--shoot-y, -80px)) scale(0);
     opacity: 0;
   }
 }
-

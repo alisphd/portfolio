@@ -179,16 +179,25 @@ export default function App() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Shooting star effect on click in dark mode
+  // Shooting star burst effect on click in dark mode
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       if (!darkMode) return;
-      const star = document.createElement('div');
-      star.className = 'shooting-star';
-      star.style.left = `${e.clientX}px`;
-      star.style.top = `${e.clientY}px`;
-      document.body.appendChild(star);
-      setTimeout(() => star.remove(), 700);
+      const count = 3 + Math.floor(Math.random() * 3); // 3-5 stars
+      for (let i = 0; i < count; i++) {
+        const star = document.createElement('div');
+        star.className = 'shooting-star';
+        star.style.left = `${e.clientX}px`;
+        star.style.top = `${e.clientY}px`;
+        // Random angle and distance for each star
+        const angle = Math.random() * 360;
+        const dist = 80 + Math.random() * 120;
+        star.style.setProperty('--shoot-x', `${Math.cos(angle * Math.PI / 180) * dist}px`);
+        star.style.setProperty('--shoot-y', `${Math.sin(angle * Math.PI / 180) * dist}px`);
+        star.style.animationDelay = `${i * 0.05}s`;
+        document.body.appendChild(star);
+        setTimeout(() => star.remove(), 900);
+      }
     };
     window.addEventListener('click', handleClick);
     return () => window.removeEventListener('click', handleClick);
@@ -268,7 +277,19 @@ export default function App() {
 
       {/* Static Hero Background for better performance */}
       <div className="h-64 bg-slate-900 dark:bg-slate-950 relative overflow-hidden transition-colors duration-300">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#27272a_1px,transparent_1px),linear-gradient(to_bottom,#27272a_1px,transparent_1px)] bg-[size:3rem_3rem] opacity-20 dark:opacity-10"></div>
+        {/* Grid pattern (light mode) */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#27272a_1px,transparent_1px),linear-gradient(to_bottom,#27272a_1px,transparent_1px)] bg-[size:3rem_3rem] opacity-20 dark:opacity-0 transition-opacity duration-300"></div>
+        {/* Stars layer (dark mode) */}
+        <div className="absolute inset-0 starry-sky opacity-0 dark:opacity-100 transition-opacity duration-300"></div>
+        {/* Nebula clouds (dark mode) */}
+        <div className="absolute -top-20 -right-20 w-80 h-80 bg-purple-600/20 rounded-full blur-[100px] opacity-0 dark:opacity-100 transition-opacity duration-500"></div>
+        <div className="absolute top-10 left-1/4 w-60 h-60 bg-blue-500/15 rounded-full blur-[80px] opacity-0 dark:opacity-100 transition-opacity duration-500"></div>
+        <div className="absolute -bottom-10 right-1/3 w-72 h-72 bg-teal-500/10 rounded-full blur-[90px] opacity-0 dark:opacity-100 transition-opacity duration-500"></div>
+        <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-indigo-500/15 rounded-full blur-[80px] opacity-0 dark:opacity-100 transition-opacity duration-500"></div>
+        {/* Original gradient blobs */}
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-slate-500/10 rounded-full blur-3xl"></div>
+        {/* Dark mode toggle */}
         <div className="absolute top-4 right-4 z-50">
           <button
             onClick={() => setDarkMode(!darkMode)}
@@ -278,18 +299,16 @@ export default function App() {
             {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
           </button>
         </div>
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-slate-500/10 rounded-full blur-3xl"></div>
       </div>
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-32 relative z-10">
 
-        {/* Profile Card - Solid Background */}
+        {/* Profile Card - Semi-transparent in dark mode */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="bg-white dark:bg-slate-800 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-black/30 border border-slate-100 dark:border-slate-700 p-8 sm:p-8 mb-10 flex flex-col md:flex-row gap-8 items-center md:items-start transition-colors duration-300"
+          className="bg-white dark:bg-slate-800/70 dark:backdrop-blur-xl rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-black/40 border border-slate-100 dark:border-slate-600/50 p-8 sm:p-8 mb-10 flex flex-col md:flex-row gap-8 items-center md:items-start transition-colors duration-300"
         >
           {/* Picture - Modern Frame with Shake Effect */}
           <div className="shrink-0 relative group">
