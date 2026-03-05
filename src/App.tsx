@@ -313,7 +313,7 @@ export default function App() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-xl font-medium text-slate-500 dark:text-slate-400 mb-3 h-8"
+              className="text-xl font-medium text-slate-500 dark:text-slate-400 mb-3 min-h-[2rem]"
             >
               <span>{TYPING_ROLES[roleIndex].substring(0, charIndex)}</span>
               <span className="inline-block w-[2px] h-5 bg-teal-500 dark:bg-teal-400 ml-0.5 align-middle animate-pulse" />
