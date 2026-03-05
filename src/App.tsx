@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { motion, AnimatePresence, useScroll, useSpring, useInView } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useSpring, useInView } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
 import {
   Mail, Phone, MapPin, Linkedin, BookOpen, Briefcase,
