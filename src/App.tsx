@@ -3,8 +3,8 @@ import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import {
   Mail, Phone, MapPin, Linkedin, BookOpen, Briefcase,
-  Award, GraduationCap, Code, FileText, User, ChevronRight, ChevronLeft,
-  Search, ExternalLink, Image, Layers, Sparkles, Building, PlayCircle, Binary, Library, Trophy, ShieldCheck, Sun, Moon, ArrowUpRight, Github, Code2, Globe, Cpu, Database, Fingerprint, Activity, Terminal, Layout, Share2, Workflow, MessageSquare, Mic, FileAudio, Youtube, Podcast, Zap, MonitorPlay, Focus, X, Microscope, Sprout, Dna, FlaskConical, Leaf, FileSearch, Brain, FlaskRound, Atom
+  Award, GraduationCap, Code, FileText, User, ChevronRight, ChevronLeft, ChevronDown,
+  Search, ExternalLink, Image, Layers, Sparkles, Building, PlayCircle, Binary, Library, Trophy, ShieldCheck, Sun, Moon, ArrowUpRight, Github, Code2, Globe, Cpu, Database, Fingerprint, Activity, Terminal, Layout, Share2, Workflow, MessageSquare, Mic, FileAudio, Youtube, Podcast, Zap, MonitorPlay, Focus, X, Microscope, Sprout, Dna, FlaskConical, Leaf, FileSearch, Brain, FlaskRound, Atom, Filter
 } from 'lucide-react';
 import { cvData } from './data';
 import { logVisit } from './analytics';
@@ -86,6 +86,13 @@ const GALLERY_CATEGORY_COLORS: Record<string, string> = {
   "Frontier & Emerging Methods": "from-teal-500 to-cyan-600",
 };
 
+const TYPING_ROLES = [
+  'Plant Pathologist & Bioinformatician',
+  'Computational Genomics Researcher',
+  'Rice Stress Biology Specialist',
+  'Multi-omics Data Scientist',
+];
+
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabId>('about');
   const [galleryCategory, setGalleryCategory] = useState<string>('All');
@@ -94,6 +101,48 @@ export default function App() {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
+  const [filterOpen, setFilterOpen] = useState(false);
+  const filterRef = useRef<HTMLDivElement>(null);
+
+  // Typing effect state
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const currentRole = TYPING_ROLES[roleIndex];
+    const speed = isDeleting ? 30 : 60;
+    const pauseAfterType = 2000;
+    const pauseAfterDelete = 400;
+
+    if (!isDeleting && charIndex === currentRole.length) {
+      const timeout = setTimeout(() => setIsDeleting(true), pauseAfterType);
+      return () => clearTimeout(timeout);
+    }
+    if (isDeleting && charIndex === 0) {
+      const timeout = setTimeout(() => {
+        setIsDeleting(false);
+        setRoleIndex((prev) => (prev + 1) % TYPING_ROLES.length);
+      }, pauseAfterDelete);
+      return () => clearTimeout(timeout);
+    }
+
+    const timeout = setTimeout(() => {
+      setCharIndex((prev) => prev + (isDeleting ? -1 : 1));
+    }, speed);
+    return () => clearTimeout(timeout);
+  }, [charIndex, isDeleting, roleIndex]);
+
+  // Close filter dropdown on outside click
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (filterRef.current && !filterRef.current.contains(e.target as Node)) {
+        setFilterOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -237,9 +286,10 @@ export default function App() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-xl font-medium text-slate-500 dark:text-slate-400 mb-3"
+              className="text-xl font-medium text-slate-500 dark:text-slate-400 mb-3 h-8"
             >
-              {cvData.title}
+              <span>{TYPING_ROLES[roleIndex].substring(0, charIndex)}</span>
+              <span className="inline-block w-[2px] h-5 bg-teal-500 dark:bg-teal-400 ml-0.5 align-middle animate-pulse" />
             </motion.h2>
 
             <motion.div
@@ -888,33 +938,48 @@ export default function App() {
                     showcasing analytical skills across bioinformatics, genomics, machine learning, and field research.
                   </p>
 
-                  {/* Category Filter Pills */}
-                  <div className="flex flex-wrap gap-2 mb-10">
+                  {/* Category Filter Dropdown */}
+                  <div className="relative mb-10" ref={filterRef}>
                     <button
-                      onClick={() => setGalleryCategory('All')}
-                      className={`px-4 py-2 rounded-full text-sm font-bold transition-all duration-300 border ${galleryCategory === 'All'
-                        ? 'bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 border-slate-900 dark:border-slate-100 shadow-lg shadow-slate-900/20'
-                        : 'bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 hover:border-slate-300 dark:hover:border-slate-600'
-                        }`}
+                      onClick={() => setFilterOpen(!filterOpen)}
+                      className="flex items-center gap-2.5 px-5 py-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-bold text-slate-700 dark:text-slate-200 hover:border-teal-300 dark:hover:border-teal-600 hover:shadow-sm transition-all duration-300"
                     >
-                      All
+                      <Filter className="w-4 h-4 text-slate-400 dark:text-slate-500" />
+                      {galleryCategory === 'All' ? 'All Categories' : galleryCategory}
+                      <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${filterOpen ? 'rotate-180' : ''}`} />
                     </button>
-                    {cvData.gallery.map((cat) => {
-                      const CatIcon = GALLERY_CATEGORY_ICONS[cat.icon] || Layers;
-                      return (
-                        <button
-                          key={cat.category}
-                          onClick={() => setGalleryCategory(cat.category)}
-                          className={`px-4 py-2 rounded-full text-sm font-bold transition-all duration-300 border flex items-center gap-1.5 ${galleryCategory === cat.category
-                            ? 'bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 border-slate-900 dark:border-slate-100 shadow-lg shadow-slate-900/20'
-                            : 'bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 hover:border-slate-300 dark:hover:border-slate-600'
-                            }`}
+                    <AnimatePresence>
+                      {filterOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: -8, scale: 0.95 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: -8, scale: 0.95 }}
+                          transition={{ duration: 0.15 }}
+                          className="absolute left-0 top-full mt-2 z-50 w-72 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-xl shadow-slate-200/50 dark:shadow-none overflow-hidden"
                         >
-                          <CatIcon className="w-3.5 h-3.5" />
-                          {cat.category}
-                        </button>
-                      );
-                    })}
+                          <button
+                            onClick={() => { setGalleryCategory('All'); setFilterOpen(false); }}
+                            className={`w-full text-left px-5 py-3 text-sm font-bold transition-colors ${galleryCategory === 'All' ? 'bg-teal-50 dark:bg-teal-900/40 text-teal-700 dark:text-teal-300' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50'}`}
+                          >
+                            All Categories
+                          </button>
+                          {cvData.gallery.map((cat) => {
+                            const CatIcon = GALLERY_CATEGORY_ICONS[cat.icon] || Layers;
+                            return (
+                              <button
+                                key={cat.category}
+                                onClick={() => { setGalleryCategory(cat.category); setFilterOpen(false); }}
+                                className={`w-full text-left px-5 py-3 text-sm font-bold transition-colors flex items-center gap-2.5 ${galleryCategory === cat.category ? 'bg-teal-50 dark:bg-teal-900/40 text-teal-700 dark:text-teal-300' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50'}`}
+                              >
+                                <CatIcon className="w-4 h-4 text-slate-400 dark:text-slate-500" />
+                                {cat.category}
+                                <span className="ml-auto text-xs text-slate-400 dark:text-slate-500">{cat.figures.length}</span>
+                              </button>
+                            );
+                          })}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
 
                   {/* Gallery Content */}
