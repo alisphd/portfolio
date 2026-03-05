@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useSpring, useInView } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import {
   Mail, Phone, MapPin, Linkedin, BookOpen, Briefcase,
@@ -34,6 +34,23 @@ const TABS: TabConfig[] = [
   { id: 'honors', label: 'Honors & Awards', icon: Trophy },
   { id: 'references', label: 'References', icon: Briefcase },
 ];
+
+// Scroll-reveal wrapper
+function RevealOnScroll({ children, className = '', ...rest }: { children: React.ReactNode, className?: string, [key: string]: any }) {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: '-60px' });
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+      transition={{ duration: 0.5, ease: 'easeOut' }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 // Clean, minimalist section heading
 const SectionHeading = ({ title, icon: Icon }: { title: string, icon?: React.ElementType }) => (
@@ -102,6 +119,16 @@ export default function App() {
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
+  const [tabDirection, setTabDirection] = useState(0);
+  const prevTabIndexRef = useRef(0);
+
+  const handleTabChange = useCallback((newTab: TabId) => {
+    const newIndex = TABS.findIndex(t => t.id === newTab);
+    const oldIndex = prevTabIndexRef.current;
+    setTabDirection(newIndex > oldIndex ? 1 : -1);
+    prevTabIndexRef.current = newIndex;
+    setActiveTab(newTab);
+  }, []);
   const filterRef = useRef<HTMLDivElement>(null);
 
   // Typing effect state
@@ -278,7 +305,7 @@ export default function App() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-2 tracking-tight"
+              className="text-4xl md:text-5xl font-extrabold mb-2 tracking-tight bg-gradient-to-r from-slate-900 via-teal-600 to-blue-600 dark:from-white dark:via-teal-400 dark:to-blue-400 bg-clip-text text-transparent"
             >
               {cvData.name}
             </motion.h1>
@@ -358,7 +385,7 @@ export default function App() {
                 return (
                   <button
                     key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
+                    onClick={() => handleTabChange(tab.id)}
                     className={`
                       snap-start relative flex items-center gap-2 py-2.5 px-5 text-sm font-semibold rounded-full transition-all duration-300 whitespace-nowrap shrink-0
                       ${isActive ? 'text-white' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'}
@@ -405,10 +432,10 @@ export default function App() {
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
-              initial={{ opacity: 0, scale: 0.98, filter: 'blur(10px)' }}
-              animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-              exit={{ opacity: 0, scale: 1.02, filter: 'blur(10px)' }}
-              transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+              initial={{ opacity: 0, x: tabDirection * 60 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: tabDirection * -60 }}
+              transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
               className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 p-8 md:p-14 relative overflow-hidden transition-colors duration-300"
             >
               {/* Subtle background graphic for content area */}
@@ -432,26 +459,25 @@ export default function App() {
                       { icon: Dna, title: "Computational Biology", desc: ["Genome-wide & synteny mapping", "Protein structure & dynamics", "Phylogenomics & evolution"] },
                       { icon: Leaf, title: "Data Workflows", desc: ["R/Python pipelines", "Plant-pathogen interactions", "Stress-responsive gene discovery"] }
                     ].map((item, i) => (
-                      <motion.div
-                        key={i}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.3 + i * 0.1 }}
-                        className="p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:bg-teal-50 dark:hover:bg-slate-800/80 hover:shadow-md hover:border-teal-200 dark:hover:border-teal-500/50 transition-all duration-300 group"
-                      >
-                        <div className="w-14 h-14 bg-slate-50 dark:bg-slate-800/50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-white dark:group-hover:bg-slate-800 group-hover:shadow-sm transition-all duration-300">
-                          <item.icon className="w-7 h-7 text-slate-400 dark:text-slate-500 group-hover:text-teal-500 transition-colors group-hover:scale-110 duration-300" />
-                        </div>
-                        <h4 className="font-extrabold text-slate-900 dark:text-slate-100 mb-4 text-[19px]">{item.title}</h4>
-                        <ul className="space-y-2">
-                          {item.desc.map((bullet, idx) => (
-                            <li key={idx} className="flex items-start gap-2.5 text-sm text-slate-500 dark:text-slate-400 leading-relaxed group-hover:text-slate-600 dark:group-hover:text-slate-300 transition-colors">
-                              <div className="w-1.5 h-1.5 rounded-full bg-teal-400 dark:bg-teal-500 mt-1.5 shrink-0"></div>
-                              <span>{bullet}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </motion.div>
+                      <RevealOnScroll key={i}>
+                        <motion.div
+                          whileHover={{ y: -4 }}
+                          className="p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:bg-teal-50 dark:hover:bg-slate-800/80 hover:shadow-md hover:border-teal-200 dark:hover:border-teal-500/50 transition-all duration-300 group"
+                        >
+                          <motion.div whileHover={{ rotate: [0, -10, 10, -10, 0] }} transition={{ duration: 0.5 }} className="w-14 h-14 bg-slate-50 dark:bg-slate-800/50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-white dark:group-hover:bg-slate-800 group-hover:shadow-sm transition-all duration-300">
+                            <item.icon className="w-7 h-7 text-slate-400 dark:text-slate-500 group-hover:text-teal-500 transition-colors group-hover:scale-110 duration-300" />
+                          </motion.div>
+                          <h4 className="font-extrabold text-slate-900 dark:text-slate-100 mb-4 text-[19px]">{item.title}</h4>
+                          <ul className="space-y-2">
+                            {item.desc.map((bullet, idx) => (
+                              <li key={idx} className="flex items-start gap-2.5 text-sm text-slate-500 dark:text-slate-400 leading-relaxed group-hover:text-slate-600 dark:group-hover:text-slate-300 transition-colors">
+                                <div className="w-1.5 h-1.5 rounded-full bg-teal-400 dark:bg-teal-500 mt-1.5 shrink-0"></div>
+                                <span>{bullet}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </motion.div>
+                      </RevealOnScroll>
                     ))}
                   </div>
                 </div>
@@ -691,25 +717,26 @@ export default function App() {
                   <SectionHeading title="Technical Skills" icon={Binary} />
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
                     {cvData.skills.map((skill, idx) => (
-                      <motion.div
-                        key={idx}
-                        whileHover={{ scale: 1.02 }}
-                        className="p-8 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 hover:shadow-md hover:border-teal-100 dark:hover:border-teal-500/50 transition-all duration-500"
-                      >
-                        <h3 className="text-xs font-black text-teal-500 dark:text-teal-400 mb-6 uppercase tracking-[0.2em]">{skill.category}</h3>
-                        <div className="flex flex-wrap gap-2.5">
-                          {(Array.isArray(skill.details) ? skill.details : [skill.details]).map((detail, dIdx) => (
-                            <motion.span
-                              key={dIdx}
-                              whileHover={{ y: -2, scale: 1.05 }}
-                              className="px-3 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm font-bold rounded-lg shadow-sm hover:border-teal-400 dark:hover:border-teal-500 hover:text-teal-600 dark:hover:text-teal-400 hover:shadow transition-all duration-300 cursor-default flex items-center gap-2"
-                            >
-                              <div className="w-1.5 h-1.5 rounded-full bg-teal-400 dark:bg-teal-500"></div>
-                              {detail}
-                            </motion.span>
-                          ))}
-                        </div>
-                      </motion.div>
+                      <RevealOnScroll key={idx}>
+                        <motion.div
+                          whileHover={{ scale: 1.02 }}
+                          className="p-8 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 hover:shadow-md hover:border-teal-100 dark:hover:border-teal-500/50 transition-all duration-500"
+                        >
+                          <h3 className="text-xs font-black text-teal-500 dark:text-teal-400 mb-6 uppercase tracking-[0.2em]">{skill.category}</h3>
+                          <div className="flex flex-wrap gap-2.5">
+                            {(Array.isArray(skill.details) ? skill.details : [skill.details]).map((detail, dIdx) => (
+                              <motion.span
+                                key={dIdx}
+                                whileHover={{ y: -2, scale: 1.05 }}
+                                className="px-3 py-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm font-bold rounded-lg shadow-sm hover:border-teal-400 dark:hover:border-teal-500 hover:text-teal-600 dark:hover:text-teal-400 hover:shadow transition-all duration-300 cursor-default flex items-center gap-2"
+                              >
+                                <div className="w-1.5 h-1.5 rounded-full bg-teal-400 dark:bg-teal-500"></div>
+                                {detail}
+                              </motion.span>
+                            ))}
+                          </div>
+                        </motion.div>
+                      </RevealOnScroll>
                     ))}
                   </div>
                 </div>
