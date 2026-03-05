@@ -253,16 +253,45 @@ export default function App() {
       />
 
       {/* Static Hero Background for better performance */}
-      <div className="h-64 bg-slate-900 dark:bg-slate-950 relative overflow-hidden transition-colors duration-300">
+      <div className="h-64 bg-slate-900 dark:bg-[#030712] relative overflow-hidden transition-colors duration-300">
         {/* Grid pattern (light mode) */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#27272a_1px,transparent_1px),linear-gradient(to_bottom,#27272a_1px,transparent_1px)] bg-[size:3rem_3rem] opacity-20 dark:opacity-0 transition-opacity duration-300"></div>
-        {/* Stars layer (dark mode) */}
+        {/* Stars layer - tiny dots (dark mode) */}
         <div className="absolute inset-0 starry-sky opacity-0 dark:opacity-100 transition-opacity duration-300"></div>
-        {/* Nebula clouds (dark mode) */}
-        <div className="absolute -top-20 -right-20 w-80 h-80 bg-purple-600/20 rounded-full blur-3xl opacity-0 dark:opacity-100 transition-opacity duration-500"></div>
-        <div className="absolute top-10 left-1/4 w-60 h-60 bg-blue-500/15 rounded-full blur-3xl opacity-0 dark:opacity-100 transition-opacity duration-500"></div>
-        <div className="absolute -bottom-10 right-1/3 w-72 h-72 bg-teal-500/10 rounded-full blur-3xl opacity-0 dark:opacity-100 transition-opacity duration-500"></div>
-        <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-indigo-500/15 rounded-full blur-3xl opacity-0 dark:opacity-100 transition-opacity duration-500"></div>
+
+        {/* Bright stars with glow (dark mode) */}
+        {darkMode && (
+          <>
+            {/* Bright large stars */}
+            <div className="absolute" style={{ top: '18%', left: '15%', width: 4, height: 4, borderRadius: '50%', background: '#fff', boxShadow: '0 0 8px 3px rgba(255,255,255,0.6), 0 0 20px 6px rgba(186,230,253,0.3)' }}></div>
+            <div className="absolute" style={{ top: '35%', right: '20%', width: 5, height: 5, borderRadius: '50%', background: '#fff', boxShadow: '0 0 10px 4px rgba(255,255,255,0.5), 0 0 25px 8px rgba(253,224,71,0.15)' }}></div>
+            <div className="absolute" style={{ top: '60%', left: '55%', width: 4, height: 4, borderRadius: '50%', background: '#fff', boxShadow: '0 0 8px 3px rgba(255,255,255,0.5), 0 0 18px 5px rgba(186,230,253,0.25)' }}></div>
+            <div className="absolute" style={{ top: '25%', right: '40%', width: 3, height: 3, borderRadius: '50%', background: '#f0f9ff', boxShadow: '0 0 6px 2px rgba(255,255,255,0.5), 0 0 15px 4px rgba(186,230,253,0.2)' }}></div>
+            <div className="absolute" style={{ top: '70%', left: '80%', width: 4, height: 4, borderRadius: '50%', background: '#fff', boxShadow: '0 0 8px 3px rgba(255,255,255,0.4), 0 0 20px 6px rgba(253,244,220,0.2)' }}></div>
+            {/* Medium stars */}
+            <div className="absolute" style={{ top: '12%', left: '45%', width: 3, height: 3, borderRadius: '50%', background: '#e2e8f0', boxShadow: '0 0 4px 1px rgba(255,255,255,0.4)' }}></div>
+            <div className="absolute" style={{ top: '50%', left: '25%', width: 2, height: 2, borderRadius: '50%', background: '#e2e8f0', boxShadow: '0 0 4px 1px rgba(255,255,255,0.3)' }}></div>
+            <div className="absolute" style={{ top: '40%', right: '10%', width: 3, height: 3, borderRadius: '50%', background: '#f1f5f9', boxShadow: '0 0 5px 2px rgba(255,255,255,0.35)' }}></div>
+            <div className="absolute" style={{ top: '75%', left: '35%', width: 2, height: 2, borderRadius: '50%', background: '#e2e8f0', boxShadow: '0 0 3px 1px rgba(255,255,255,0.3)' }}></div>
+            <div className="absolute" style={{ top: '15%', right: '30%', width: 2, height: 2, borderRadius: '50%', background: '#f1f5f9', boxShadow: '0 0 4px 1px rgba(255,255,255,0.3)' }}></div>
+            <div className="absolute" style={{ top: '55%', right: '55%', width: 2, height: 2, borderRadius: '50%', background: '#cbd5e1', boxShadow: '0 0 3px 1px rgba(255,255,255,0.25)' }}></div>
+            {/* Tiny faint stars */}
+            <div className="absolute" style={{ top: '22%', left: '70%', width: 1, height: 1, borderRadius: '50%', background: '#94a3b8' }}></div>
+            <div className="absolute" style={{ top: '45%', left: '10%', width: 1, height: 1, borderRadius: '50%', background: '#94a3b8' }}></div>
+            <div className="absolute" style={{ top: '65%', left: '65%', width: 1, height: 1, borderRadius: '50%', background: '#cbd5e1' }}></div>
+            <div className="absolute" style={{ top: '30%', left: '85%', width: 1, height: 1, borderRadius: '50%', background: '#94a3b8' }}></div>
+            <div className="absolute" style={{ top: '80%', left: '50%', width: 1, height: 1, borderRadius: '50%', background: '#cbd5e1' }}></div>
+            <div className="absolute" style={{ top: '10%', left: '60%', width: 1, height: 1, borderRadius: '50%', background: '#94a3b8' }}></div>
+            <div className="absolute" style={{ top: '68%', left: '92%', width: 1, height: 1, borderRadius: '50%', background: '#94a3b8' }}></div>
+          </>
+        )}
+
+        {/* Galaxy / Milky Way clouds (dark mode) */}
+        <div className="absolute opacity-0 dark:opacity-100 transition-opacity duration-500" style={{ top: '10%', left: '5%', width: '50%', height: '80%', background: 'linear-gradient(135deg, transparent 20%, rgba(139,92,246,0.08) 40%, rgba(99,102,241,0.06) 55%, transparent 75%)', filter: 'blur(30px)', transform: 'rotate(-15deg)' }}></div>
+        <div className="absolute opacity-0 dark:opacity-100 transition-opacity duration-500" style={{ top: '-10%', right: '10%', width: '40%', height: '90%', background: 'linear-gradient(160deg, transparent 25%, rgba(56,189,248,0.06) 45%, rgba(139,92,246,0.05) 60%, transparent 80%)', filter: 'blur(25px)', transform: 'rotate(10deg)' }}></div>
+        <div className="absolute opacity-0 dark:opacity-100 transition-opacity duration-500" style={{ top: '30%', left: '30%', width: '45%', height: '50%', background: 'radial-gradient(ellipse at center, rgba(217,70,239,0.04) 0%, rgba(99,102,241,0.03) 40%, transparent 70%)', filter: 'blur(20px)' }}></div>
+        <div className="absolute opacity-0 dark:opacity-100 transition-opacity duration-500" style={{ top: '0%', left: '50%', width: '35%', height: '60%', background: 'linear-gradient(180deg, transparent 10%, rgba(186,230,253,0.04) 40%, rgba(56,189,248,0.03) 60%, transparent 85%)', filter: 'blur(25px)' }}></div>
+
         {/* Original gradient blobs */}
         <div className="absolute -top-24 -right-24 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl"></div>
         <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-slate-500/10 rounded-full blur-3xl"></div>
