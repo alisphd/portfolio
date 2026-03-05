@@ -179,6 +179,21 @@ export default function App() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Shooting star effect on click in dark mode
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (!darkMode) return;
+      const star = document.createElement('div');
+      star.className = 'shooting-star';
+      star.style.left = `${e.clientX}px`;
+      star.style.top = `${e.clientY}px`;
+      document.body.appendChild(star);
+      setTimeout(() => star.remove(), 700);
+    };
+    window.addEventListener('click', handleClick);
+    return () => window.removeEventListener('click', handleClick);
+  }, [darkMode]);
+
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -232,7 +247,7 @@ export default function App() {
   };
 
   return (
-    <div className={`min-h-screen text-slate-600 font-sans pb-24 selection:bg-slate-900 selection:text-white transition-colors duration-300 ${darkMode ? 'dark bg-slate-950 text-slate-300' : 'bg-slate-50'}`}>
+    <div className={`min-h-screen text-slate-600 font-sans pb-24 selection:bg-slate-900 selection:text-white transition-colors duration-300 ${darkMode ? 'dark bg-slate-950 text-slate-300 starry-sky' : 'bg-slate-50'}`}>
       <Helmet>
         <title>{cvData.name} - {cvData.title}</title>
         <meta name="description" content={cvData.about.substring(0, 160) + '...'} />
@@ -274,7 +289,7 @@ export default function App() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="bg-white dark:bg-slate-900 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 p-8 sm:p-8 mb-10 flex flex-col md:flex-row gap-8 items-center md:items-start transition-colors duration-300"
+          className="bg-white dark:bg-slate-800 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-black/30 border border-slate-100 dark:border-slate-700 p-8 sm:p-8 mb-10 flex flex-col md:flex-row gap-8 items-center md:items-start transition-colors duration-300"
         >
           {/* Picture - Modern Frame with Shake Effect */}
           <div className="shrink-0 relative group">
@@ -444,7 +459,7 @@ export default function App() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: tabDirection * -60 }}
               transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
-              className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 p-8 md:p-14 relative overflow-hidden transition-colors duration-300"
+              className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl shadow-slate-200/50 dark:shadow-black/30 border border-slate-100 dark:border-slate-700 p-8 md:p-14 relative overflow-hidden transition-colors duration-300"
             >
               {/* Subtle background graphic for content area */}
               <div className="absolute top-0 right-0 w-96 h-96 bg-slate-50 dark:bg-slate-800/20 rounded-full blur-3xl -z-10 opacity-50 translate-x-1/2 -translate-y-1/2 transition-colors duration-300"></div>

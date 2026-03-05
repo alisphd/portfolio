@@ -45,3 +45,71 @@
   @apply bg-slate-900/80 backdrop-blur-md border border-slate-800/50;
 }
 
+/* Starry sky background for dark mode */
+.starry-sky {
+  background-color: #020617;
+  background-image:
+    radial-gradient(2px 2px at 20px 30px, #f8fafc, transparent),
+    radial-gradient(2px 2px at 40px 70px, #e2e8f0, transparent),
+    radial-gradient(1px 1px at 90px 40px, #f1f5f9, transparent),
+    radial-gradient(1px 1px at 130px 80px, #cbd5e1, transparent),
+    radial-gradient(2px 2px at 160px 30px, #f8fafc, transparent),
+    radial-gradient(1px 1px at 200px 60px, #e2e8f0, transparent),
+    radial-gradient(1.5px 1.5px at 50px 120px, #f8fafc, transparent),
+    radial-gradient(1px 1px at 100px 150px, #cbd5e1, transparent),
+    radial-gradient(2px 2px at 250px 100px, #f1f5f9, transparent),
+    radial-gradient(1px 1px at 300px 20px, #e2e8f0, transparent),
+    radial-gradient(1.5px 1.5px at 350px 140px, #f8fafc, transparent),
+    radial-gradient(1px 1px at 400px 50px, #cbd5e1, transparent),
+    radial-gradient(2px 2px at 420px 110px, #f1f5f9, transparent),
+    radial-gradient(1px 1px at 450px 30px, #e2e8f0, transparent),
+    radial-gradient(1.5px 1.5px at 500px 80px, #f8fafc, transparent),
+    radial-gradient(1px 1px at 550px 130px, #cbd5e1, transparent),
+    radial-gradient(2px 2px at 600px 40px, #f1f5f9, transparent),
+    radial-gradient(1px 1px at 650px 90px, #e2e8f0, transparent);
+  background-size: 700px 180px;
+  animation: twinkle 4s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  0% { opacity: 0.85; }
+  100% { opacity: 1; }
+}
+
+/* Shooting star */
+.shooting-star {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  background: white;
+  border-radius: 50%;
+  box-shadow:
+    0 0 6px 2px rgba(255, 255, 255, 0.6),
+    0 0 12px 4px rgba(56, 189, 248, 0.4);
+  pointer-events: none;
+  z-index: 9999;
+  animation: shoot 0.6s ease-out forwards;
+}
+
+.shooting-star::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(to left, rgba(255,255,255,0.8), transparent);
+  transform: translateY(-50%);
+}
+
+@keyframes shoot {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(120px, -80px) scale(0);
+    opacity: 0;
+  }
+}
+
