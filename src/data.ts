@@ -143,9 +143,21 @@ export const cvData = {
       location: "Faisalabad, Pakistan",
       period: "2024 – Present",
       certificateUrl: "#",
-      details: [
-        "**Evolutionary Origins and Structural Mechanism of V2-Mediated Host Immunity Suppression in Soybean Stay-Green Associated Virus (SoSGV)**: Compiled 54 complete SoSGV genomes plus outgroups from GenBank; performed MAFFT alignment, maximum-likelihood phylogeny (MEGA11/ggtree). Estimated population diversity (DnaSP), detected recombination (RDP5), identified episodic positive selection on the V2 gene (Datamonkey MEME), predicted V2 and soybean SKP1 structures (ColabFold), docked the complex with HDOCK, and evaluated complex stability by GROMACS molecular dynamics simulations.",
-        "**Systematic Characterization of Glycine max IQD Genes Reveals Insights into Drought Stress Adaptation and Hormonal Regulation of Plant Architecture**: Identified 12 soybean IQD genes (HMMER, SMART); characterized protein physicochemical properties, subcellular localization, reconstructed phylogenetic relationships (iTOL); analyzed gene structure, conserved motifs, synteny, promoter cis-elements, RNA-seq expression, and STRING-based interactions using TBtools, SoyAtlas, and Phytozome."
+      projects: [
+        {
+          name: "Evolutionary Origins and Structural Mechanism of V2-Mediated Host Immunity Suppression in Soybean Stay-Green Associated Virus (SoSGV)",
+          details: [
+            "Compiled 54 complete SoSGV genomes plus outgroups from GenBank; performed MAFFT alignment, maximum-likelihood phylogeny (MEGA11/ggtree).",
+            "Estimated population diversity (DnaSP), detected recombination (RDP5), identified episodic positive selection on the V2 gene (Datamonkey MEME), predicted V2 and soybean SKP1 structures (ColabFold), docked the complex with HDOCK, and evaluated complex stability by GROMACS molecular dynamics simulations."
+          ]
+        },
+        {
+          name: "Systematic Characterization of Glycine max IQD Genes Reveals Insights into Drought Stress Adaptation and Hormonal Regulation of Plant Architecture",
+          details: [
+            "Identified 12 soybean IQD genes (HMMER, SMART); characterized protein physicochemical properties, subcellular localization, reconstructed phylogenetic relationships (iTOL).",
+            "Analyzed gene structure, conserved motifs, synteny, promoter cis-elements, RNA-seq expression, and STRING-based interactions using TBtools, SoyAtlas, and Phytozome."
+          ]
+        }
       ]
     }
   ],
