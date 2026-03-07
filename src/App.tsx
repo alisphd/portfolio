@@ -121,7 +121,6 @@ export default function App() {
   const [filterOpen, setFilterOpen] = useState(false);
   const [tabDirection, setTabDirection] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
-  const [moonPhase, setMoonPhase] = useState(0); // 0-7 random moon phase
   const prevTabIndexRef = useRef(0);
 
   const handleTabChange = useCallback((newTab: TabId) => {
@@ -298,65 +297,13 @@ export default function App() {
         {/* Dark mode toggle */}
         <div className="absolute top-4 right-4 z-50">
           <button
-            onClick={() => {
-              setDarkMode(!darkMode);
-              setMoonPhase(Math.floor(Math.random() * 8));
-            }}
+            onClick={() => setDarkMode(!darkMode)}
             className="p-2.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 transition-all shadow-lg"
             aria-label="Toggle Dark Mode"
           >
             {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
           </button>
         </div>
-
-        {/* Realistic Moon with glow (dark mode only) */}
-        {darkMode && (() => {
-          // CSS radial-gradient positions for curved phase shadow
-          const phaseStyles: Record<number, React.CSSProperties> = {
-            0: { background: 'radial-gradient(circle at 20% 50%, transparent 32%, #020617 34%)' },  // thin crescent
-            1: { background: 'radial-gradient(circle at 30% 50%, transparent 34%, #020617 36%)' },  // waxing crescent
-            2: { background: 'linear-gradient(to left, transparent 48%, #020617 52%)' },             // first quarter
-            3: { background: 'radial-gradient(circle at 70% 50%, #020617 30%, transparent 33%)' },   // waxing gibbous
-            4: { background: 'radial-gradient(circle at 30% 50%, #020617 30%, transparent 33%)' },   // waning gibbous
-            5: { background: 'linear-gradient(to right, transparent 48%, #020617 52%)' },            // last quarter
-            6: { background: 'radial-gradient(circle at 70% 50%, transparent 34%, #020617 36%)' },   // waning crescent
-            7: {},  // full moon - no overlay
-          };
-          return (
-            <div className="absolute top-3 left-6 z-10">
-              {/* Atmospheric glow */}
-              <div className="absolute rounded-full" style={{
-                width: '220px', height: '220px',
-                top: '-74px', left: '-74px',
-                background: 'radial-gradient(circle, rgba(253,244,220,0.08) 0%, rgba(253,244,220,0.04) 25%, rgba(186,230,253,0.02) 45%, transparent 65%)',
-              }}></div>
-              {/* Close halo */}
-              <div className="absolute rounded-full" style={{
-                width: '110px', height: '110px',
-                top: '-19px', left: '-19px',
-                background: 'radial-gradient(circle, rgba(253,244,220,0.14) 0%, rgba(226,232,240,0.06) 50%, transparent 70%)',
-              }}></div>
-              {/* Moon image with phase overlay */}
-              <div className="relative overflow-hidden rounded-full" style={{ width: '72px', height: '72px' }}>
-                <img
-                  src={`${import.meta.env.BASE_URL}moon.png`}
-                  alt=""
-                  className="w-full h-full object-cover rounded-full"
-                  style={{
-                    filter: 'brightness(1.1) contrast(1.05)',
-                  }}
-                />
-                {/* Phase shadow with curved edge */}
-                {moonPhase < 7 && (
-                  <div
-                    className="absolute inset-0 rounded-full"
-                    style={phaseStyles[moonPhase]}
-                  ></div>
-                )}
-              </div>
-            </div>
-          );
-        })()}
       </div>
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-32 relative z-10">
