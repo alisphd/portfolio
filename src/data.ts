@@ -39,13 +39,12 @@ export const cvData = {
       certificateUrl: "https://drive.google.com/file/d/14XRTN_t0_nuX0CChL30IpVVl99rK-1Jl/view?usp=sharing",
       projects: [
         {
-          name: "Project 1: In-Silico Analysis of WRKY Genes in Rice Subspecies (Sep–Oct 2025)",
+          name: "Project 1: Comparative Evolutionary Analysis of WRKY Transcription Factors in Rice Lineages (Sep-Oct 2025)",
           details: [
-            "Identified and characterized 252 WRKY transcription factors across O. sativa indica, japonica, and O. glaberrima using PlantTFDB and SMART databases",
-            "Constructed maximum likelihood phylogenetic trees (ClustalX, MEGA12) to classify genes into evolutionary subgroups based on conserved domain architecture",
-            "Analyzed spatio-temporal expression patterns across 42 tissue types using RiceXPro and constructed co-expression networks with RiceFRIEND to identify functional modules",
-            "Generated publication-quality visualizations using R (gplots, heatmap.2, ComplexHeatmap) and TBtools for multi-dimensional expression profiling",
-            "Identified 252 WRKY TFs, contributing to the first comparative analysis across Pakistani rice subspecies and providing actionable targets for stress tolerance."
+            "Retrieved 325 WRKY transcription factors from O. sativa ssp. japonica, O. sativa ssp. indica, and O. glaberrima from PlantTFDB; independently validated WRKY domains with Pfam and SMART, excluded non-WRKY sequences, and retained representative isoforms for downstream analysis",
+            "Constructed outgroup-rooted maximum-likelihood phylogenies with 90 Arabidopsis WRKY proteins using MAFFT L-INS-i and IQ-TREE/ModelFinder (1,000 ultrafast bootstraps) to classify rice WRKYs into canonical subgroups",
+            "Characterized conserved motifs, exon-intron organization, chromosomal distribution, tandem/segmental duplication, and promoter cis-elements using MEME, GFF3-based gene structure parsing, MCScanX, and PlantCARE",
+            "Analyzed spatio-temporal RNA-seq expression across key developmental and abiotic-stress libraries; performed Kruskal-Wallis tissue-enrichment testing, GO/KEGG enrichment, and RiceFREND/NetworkX-based co-expression analysis; visualized results with TBtools, ESPript, Python, and R"
           ]
         },
         {
@@ -55,8 +54,16 @@ export const cvData = {
             "Characterized gene structure, conserved motifs (MEME Suite), and protein domains (InterProScan) to establish evolutionary relationships across cereals",
             "Executed comparative synteny analysis using MCScanX and Circa, mapping 700+ orthologous gene pairs and visualizing chromosomal relationships with TBtools and circlize",
             "Calculated evolutionary selection pressure (KaKs_Calculator 2.0), demonstrating strong purifying selection (Ka/Ks = 0.08–0.12) across WRKY gene families",
-            "Applied multivariate statistical methods (PCA, t-SNE) and codon usage bias analysis (seqinr) to compositional datasets; developed reproducible analytical workflows using Python (BioPython) and R for statistical testing and high-dimensional visualization",
-            "Established comprehensive phylogenetic and syntenic relationships across seven cereal species, providing a foundation for future stress-resilience breeding programs."
+            "Applied multivariate statistical methods (PCA, t-SNE) and codon usage bias analysis (seqinr) to compositional datasets; developed reproducible analytical workflows using Python (BioPython) and R for statistical testing and high-dimensional visualization"
+          ]
+        },
+        {
+          name: "Project 3: Multi-Omics Network Pharmacology of Antidiabetic Medicinal Plants with Rat qPCR Validation Design (2026)",
+          details: [
+            "Curated 44 bioactive phytochemicals from Moringa oleifera, Ocimum sanctum, Zingiber officinale, and Withania somnifera using plant-compound databases; predicted 536 compound targets with SwissTargetPrediction and SEA and integrated them with 2,281 antioxidant/T2D-associated genes to identify core therapeutic nodes",
+            "Constructed STRING protein-protein interaction networks, ranked hub genes using degree, betweenness, and closeness centrality, and performed GO/KEGG enrichment to resolve insulin signaling, FOXO, HIF-1, inflammatory, and oxidative-stress pathways",
+            "Performed molecular docking of 44 phytochemicals against top hub proteins, generated publication-ready network, heatmap, docking, and Venn-diagram figures, and prioritized candidate binders including curcumin, eugenol, and withanolide-class compounds",
+            "Mapped 55 human targets to Rattus norvegicus orthologs and designed qPCR primers for 12 validation genes using NCBI Primer-BLAST to support downstream wet-lab validation in diabetic rat models"
           ]
         },
         {
@@ -128,6 +135,17 @@ export const cvData = {
         "Designed and conducted field trials in walk-in tunnels to study disease prevalence and fungicide efficacy in vegetable crops (tomatoes, cucumbers, watermelons, onions, garlic), with emphasis on tomato early blight and grey mold management.",
         "Performed plant pathology diagnostics including pathogen isolation, ELISA-based virus identification, and PCR-based detection for bacterial and nematode pathogens.",
         "Contributed disease resistance data to vegetable and cereal breeding programs through statistical analysis (RStudio, Python), supporting crop improvement strategies."
+      ]
+    },
+    {
+      title: "Independent Research Projects",
+      organization: "Personal Projects",
+      location: "Faisalabad, Pakistan",
+      period: "2024 – Present",
+      certificateUrl: "#",
+      details: [
+        "**Evolutionary Origins and Structural Mechanism of V2-Mediated Host Immunity Suppression in Soybean Stay-Green Associated Virus (SoSGV)**: Compiled 54 complete SoSGV genomes plus outgroups from GenBank; performed MAFFT alignment, maximum-likelihood phylogeny (MEGA11/ggtree). Estimated population diversity (DnaSP), detected recombination (RDP5), identified episodic positive selection on the V2 gene (Datamonkey MEME), predicted V2 and soybean SKP1 structures (ColabFold), docked the complex with HDOCK, and evaluated complex stability by GROMACS molecular dynamics simulations.",
+        "**Systematic Characterization of Glycine max IQD Genes Reveals Insights into Drought Stress Adaptation and Hormonal Regulation of Plant Architecture**: Identified 12 soybean IQD genes (HMMER, SMART); characterized protein physicochemical properties, subcellular localization, reconstructed phylogenetic relationships (iTOL); analyzed gene structure, conserved motifs, synteny, promoter cis-elements, RNA-seq expression, and STRING-based interactions using TBtools, SoyAtlas, and Phytozome."
       ]
     }
   ],
@@ -710,51 +728,53 @@ export const cvData = {
         "Pathogen isolation & identification",
         "PCR, Gel Electrophoresis",
         "SSR Genotyping, Marker-Assisted Selection (MAS)",
-        "Primer Design",
-        "Physiological Assays (SPAD, IRGA, Porometer, Osmometer, Spectrophotometry)",
-        "Biochemical profiling (MDA, POD activity)"
+        "Primer Design (Primer3, NCBI Primer-BLAST)",
+        "Physiological Assays (SPAD, IRGA, Porometer, Osmometer, Pressure chamber)",
+        "Biochemical profiling (MDA, POD, EC, ion quantification)",
+        "qPCR validation planning"
       ]
     },
     {
       category: "Genome-Wide & Comparative Genomics",
       details: [
-        "HMM-based gene family identification (HMMER 3.0)",
-        "Protein domain verification (SMART, Pfam)",
-        "Gene structure analysis (GSDS 2.0)",
+        "HMM-based gene family identification (HMMER)",
+        "Domain validation (PlantTFDB, Pfam, SMART, NCBI CDD)",
+        "Gene structure analysis (GSDS, GFF3 parsing)",
         "Motif discovery (MEME Suite)",
-        "Synteny analysis (MCScanX, Circos, TBtools-II)",
+        "Chromosomal mapping, synteny and duplication analysis (MCScanX)",
         "Promoter cis-element analysis (PlantCARE)",
-        "Subcellular localization prediction (WoLF PSORT)"
+        "RNA-seq expression profiling"
       ]
     },
     {
       category: "Phylogenomics & Molecular Evolution",
       details: [
-        "Phylogenetic reconstruction (MEGA 11/12; Maximum Likelihood, Neighbor-Joining; 1,000 bootstrap replicates)",
-        "Sequence alignment (MAFFT, ClustalW)",
-        "Recombination detection (RDP5, 7 algorithms)",
-        "Positive selection analysis (MEME)",
-        "Evolutionary metrics (KaKs_Calculator, DnaSP 6)",
-        "Tree visualization (iTOL, ggtree)"
+        "Sequence alignment (MAFFT L-INS-i, ClustalW)",
+        "Phylogenetic reconstruction (IQ-TREE, ModelFinder, MEGA11/12, ggtree, iTOL, ESPript)",
+        "Recombination detection (RDP5)",
+        "Population genetics (DnaSP)",
+        "Positive selection analysis (Datamonkey MEME)",
+        "Ka/Ks estimation (KaKs_Calculator, PAL2NAL)"
       ]
     },
     {
-      category: "Protein Structure & Docking",
+      category: "Protein Structure, Docking & Interaction Analysis",
       details: [
-        "Structure prediction (ColabFold)",
+        "Structure prediction (ColabFold/AlphaFold2, AlphaFold DB)",
         "Protein-protein docking (HDOCK)",
         "Molecular dynamics simulations (GROMACS)",
-        "PPI network analysis (STRING database)"
+        "Protein-protein interaction network analysis (STRING)"
       ]
     },
     {
-      category: "Data Analysis & Visualization",
+      category: "Network Pharmacology, Statistics & Visualization",
       details: [
-        "R Programming (tidyverse, ggplot2, ComplexHeatmap, pheatmap, circlize, seqinr)",
-        "Python (BioPython, Pandas)",
-        "Statistical analysis (ANOVA, Kruskal-Wallis, PCA, t-SNE)",
-        "RNA-seq analysis (expression profiling, heatmap clustering)",
-        "GIS & Remote Sensing"
+        "Compound-target prediction (SwissTargetPrediction, SEA)",
+        "Target overlap analysis, hub-gene ranking by network centrality (GO/KEGG enrichment)",
+        "Python (BioPython, Pandas, NetworkX, matplotlib, seaborn)",
+        "R (tidyverse, ggplot2, ComplexHeatmap, pheatmap, circlize, seqinr)",
+        "GraphPad Prism, TBtools, RiceFREND",
+        "PCA, t-SNE, ANOVA, and Kruskal-Wallis testing"
       ]
     },
     {
@@ -763,8 +783,8 @@ export const cvData = {
         "Greenhouse & field trial management (RCBD, factorial design)",
         "Screening for biotic & abiotic stress tolerance in rice and other crops",
         "Agroecological data collection",
-        "IPM/IDM practices",
-        "Sustainable agriculture frameworks"
+        "IPM",
+        "Farmer-facing extension support"
       ]
     },
     {
@@ -772,7 +792,9 @@ export const cvData = {
       details: [
         "Scientific writing",
         "Conference presentations",
-        "Fundraising"
+        "Peer review",
+        "Knowledge synthesis",
+        "Interdisciplinary collaboration"
       ]
     }
   ],
