@@ -218,6 +218,8 @@ export default function App() {
   // Log visitor analytics on first page load
   useEffect(() => {
     logVisit();
+    // Force native document title to ensure it displays correctly in all browsers
+    document.title = `${cvData.name} - ${cvData.title}`;
   }, []);
 
   const scrollMenu = (direction: 'left' | 'right') => {
@@ -1212,7 +1214,7 @@ export default function App() {
           <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">
             © 2026 {cvData.name}. All rights reserved.
           </p>
-          <span className="text-xs text-slate-400 dark:text-slate-500 font-medium">Last updated: March 5, 2026</span>
+          <span className="text-xs text-slate-400 dark:text-slate-500 font-medium">Last updated: March 8, 2026</span>
         </div>
       </footer>
     </div>
