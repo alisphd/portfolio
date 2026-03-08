@@ -9,7 +9,7 @@ export const cvData = {
     wechat: "saqibali01",
     location: "Chiniot, Punjab, Pakistan"
   },
-  about: "<strong>Plant Pathologist and Bioinformatician (M.Sc. Hons.)</strong> combining wet-lab molecular diagnostics with advanced R/Python bioinformatics workflows to solve complex research problems in plant-pathogen interactions and stress-responsive gene discovery.<br/><br/>Specializing in genome-wide analysis, phylogenomics, and molecular evolution, with a proven ability to bridge the gap between computational prediction and physiological validation.",
+  about: "<strong>Plant Pathologist and Bioinformatician (M.Sc. Hons.)</strong> combining wet-lab molecular diagnostics with advanced computational pipelines to solve complex research challenges in plant-pathogen interactions and stress-responsive gene discovery.<br/><br/>Specializing in multi-omics integration, network pharmacology, phylogenomics, and applied machine learning, with a proven ability to bridge the critical gap between predictive analytics and physiological validation.",
   education: [
     {
       degree: "M.Sc. (Hons.) Agriculture Plant Pathology",
@@ -852,7 +852,8 @@ export const cvData = {
         { id: 3, file: "output_03_expression_heatmap.webp", title: "Expression Profiling Heatmap", desc: "Hierarchical clustering across 42 tissue types reveals stress-responsive WRKY modules preferentially expressed in roots and flag leaves", tags: ["RNA-seq", "Heatmap", "R"] },
         { id: 7, file: "output_07_coexpression_network.webp", title: "Co-expression Network", desc: "RiceFRIEND-derived network highlights hub genes connecting biotic and abiotic stress-response pathways in rice", tags: ["NetworkX", "Co-expression", "Python"] },
         { id: 8, file: "output_08_pca_tsne.webp", title: "PCA & t-SNE Clustering", desc: "Dimensionality reduction separates WRKY genes by subfamily, confirming sequence-based classification with expression data", tags: ["PCA", "t-SNE", "Python"] },
-        { id: 45, file: "output_46_go_kegg_bubble.webp", title: "GO/KEGG Enrichment Analysis", desc: "Bubble plot revealing core therapeutic networks of antidiabetic phytochemicals across insulin, FOXO, and oxidative stress pathways", tags: ["Enrichment", "Network Pharmacology", "Python"] }
+        { id: 45, file: "output_46_go_kegg_bubble.webp", title: "GO/KEGG Enrichment Analysis", desc: "Bubble plot revealing core therapeutic networks of antidiabetic phytochemicals across insulin, FOXO, and oxidative stress pathways", tags: ["Enrichment", "Network Pharmacology", "Python"] },
+        { id: 48, file: "output_49_complex_heatmap.webp", title: "Integrated Multi-Omics Clustering", desc: "ComplexHeatmap-style visualization of defense response signatures across phytochemical-treated vs. control groups", tags: ["Transcriptomics", "ComplexHeatmap", "Python"] }
       ]
     },
     {
@@ -899,6 +900,7 @@ export const cvData = {
         { id: 19, file: "output_19_stress_physiology.webp", title: "Stress Physiology Panel", desc: "SPAD chlorophyll, stomatal conductance, and transpiration rates reveal genotype-specific drought tolerance in rice germplasm", tags: ["Physiology", "Stress", "R/ggplot2"] },
         { id: 20, file: "output_20_biochemical_mda_pod.webp", title: "Biochemical MDA & POD", desc: "Elevated MDA and POD activity under salt stress distinguish tolerant from susceptible rice genotypes", tags: ["Biochemistry", "Spectrophotometry", "R/ggplot2"] },
         { id: 21, file: "output_21_ssr_genotyping.webp", title: "SSR Marker Genotyping", desc: "SSR markers reveal high allelic diversity and population structure, enabling marker-assisted selection for stress tolerance", tags: ["SSR", "MAS", "R/ggplot2"] },
+        { id: 47, file: "output_48_qpcr_validation.webp", title: "In Vivo qPCR Target Validation", desc: "Relative fold change (2^-ΔΔCt) of core therapeutic hub genes in control vs phytocompound-treated rat models", tags: ["qPCR", "In Vivo", "Python/ggplot2"] }
       ]
     },
     {
