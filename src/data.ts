@@ -852,7 +852,7 @@ export const cvData = {
         { id: 3, file: "output_03_expression_heatmap.webp", title: "Expression Profiling Heatmap", desc: "Hierarchical clustering across 42 tissue types reveals stress-responsive WRKY modules preferentially expressed in roots and flag leaves", tags: ["RNA-seq", "Heatmap", "R"] },
         { id: 7, file: "output_07_coexpression_network.webp", title: "Co-expression Network", desc: "RiceFRIEND-derived network highlights hub genes connecting biotic and abiotic stress-response pathways in rice", tags: ["NetworkX", "Co-expression", "Python"] },
         { id: 8, file: "output_08_pca_tsne.webp", title: "PCA & t-SNE Clustering", desc: "Dimensionality reduction separates WRKY genes by subfamily, confirming sequence-based classification with expression data", tags: ["PCA", "t-SNE", "Python"] },
-        { id: 45, file: "samples/output_46_go_kegg_bubble.webp", title: "GO/KEGG Enrichment Analysis", desc: "Bubble plot revealing core therapeutic networks of antidiabetic phytochemicals across insulin, FOXO, and oxidative stress pathways", tags: ["Enrichment", "Network Pharmacology", "Python"] }
+        { id: 45, file: "output_46_go_kegg_bubble.webp", title: "GO/KEGG Enrichment Analysis", desc: "Bubble plot revealing core therapeutic networks of antidiabetic phytochemicals across insulin, FOXO, and oxidative stress pathways", tags: ["Enrichment", "Network Pharmacology", "Python"] }
       ]
     },
     {
@@ -928,7 +928,7 @@ export const cvData = {
         { id: 30, file: "output_30_multiomics_integration.webp", title: "Multi-omics Integration", desc: "Integrated transcriptomic-proteomic-metabolomic heatmap revealing coordinated defense response signatures in rice", tags: ["Multi-omics", "Matplotlib", "Python"] },
         { id: 31, file: "output_31_wgcna_modules.webp", title: "WGCNA Co-expression Modules", desc: "WGCNA identifies stress-correlated gene modules with WRKY hub genes linking hormone signaling to pathogen defense", tags: ["WGCNA", "NetworkX", "Python"] },
         { id: 32, file: "output_32_roc_confusion.webp", title: "ROC Curve & Confusion Matrix", desc: "Random Forest classifier achieves AUC > 0.92 for predicting stress-responsive gene candidates from sequence features", tags: ["ROC", "scikit-learn", "Python"] },
-        { id: 46, file: "samples/output_47_network_venn_diagram.webp", title: "Core Therapeutic Target Overlap", desc: "Intersection of 536 phytochemical targets with 2,281 antioxidant/T2D genes identifies 142 hub targets for qPCR validation", tags: ["Network Pharmacology", "Venn Diagram", "Python"] }
+        { id: 46, file: "output_47_network_venn_diagram.webp", title: "Core Therapeutic Target Overlap", desc: "Intersection of 536 phytochemical targets with 2,281 antioxidant/T2D genes identifies 142 hub targets for qPCR validation", tags: ["Network Pharmacology", "Venn Diagram", "Python"] }
       ]
     },
     {
