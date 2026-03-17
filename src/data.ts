@@ -836,7 +836,7 @@ export const cvData = {
       relationship: "Bachelors and Master Instructor"
     }
   ],
-  projects: [
+  digitalProjects: [
     {
       title: "PhytoAid",
       category: "Web App",

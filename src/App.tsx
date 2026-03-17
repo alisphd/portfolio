@@ -29,7 +29,7 @@ const TABS: TabConfig[] = [
   { id: 'education', label: 'Education', icon: GraduationCap },
   { id: 'publications', label: 'Publications', icon: FileSearch },
   { id: 'skills', label: 'Skills', icon: Binary },
-  { id: 'projects', label: 'Projects', icon: MonitorPlay },
+  { id: 'projects', label: 'Digital Projects', icon: MonitorPlay },
   { id: 'gallery', label: 'Research Gallery', icon: Image },
   { id: 'courses', label: 'Courses', icon: Library },
   { id: 'honors', label: 'Honors & Awards', icon: Trophy },
@@ -612,6 +612,13 @@ export default function App() {
 
                               {exp.projects ? (
                                 <div className="space-y-8">
+                                  <div className="flex items-center gap-3">
+                                    <div className="h-px flex-1 bg-slate-200 dark:bg-slate-700"></div>
+                                    <span className="text-xs font-black uppercase tracking-[0.24em] text-teal-500 dark:text-teal-400">
+                                      Selected Research Workstreams
+                                    </span>
+                                    <div className="h-px flex-1 bg-slate-200 dark:bg-slate-700"></div>
+                                  </div>
                                   {exp.projects.map((proj, pIdx) => (
                                     <div key={pIdx} className="bg-slate-50/50 dark:bg-slate-700/40 rounded-2xl p-8 border border-slate-100 dark:border-slate-600/50 hover:bg-white dark:hover:bg-slate-700/60 hover:shadow-md transition-all duration-300">
                                       <h4 className="font-bold text-slate-900 dark:text-slate-100 mb-6 text-xl flex items-center gap-3">
@@ -790,19 +797,19 @@ export default function App() {
                   <div className="flex items-center justify-between mb-8 pb-6 border-b border-slate-200 dark:border-slate-800">
                     <div className="flex items-center gap-4">
                       <MonitorPlay className="w-6 h-6 text-slate-400 dark:text-slate-500" />
-                      <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">Software Projects</h3>
+                      <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">Software, Tools & Pipelines</h3>
                     </div>
                     <div className="bg-slate-900 dark:bg-slate-800 text-white dark:text-slate-200 px-5 py-2 rounded-2xl text-sm font-bold shadow-lg shadow-slate-900/20 dark:shadow-none">
-                      {cvData.projects.length} Featured
+                      {cvData.digitalProjects.length} Featured
                     </div>
                   </div>
 
                   <p className="text-slate-500 dark:text-slate-400 mb-10 text-base font-medium leading-relaxed max-w-3xl">
-                    Software tools, pipelines, and web applications that complement the research portfolio with practical, deployable work.
+                    Deployed digital products, bioinformatics utilities, and workflow platforms presented separately from the research workstreams listed under Experience.
                   </p>
 
                   <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-                    {cvData.projects.map((project: any, idx: number) => (
+                    {cvData.digitalProjects.map((project: any, idx: number) => (
                       <motion.div
                         key={project.title}
                         initial={{ opacity: 0, y: 20 }}
