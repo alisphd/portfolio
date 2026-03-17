@@ -853,6 +853,21 @@ export const cvData = {
       ]
     },
     {
+      title: "Research Synthesizer",
+      category: "AI Research Tool",
+      status: "Live",
+      period: "2026",
+      summary: "A browser-based literature review and knowledge synthesis app for building a personal research library with local PDF extraction, public paper metadata lookup, note-grounded synthesis, and portable JSON export.",
+      stack: ["React", "TypeScript", "Vite", "PDF Extraction", "Crossref", "Local-First"],
+      repoUrl: "https://github.com/alisphd/research-synthesizer",
+      liveUrl: "https://alisphd.github.io/research-synthesizer/",
+      highlights: [
+        "Built a local-first workspace for uploading PDFs, extracting text in the browser, and organizing a reusable personal paper library.",
+        "Added public metadata discovery through Crossref along with a built-in demo collection for quick showcasing and onboarding.",
+        "Implemented note-grounded synthesis, chat-style review support, and JSON import-export for portable research workflows."
+      ]
+    },
+    {
       title: "Plant Virus Pipeline",
       category: "Pipeline + Web UI",
       status: "Live",
