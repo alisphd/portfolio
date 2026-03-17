@@ -855,11 +855,12 @@ export const cvData = {
     {
       title: "Plant Virus Pipeline",
       category: "Pipeline + Web UI",
-      status: "In Progress",
+      status: "Live",
       period: "2026",
       summary: "A command-line and web-based workflow for screening paired-end plant sequencing reads for possible viral content, with dry-run reporting, job tracking, and deployment-ready tooling.",
       stack: ["Python", "CLI", "Web Service", "Docker", "GitHub Actions", "Bioinformatics"],
       repoUrl: "https://github.com/alisphd/plant-virus-pipeline",
+      liveUrl: "https://plant-virus-pipeline-production.up.railway.app/",
       highlights: [
         "Designed a workflow for quality control, host read removal, assembly, and downstream virus-oriented classification.",
         "Built both a Python CLI entrypoint and a lightweight web service for job submission, status tracking, and report generation.",
