@@ -9,7 +9,7 @@ import {
 import { cvData } from './data';
 import { logVisit } from './analytics';
 
-type TabId = 'about' | 'experience' | 'education' | 'publications' | 'skills' | 'courses' | 'honors' | 'references' | 'gallery';
+type TabId = 'about' | 'experience' | 'education' | 'publications' | 'skills' | 'projects' | 'courses' | 'honors' | 'references' | 'gallery';
 
 interface Punch {
   id: number;
@@ -29,6 +29,7 @@ const TABS: TabConfig[] = [
   { id: 'education', label: 'Education', icon: GraduationCap },
   { id: 'publications', label: 'Publications', icon: FileSearch },
   { id: 'skills', label: 'Skills', icon: Binary },
+  { id: 'projects', label: 'Projects', icon: MonitorPlay },
   { id: 'gallery', label: 'Research Gallery', icon: Image },
   { id: 'courses', label: 'Courses', icon: Library },
   { id: 'honors', label: 'Honors & Awards', icon: Trophy },
@@ -778,6 +779,114 @@ export default function App() {
                           ))}
                         </div>
                       </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* PROJECTS TAB */}
+              {activeTab === 'projects' && (
+                <div>
+                  <div className="flex items-center justify-between mb-8 pb-6 border-b border-slate-200 dark:border-slate-800">
+                    <div className="flex items-center gap-4">
+                      <MonitorPlay className="w-6 h-6 text-slate-400 dark:text-slate-500" />
+                      <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">Software Projects</h3>
+                    </div>
+                    <div className="bg-slate-900 dark:bg-slate-800 text-white dark:text-slate-200 px-5 py-2 rounded-2xl text-sm font-bold shadow-lg shadow-slate-900/20 dark:shadow-none">
+                      {cvData.projects.length} Featured
+                    </div>
+                  </div>
+
+                  <p className="text-slate-500 dark:text-slate-400 mb-10 text-base font-medium leading-relaxed max-w-3xl">
+                    Software tools, pipelines, and web applications that complement the research portfolio with practical, deployable work.
+                  </p>
+
+                  <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                    {cvData.projects.map((project: any, idx: number) => (
+                      <motion.div
+                        key={project.title}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: idx * 0.08 }}
+                        whileHover={{ y: -6 }}
+                        className="rounded-3xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800/70 dark:backdrop-blur-xl shadow-sm hover:shadow-xl hover:border-teal-200 dark:hover:border-teal-500/50 transition-all duration-500 overflow-hidden"
+                      >
+                        <div className="p-8">
+                          <div className="flex flex-wrap items-center gap-2 mb-5">
+                            <span className="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-700 text-xs font-black uppercase tracking-wider text-slate-600 dark:text-slate-300">
+                              {project.category}
+                            </span>
+                            <span className={`px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider ${project.status === 'Live' ? 'bg-emerald-50 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300' : 'bg-amber-50 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300'}`}>
+                              {project.status}
+                            </span>
+                            <span className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
+                              {project.period}
+                            </span>
+                          </div>
+
+                          <h4 className="text-2xl font-extrabold text-slate-900 dark:text-white mb-4">{project.title}</h4>
+                          <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-8">
+                            {project.summary}
+                          </p>
+
+                          <div className="mb-8">
+                            <div className="text-xs font-black uppercase tracking-[0.2em] text-teal-500 dark:text-teal-400 mb-4">
+                              Tech Stack
+                            </div>
+                            <div className="flex flex-wrap gap-2.5">
+                              {project.stack.map((item: string, stackIdx: number) => (
+                                <span
+                                  key={stackIdx}
+                                  className="px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm font-bold"
+                                >
+                                  {item}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+
+                          <div className="mb-8">
+                            <div className="text-xs font-black uppercase tracking-[0.2em] text-teal-500 dark:text-teal-400 mb-4">
+                              Highlights
+                            </div>
+                            <ul className="space-y-3">
+                              {project.highlights.map((highlight: string, highlightIdx: number) => (
+                                <li key={highlightIdx} className="flex items-start gap-3 text-slate-600 dark:text-slate-300">
+                                  <ChevronRight className="w-4 h-4 text-teal-500 mt-1 shrink-0" />
+                                  <span className="leading-relaxed">{highlight}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          <div className="flex flex-wrap gap-3 pt-6 border-t border-slate-100 dark:border-slate-700">
+                            {project.liveUrl && (
+                              <a
+                                href={project.liveUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-teal-600 text-white text-sm font-bold hover:bg-teal-700 transition-colors shadow-sm"
+                              >
+                                <Globe className="w-4 h-4" />
+                                Live Demo
+                                <ArrowUpRight className="w-4 h-4" />
+                              </a>
+                            )}
+                            {project.repoUrl && (
+                              <a
+                                href={project.repoUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-slate-100 text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
+                              >
+                                <Github className="w-4 h-4" />
+                                GitHub
+                                <ArrowUpRight className="w-4 h-4" />
+                              </a>
+                            )}
+                          </div>
+                        </div>
+                      </motion.div>
                     ))}
                   </div>
                 </div>

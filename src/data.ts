@@ -836,6 +836,37 @@ export const cvData = {
       relationship: "Bachelors and Master Instructor"
     }
   ],
+  projects: [
+    {
+      title: "PhytoAid",
+      category: "Web App",
+      status: "Live",
+      period: "2026",
+      summary: "A rule-based Streamlit application for preliminary plant disease diagnosis using crop, plant part, and symptom selection, with confidence scoring, severity estimation, management guidance, and a cited local symptom image library.",
+      stack: ["Python", "Streamlit", "Plotly", "JSON", "Plant Pathology"],
+      repoUrl: "https://github.com/alisphd/phytoaid",
+      liveUrl: "https://phytoaid.streamlit.app/",
+      highlights: [
+        "Built a decision-support workflow for citrus, tomato, wheat, rice, maize, sugarcane, and cotton.",
+        "Implemented symptom-based disease ranking, confidence scoring, severity estimation, and management recommendations.",
+        "Created a local symptom reference gallery with cited image sources for a more polished and responsible user experience."
+      ]
+    },
+    {
+      title: "Plant Virus Pipeline",
+      category: "Pipeline + Web UI",
+      status: "In Progress",
+      period: "2026",
+      summary: "A command-line and web-based workflow for screening paired-end plant sequencing reads for possible viral content, with dry-run reporting, job tracking, and deployment-ready tooling.",
+      stack: ["Python", "CLI", "Web Service", "Docker", "GitHub Actions", "Bioinformatics"],
+      repoUrl: "https://github.com/alisphd/plant-virus-pipeline",
+      highlights: [
+        "Designed a workflow for quality control, host read removal, assembly, and downstream virus-oriented classification.",
+        "Built both a Python CLI entrypoint and a lightweight web service for job submission, status tracking, and report generation.",
+        "Added demo-mode execution, smoke-testable inputs, container deployment files, and CI support for reproducible development."
+      ]
+    }
+  ],
   gallery: [
     {
       category: "Phylogenomics & Molecular Evolution",
