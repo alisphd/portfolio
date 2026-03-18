@@ -7,7 +7,6 @@ import {
   Search, ExternalLink, Image, Layers, Sparkles, Building, PlayCircle, Binary, Library, Trophy, ShieldCheck, Sun, Moon, ArrowUpRight, ArrowUp, Github, Code2, Globe, Cpu, Database, Fingerprint, Activity, Terminal, Layout, Share2, Workflow, MessageSquare, Mic, FileAudio, Youtube, Podcast, Zap, MonitorPlay, Focus, X, Microscope, Sprout, Dna, FlaskConical, Leaf, FileSearch, Brain, FlaskRound, Atom, Filter
 } from 'lucide-react';
 import { cvData } from './data';
-import { logVisit } from './analytics';
 
 type TabId = 'about' | 'experience' | 'education' | 'publications' | 'skills' | 'projects' | 'courses' | 'honors' | 'references' | 'gallery';
 
@@ -241,9 +240,7 @@ export default function App() {
     return () => window.removeEventListener('resize', checkScroll);
   }, [checkScroll]);
 
-  // Log visitor analytics on first page load
   useEffect(() => {
-    logVisit();
     // Force native document title to ensure it displays correctly in all browsers
     document.title = `${cvData.name} - ${cvData.title}`;
   }, []);

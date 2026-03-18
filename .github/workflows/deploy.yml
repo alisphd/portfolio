@@ -19,13 +19,6 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
-      VITE_FIREBASE_AUTH_DOMAIN: "alis-portfolio-58436.firebaseapp.com"
-      VITE_FIREBASE_PROJECT_ID: "alis-portfolio-58436"
-      VITE_FIREBASE_STORAGE_BUCKET: "alis-portfolio-58436.firebasestorage.app"
-      VITE_FIREBASE_MESSAGING_SENDER_ID: "35365716593"
-      VITE_FIREBASE_APP_ID: "1:35365716593:web:4974459d6db187484951d0"
     steps:
       - name: Checkout
         uses: actions/checkout@v4

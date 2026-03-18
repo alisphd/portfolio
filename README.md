@@ -18,7 +18,6 @@ Personal portfolio website for **Saqib Ali**, a Plant Pathologist and Bioinforma
 - Research-focused sections for experience, education, publications, skills, courses, honors, references, and a research gallery
 - A separate **Digital Projects** area for deployed tools, web apps, and pipelines
 - Responsive design with animated navigation and modern card-based layouts
-- Anonymous visitor analytics using Firebase
 
 ## Featured Digital Projects
 
@@ -46,7 +45,6 @@ Personal portfolio website for **Saqib Ali**, a Plant Pathologist and Bioinforma
 - [Tailwind CSS v4](https://tailwindcss.com/)
 - [Lucide React](https://lucide.dev/)
 - [Motion](https://motion.dev/)
-- [Firebase Firestore](https://firebase.google.com/)
 
 ## Local Development
 
@@ -72,30 +70,6 @@ http://localhost:3000/portfolio/
 ## Content Management
 
 Most portfolio content is driven from [src/data.ts](src/data.ts), including experience, publications, gallery items, and digital project cards.
-
-## Analytics Setup
-
-Create a `.env` file in the project root and provide your Firebase configuration:
-
-```env
-VITE_FIREBASE_API_KEY=""
-VITE_FIREBASE_AUTH_DOMAIN=""
-VITE_FIREBASE_PROJECT_ID=""
-VITE_FIREBASE_STORAGE_BUCKET=""
-VITE_FIREBASE_MESSAGING_SENDER_ID=""
-VITE_FIREBASE_APP_ID=""
-```
-
-Visitor logs are stored in the Firestore collection `visits`. Each record includes:
-
-- `timestamp` for the server-side write time
-- `clientTimeIso` and `clientLocalDateTime` for the visitor's browser time
-- `clientTimeZone`, `clientUtcOffset`, and `clientUtcOffsetMinutes`
-- `country`, `countryCode`, `region`, and `city`
-- `geoTimeZone`, `geoUtcOffset`, and `geoSource`
-- `page`, `pageUrl`, `referrer`, `language`, `screenWidth`, `screenHeight`, and `userAgent`
-
-To inspect visitor logs, open Firebase Console -> Firestore Database -> `visits`.
 
 ## License
 
