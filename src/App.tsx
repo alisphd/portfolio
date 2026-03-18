@@ -118,6 +118,23 @@ export default function App() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const lastUpdatedLabel = React.useMemo(() => {
+    const rawDate =
+      import.meta.env.VITE_BUILD_DATE ||
+      (typeof document !== 'undefined' ? document.lastModified : '') ||
+      new Date().toISOString();
+    const parsedDate = new Date(rawDate);
+
+    if (Number.isNaN(parsedDate.getTime())) {
+      return 'Recently';
+    }
+
+    return parsedDate.toLocaleDateString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    });
+  }, []);
   const [darkMode, setDarkMode] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
   const [tabDirection, setTabDirection] = useState(0);
@@ -1330,7 +1347,9 @@ export default function App() {
           <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">
             © 2026 {cvData.name}. All rights reserved.
           </p>
-          <span className="text-xs text-slate-400 dark:text-slate-500 font-medium">Last updated: March 8, 2026</span>
+          <span className="text-xs text-slate-400 dark:text-slate-500 font-medium">
+            Last updated: {lastUpdatedLabel}
+          </span>
         </div>
       </footer>
     </div>
