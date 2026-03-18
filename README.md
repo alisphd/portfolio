@@ -86,6 +86,17 @@ VITE_FIREBASE_MESSAGING_SENDER_ID=""
 VITE_FIREBASE_APP_ID=""
 ```
 
+Visitor logs are stored in the Firestore collection `visits`. Each record includes:
+
+- `timestamp` for the server-side write time
+- `clientTimeIso` and `clientLocalDateTime` for the visitor's browser time
+- `clientTimeZone`, `clientUtcOffset`, and `clientUtcOffsetMinutes`
+- `country`, `countryCode`, `region`, and `city`
+- `geoTimeZone`, `geoUtcOffset`, and `geoSource`
+- `page`, `pageUrl`, `referrer`, `language`, `screenWidth`, `screenHeight`, and `userAgent`
+
+To inspect visitor logs, open Firebase Console -> Firestore Database -> `visits`.
+
 ## License
 
 Copyright 2026 Saqib Ali. All rights reserved.
