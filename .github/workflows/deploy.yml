@@ -20,7 +20,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      VITE_FIREBASE_API_KEY: "AIzaSyC24JYJ6h_8dhh7Yv6VusMwy-jzSqPWXK4"
+      VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
       VITE_FIREBASE_AUTH_DOMAIN: "alis-portfolio-58436.firebaseapp.com"
       VITE_FIREBASE_PROJECT_ID: "alis-portfolio-58436"
       VITE_FIREBASE_STORAGE_BUCKET: "alis-portfolio-58436.firebasestorage.app"
