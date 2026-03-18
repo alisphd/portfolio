@@ -846,6 +846,8 @@ export const cvData = {
       stack: ["Python", "Streamlit", "Plotly", "JSON", "Plant Pathology"],
       repoUrl: "https://github.com/alisphd/phytoaid",
       liveUrl: "https://phytoaid.streamlit.app/",
+      thumbnailFile: "phytoaid.png",
+      thumbnailAlt: "PhytoAid dashboard and symptom reference interface",
       highlights: [
         "Built a decision-support workflow for citrus, tomato, wheat, rice, maize, sugarcane, and cotton.",
         "Implemented symptom-based disease ranking, confidence scoring, severity estimation, and management recommendations.",
@@ -861,6 +863,8 @@ export const cvData = {
       stack: ["React", "TypeScript", "Vite", "Zustand", "Experimental Design", "Randomization"],
       repoUrl: "https://github.com/alisphd/phytoplan",
       liveUrl: "https://alisphd.github.io/phytoplan/",
+      thumbnailFile: "phytoplan.png",
+      thumbnailAlt: "PhytoPlan experiment planner dashboard",
       highlights: [
         "Built an interactive planning workflow for setting up agricultural experiments with design guidance based on the study structure.",
         "Implemented randomized layout generation together with reusable templates, saved plans, and experiment detail views for repeatable planning.",
@@ -876,6 +880,8 @@ export const cvData = {
       stack: ["React", "TypeScript", "Vite", "PDF Extraction", "Crossref", "Local-First"],
       repoUrl: "https://github.com/alisphd/research-synthesizer",
       liveUrl: "https://alisphd.github.io/research-synthesizer/",
+      thumbnailFile: "research-synthesizer.png",
+      thumbnailAlt: "Research Synthesizer literature review interface",
       highlights: [
         "Built a local-first workspace for uploading PDFs, extracting text in the browser, and organizing a reusable personal paper library.",
         "Added public metadata discovery through Crossref along with a built-in demo collection for quick showcasing and onboarding.",
@@ -891,6 +897,8 @@ export const cvData = {
       stack: ["Python", "CLI", "Web Service", "Docker", "GitHub Actions", "Bioinformatics"],
       repoUrl: "https://github.com/alisphd/plant-virus-pipeline",
       liveUrl: "https://plant-virus-pipeline-production.up.railway.app/",
+      thumbnailFile: "plant-virus-pipeline.png",
+      thumbnailAlt: "Plant Virus Pipeline web interface",
       highlights: [
         "Designed a workflow for quality control, host read removal, assembly, and downstream virus-oriented classification.",
         "Built both a Python CLI entrypoint and a lightweight web service for job submission, status tracking, and report generation.",

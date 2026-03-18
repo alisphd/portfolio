@@ -118,6 +118,7 @@ export default function App() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const currentYear = new Date().getFullYear();
   const lastUpdatedLabel = React.useMemo(() => {
     const rawDate =
       import.meta.env.VITE_BUILD_DATE ||
@@ -139,6 +140,7 @@ export default function App() {
   const [filterOpen, setFilterOpen] = useState(false);
   const [tabDirection, setTabDirection] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [expandedWorkstreams, setExpandedWorkstreams] = useState<Record<string, boolean>>({});
   const prevTabIndexRef = useRef(0);
 
   const handleTabChange = useCallback((newTab: TabId) => {
@@ -147,6 +149,12 @@ export default function App() {
     setTabDirection(newIndex > oldIndex ? 1 : -1);
     prevTabIndexRef.current = newIndex;
     setActiveTab(newTab);
+  }, []);
+  const toggleWorkstreams = useCallback((workstreamKey: string) => {
+    setExpandedWorkstreams((prev) => ({
+      ...prev,
+      [workstreamKey]: !prev[workstreamKey],
+    }));
   }, []);
   const filterRef = useRef<HTMLDivElement>(null);
 
@@ -550,124 +558,169 @@ export default function App() {
                 <div>
                   <SectionHeading title="Work Experience" icon={FlaskConical} />
                   <div className="space-y-16 mt-12">
-                    {cvData.experience.map((exp, idx) => (
-                      <motion.div
-                        key={idx}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: idx * 0.1 }}
-                        className="relative group"
-                      >
-                        <div className="flex flex-col md:flex-row gap-6 md:gap-10">
-                          {/* Left Column: Date & Location */}
-                          <div className="md:w-[200px] shrink-0 md:text-right pt-2">
-                            <div className="text-lg font-bold text-slate-900 mb-2">
-                              {exp.period}
-                            </div>
-                            <div className="flex items-center md:justify-end gap-2 text-slate-400 text-sm font-medium">
-                              <MapPin className="w-4 h-4" />
-                              <span>{exp.location}</span>
-                            </div>
-                          </div>
+                    {cvData.experience.map((exp, idx) => {
+                      const workstreamKey = `${exp.title}-${idx}`;
+                      const isExpanded = expandedWorkstreams[workstreamKey] ?? false;
 
-                          {/* Right Column: Content */}
-                          <div className="flex-1 pb-4 relative">
-                            {/* Timeline line */}
-                            <div className="hidden md:block absolute -left-5 top-4 bottom-0 w-px bg-slate-200 dark:bg-slate-700 group-last:bg-transparent"></div>
-                            {/* Timeline dot */}
-                            <div className="hidden md:block absolute -left-[25px] top-3.5 w-3 h-3 rounded-full bg-slate-300 dark:bg-slate-600 group-hover:bg-teal-500 dark:group-hover:bg-teal-400 group-hover:scale-125 transition-all duration-300"></div>
-
-                            <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white mb-2 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-300">{exp.title}</h3>
-                            <div className="flex flex-wrap items-center gap-4 mb-6">
-                              <p className="text-slate-500 dark:text-slate-400 font-semibold text-lg">{exp.organization}</p>
-                              {exp.certificateUrl && (
-                                <a
-                                  href={exp.certificateUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="flex items-center gap-1.5 px-3 py-1 bg-teal-50 dark:bg-teal-900/40 text-teal-600 dark:text-teal-400 rounded-lg text-xs font-bold hover:bg-teal-100 dark:hover:bg-teal-800/60 transition-colors"
-                                >
-                                  <FileText className="w-3 h-3" />
-                                  View PDF
-                                </a>
-                              )}
+                      return (
+                        <motion.div
+                          key={idx}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: idx * 0.1 }}
+                          className="relative group"
+                        >
+                          <div className="flex flex-col md:flex-row gap-6 md:gap-10">
+                            {/* Left Column: Date & Location */}
+                            <div className="md:w-[200px] shrink-0 md:text-right pt-2">
+                              <div className="text-lg font-bold text-slate-900 dark:text-white mb-2">
+                                {exp.period}
+                              </div>
+                              <div className="flex items-center md:justify-end gap-2 text-slate-400 dark:text-slate-500 text-sm font-medium">
+                                <MapPin className="w-4 h-4" />
+                                <span>{exp.location}</span>
+                              </div>
                             </div>
 
-                            <div className="space-y-6">
-                              {(exp.supervisor || exp.thesis) && (
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                  {exp.supervisor && (
-                                    <div className="bg-slate-50 dark:bg-slate-700/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-600/50 flex items-center gap-4">
-                                      <div className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center shadow-sm">
-                                        <User className="w-5 h-5 text-slate-400 dark:text-slate-500" />
-                                      </div>
-                                      <div>
-                                        <div className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Supervisor</div>
-                                        {(exp as any).supervisorUrl ? (
-                                          <a href={(exp as any).supervisorUrl} target="_blank" rel="noopener noreferrer" className="text-sm font-bold text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:underline transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 rounded">
-                                            {exp.supervisor}
-                                          </a>
-                                        ) : (
-                                          <div className="text-sm font-bold text-slate-700 dark:text-slate-300">{exp.supervisor}</div>
-                                        )}
-                                      </div>
-                                    </div>
-                                  )}
-                                  {exp.thesis && (
-                                    <div className="bg-slate-50 dark:bg-slate-700/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-600/50 flex items-center gap-4">
-                                      <div className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center shadow-sm">
-                                        <BookOpen className="w-5 h-5 text-slate-400 dark:text-slate-500" />
-                                      </div>
-                                      <div>
-                                        <div className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Thesis</div>
-                                        <div className="text-sm font-bold text-slate-700 dark:text-slate-300">{exp.thesis}</div>
-                                      </div>
-                                    </div>
-                                  )}
-                                </div>
-                              )}
+                            {/* Right Column: Content */}
+                            <div className="flex-1 pb-4 relative">
+                              {/* Timeline line */}
+                              <div className="hidden md:block absolute -left-5 top-4 bottom-0 w-px bg-slate-200 dark:bg-slate-700 group-last:bg-transparent"></div>
+                              {/* Timeline dot */}
+                              <div className="hidden md:block absolute -left-[25px] top-3.5 w-3 h-3 rounded-full bg-slate-300 dark:bg-slate-600 group-hover:bg-teal-500 dark:group-hover:bg-teal-400 group-hover:scale-125 transition-all duration-300"></div>
 
-                              {exp.projects ? (
-                                <div className="space-y-8">
-                                  <div className="flex items-center gap-3">
-                                    <div className="h-px flex-1 bg-slate-200 dark:bg-slate-700"></div>
-                                    <span className="text-xs font-black uppercase tracking-[0.24em] text-teal-500 dark:text-teal-400">
-                                      Selected Research Workstreams
-                                    </span>
-                                    <div className="h-px flex-1 bg-slate-200 dark:bg-slate-700"></div>
+                              <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white mb-2 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-300">{exp.title}</h3>
+                              <div className="flex flex-wrap items-center gap-4 mb-6">
+                                <p className="text-slate-500 dark:text-slate-400 font-semibold text-lg">{exp.organization}</p>
+                                {exp.certificateUrl && (
+                                  <a
+                                    href={exp.certificateUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-1.5 px-3 py-1 bg-teal-50 dark:bg-teal-900/40 text-teal-600 dark:text-teal-400 rounded-lg text-xs font-bold hover:bg-teal-100 dark:hover:bg-teal-800/60 transition-colors"
+                                  >
+                                    <FileText className="w-3 h-3" />
+                                    View PDF
+                                  </a>
+                                )}
+                              </div>
+
+                              <div className="space-y-6">
+                                {(exp.supervisor || exp.thesis) && (
+                                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    {exp.supervisor && (
+                                      <div className="bg-slate-50 dark:bg-slate-700/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-600/50 flex items-center gap-4">
+                                        <div className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center shadow-sm">
+                                          <User className="w-5 h-5 text-slate-400 dark:text-slate-500" />
+                                        </div>
+                                        <div>
+                                          <div className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Supervisor</div>
+                                          {(exp as any).supervisorUrl ? (
+                                            <a href={(exp as any).supervisorUrl} target="_blank" rel="noopener noreferrer" className="text-sm font-bold text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 hover:underline transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 rounded">
+                                              {exp.supervisor}
+                                            </a>
+                                          ) : (
+                                            <div className="text-sm font-bold text-slate-700 dark:text-slate-300">{exp.supervisor}</div>
+                                          )}
+                                        </div>
+                                      </div>
+                                    )}
+                                    {exp.thesis && (
+                                      <div className="bg-slate-50 dark:bg-slate-700/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-600/50 flex items-center gap-4">
+                                        <div className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center shadow-sm">
+                                          <BookOpen className="w-5 h-5 text-slate-400 dark:text-slate-500" />
+                                        </div>
+                                        <div>
+                                          <div className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Thesis</div>
+                                          <div className="text-sm font-bold text-slate-700 dark:text-slate-300">{exp.thesis}</div>
+                                        </div>
+                                      </div>
+                                    )}
                                   </div>
-                                  {exp.projects.map((proj, pIdx) => (
-                                    <div key={pIdx} className="bg-slate-50/50 dark:bg-slate-700/40 rounded-2xl p-8 border border-slate-100 dark:border-slate-600/50 hover:bg-white dark:hover:bg-slate-700/60 hover:shadow-md transition-all duration-300">
-                                      <h4 className="font-bold text-slate-900 dark:text-slate-100 mb-6 text-xl flex items-center gap-3">
-                                        <div className="w-2 h-8 bg-teal-500 rounded-full"></div>
-                                        {proj.name}
-                                      </h4>
-                                      <ul className="space-y-4">
-                                        {proj.details.map((detail, dIdx) => (
-                                          <li key={dIdx} className="flex items-start gap-4 text-slate-600 dark:text-slate-300 text-base">
-                                            <ChevronRight className="w-5 h-5 text-teal-400 mt-1 shrink-0" />
-                                            <span className="leading-relaxed">{detail}</span>
-                                          </li>
-                                        ))}
-                                      </ul>
+                                )}
+
+                                {exp.projects ? (
+                                  <div className="space-y-6">
+                                    <div className="flex items-center gap-3">
+                                      <div className="h-px flex-1 bg-slate-200 dark:bg-slate-700"></div>
+                                      <span className="text-xs font-black uppercase tracking-[0.24em] text-teal-500 dark:text-teal-400">
+                                        Selected Research Workstreams
+                                      </span>
+                                      <div className="h-px flex-1 bg-slate-200 dark:bg-slate-700"></div>
                                     </div>
-                                  ))}
-                                </div>
-                              ) : (
-                                <ul className="space-y-4">
-                                  {exp.details?.map((detail, dIdx) => (
-                                    <li key={dIdx} className="flex items-start gap-4 text-slate-600 text-base">
-                                      <ChevronRight className="w-5 h-5 text-teal-400 mt-1 shrink-0" />
-                                      <span className="leading-relaxed">{detail}</span>
-                                    </li>
-                                  ))}
-                                </ul>
-                              )}
+
+                                    <div className="rounded-2xl border border-slate-100 dark:border-slate-600/50 bg-slate-50/80 dark:bg-slate-700/40 overflow-hidden">
+                                      <button
+                                        type="button"
+                                        onClick={() => toggleWorkstreams(workstreamKey)}
+                                        className="w-full px-6 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-left hover:bg-white dark:hover:bg-slate-700/60 transition-colors"
+                                        aria-expanded={isExpanded}
+                                      >
+                                        <div>
+                                          <div className="text-sm font-black uppercase tracking-[0.24em] text-teal-500 dark:text-teal-400 mb-2">
+                                            Research Fellow Portfolio
+                                          </div>
+                                          <div className="text-lg font-bold text-slate-900 dark:text-white">
+                                            {exp.projects.length} detailed workstreams
+                                          </div>
+                                          <div className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                                            {isExpanded ? 'Hide the detailed breakdown.' : 'Expand to view the full research workstream details.'}
+                                          </div>
+                                        </div>
+                                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 text-sm font-bold shadow-sm">
+                                          {isExpanded ? 'Hide details' : 'View details'}
+                                          <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+                                        </div>
+                                      </button>
+
+                                      <AnimatePresence initial={false}>
+                                        {isExpanded && (
+                                          <motion.div
+                                            initial={{ height: 0, opacity: 0 }}
+                                            animate={{ height: 'auto', opacity: 1 }}
+                                            exit={{ height: 0, opacity: 0 }}
+                                            transition={{ duration: 0.3, ease: 'easeOut' }}
+                                            className="overflow-hidden"
+                                          >
+                                            <div className="px-6 pb-6 pt-2 space-y-6 border-t border-slate-100 dark:border-slate-600/50">
+                                              {exp.projects.map((proj, pIdx) => (
+                                                <div key={pIdx} className="bg-white dark:bg-slate-800/70 rounded-2xl p-8 border border-slate-100 dark:border-slate-600/50 hover:shadow-md transition-all duration-300">
+                                                  <h4 className="font-bold text-slate-900 dark:text-slate-100 mb-6 text-xl flex items-center gap-3">
+                                                    <div className="w-2 h-8 bg-teal-500 rounded-full"></div>
+                                                    {proj.name}
+                                                  </h4>
+                                                  <ul className="space-y-4">
+                                                    {proj.details.map((detail, dIdx) => (
+                                                      <li key={dIdx} className="flex items-start gap-4 text-slate-600 dark:text-slate-300 text-base">
+                                                        <ChevronRight className="w-5 h-5 text-teal-400 mt-1 shrink-0" />
+                                                        <span className="leading-relaxed">{detail}</span>
+                                                      </li>
+                                                    ))}
+                                                  </ul>
+                                                </div>
+                                              ))}
+                                            </div>
+                                          </motion.div>
+                                        )}
+                                      </AnimatePresence>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <ul className="space-y-4">
+                                    {exp.details?.map((detail, dIdx) => (
+                                      <li key={dIdx} className="flex items-start gap-4 text-slate-600 dark:text-slate-300 text-base">
+                                        <ChevronRight className="w-5 h-5 text-teal-400 mt-1 shrink-0" />
+                                        <span className="leading-relaxed">{detail}</span>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                )}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </motion.div>
-                    ))}
+                        </motion.div>
+                      );
+                    })}
                   </div>
                 </div>
               )}
@@ -826,92 +879,121 @@ export default function App() {
                   </p>
 
                   <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-                    {cvData.digitalProjects.map((project: any, idx: number) => (
-                      <motion.div
-                        key={project.title}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: idx * 0.08 }}
-                        whileHover={{ y: -6 }}
-                        className="rounded-3xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800/70 dark:backdrop-blur-xl shadow-sm hover:shadow-xl hover:border-teal-200 dark:hover:border-teal-500/50 transition-all duration-500 overflow-hidden"
-                      >
-                        <div className="p-8">
-                          <div className="flex flex-wrap items-center gap-2 mb-5">
-                            <span className="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-700 text-xs font-black uppercase tracking-wider text-slate-600 dark:text-slate-300">
-                              {project.category}
-                            </span>
-                            <span className={`px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider ${project.status === 'Live' ? 'bg-emerald-50 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300' : 'bg-amber-50 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300'}`}>
-                              {project.status}
-                            </span>
-                            <span className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
-                              {project.period}
-                            </span>
+                    {cvData.digitalProjects.map((project: any, idx: number) => {
+                      const thumbnailSrc = project.thumbnailFile
+                        ? `${import.meta.env.BASE_URL}project-thumbs/${project.thumbnailFile}`
+                        : null;
+
+                      return (
+                        <motion.div
+                          key={project.title}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: idx * 0.08 }}
+                          whileHover={{ y: -6 }}
+                          className="group rounded-3xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800/70 dark:backdrop-blur-xl shadow-sm hover:shadow-xl hover:border-teal-200 dark:hover:border-teal-500/50 transition-all duration-500 overflow-hidden"
+                        >
+                          <div className="relative aspect-[16/10] overflow-hidden border-b border-slate-100 dark:border-slate-700 bg-slate-100 dark:bg-slate-900">
+                            {thumbnailSrc ? (
+                              <img
+                                src={thumbnailSrc}
+                                alt={project.thumbnailAlt || `${project.title} preview`}
+                                className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.02]"
+                                loading="lazy"
+                              />
+                            ) : (
+                              <div className="w-full h-full bg-gradient-to-br from-teal-500 via-cyan-500 to-slate-900"></div>
+                            )}
+                            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/10 to-transparent"></div>
+                            <div className="absolute top-5 left-5 flex flex-wrap gap-2">
+                              <span className="px-3 py-1 rounded-full bg-white/90 dark:bg-slate-900/80 backdrop-blur text-[10px] font-black uppercase tracking-wider text-slate-700 dark:text-slate-200">
+                                {project.category}
+                              </span>
+                              <span className={`px-3 py-1 rounded-full backdrop-blur text-[10px] font-black uppercase tracking-wider ${project.status === 'Live' ? 'bg-emerald-100/90 text-emerald-800 dark:bg-emerald-900/80 dark:text-emerald-200' : 'bg-amber-100/90 text-amber-800 dark:bg-amber-900/80 dark:text-amber-200'}`}>
+                                {project.status}
+                              </span>
+                            </div>
+                            <div className="absolute left-5 right-5 bottom-5 flex items-end justify-between gap-4">
+                              <div>
+                                <div className="text-xs font-black uppercase tracking-[0.24em] text-white/70 mb-2">
+                                  {project.period}
+                                </div>
+                                <h4 className="text-2xl font-extrabold text-white leading-tight">
+                                  {project.title}
+                                </h4>
+                              </div>
+                              <div className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-xl bg-black/35 backdrop-blur text-white text-xs font-bold border border-white/15">
+                                <Image className="w-4 h-4" />
+                                Preview
+                              </div>
+                            </div>
                           </div>
 
-                          <h4 className="text-2xl font-extrabold text-slate-900 dark:text-white mb-4">{project.title}</h4>
-                          <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-8">
-                            {project.summary}
-                          </p>
+                          <div className="p-8">
+                            <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-8">
+                              {project.summary}
+                            </p>
 
-                          <div className="mb-8">
-                            <div className="text-xs font-black uppercase tracking-[0.2em] text-teal-500 dark:text-teal-400 mb-4">
-                              Tech Stack
+                            <div className="mb-8">
+                              <div className="text-xs font-black uppercase tracking-[0.2em] text-teal-500 dark:text-teal-400 mb-4">
+                                Tech Stack
+                              </div>
+                              <div className="flex flex-wrap gap-2.5">
+                                {project.stack.map((item: string, stackIdx: number) => (
+                                  <span
+                                    key={stackIdx}
+                                    className="px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm font-bold"
+                                  >
+                                    {item}
+                                  </span>
+                                ))}
+                              </div>
                             </div>
-                            <div className="flex flex-wrap gap-2.5">
-                              {project.stack.map((item: string, stackIdx: number) => (
-                                <span
-                                  key={stackIdx}
-                                  className="px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm font-bold"
+
+                            <div className="mb-8">
+                              <div className="text-xs font-black uppercase tracking-[0.2em] text-teal-500 dark:text-teal-400 mb-4">
+                                Highlights
+                              </div>
+                              <ul className="space-y-3">
+                                {project.highlights.map((highlight: string, highlightIdx: number) => (
+                                  <li key={highlightIdx} className="flex items-start gap-3 text-slate-600 dark:text-slate-300">
+                                    <ChevronRight className="w-4 h-4 text-teal-500 mt-1 shrink-0" />
+                                    <span className="leading-relaxed">{highlight}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+
+                            <div className="flex flex-wrap gap-3 pt-6 border-t border-slate-100 dark:border-slate-700">
+                              {project.liveUrl && (
+                                <a
+                                  href={project.liveUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-teal-600 text-white text-sm font-bold hover:bg-teal-700 transition-colors shadow-sm"
                                 >
-                                  {item}
-                                </span>
-                              ))}
+                                  <Globe className="w-4 h-4" />
+                                  Live Demo
+                                  <ArrowUpRight className="w-4 h-4" />
+                                </a>
+                              )}
+                              {project.repoUrl && (
+                                <a
+                                  href={project.repoUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-slate-100 text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
+                                >
+                                  <Github className="w-4 h-4" />
+                                  GitHub
+                                  <ArrowUpRight className="w-4 h-4" />
+                                </a>
+                              )}
                             </div>
                           </div>
-
-                          <div className="mb-8">
-                            <div className="text-xs font-black uppercase tracking-[0.2em] text-teal-500 dark:text-teal-400 mb-4">
-                              Highlights
-                            </div>
-                            <ul className="space-y-3">
-                              {project.highlights.map((highlight: string, highlightIdx: number) => (
-                                <li key={highlightIdx} className="flex items-start gap-3 text-slate-600 dark:text-slate-300">
-                                  <ChevronRight className="w-4 h-4 text-teal-500 mt-1 shrink-0" />
-                                  <span className="leading-relaxed">{highlight}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-
-                          <div className="flex flex-wrap gap-3 pt-6 border-t border-slate-100 dark:border-slate-700">
-                            {project.liveUrl && (
-                              <a
-                                href={project.liveUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-teal-600 text-white text-sm font-bold hover:bg-teal-700 transition-colors shadow-sm"
-                              >
-                                <Globe className="w-4 h-4" />
-                                Live Demo
-                                <ArrowUpRight className="w-4 h-4" />
-                              </a>
-                            )}
-                            {project.repoUrl && (
-                              <a
-                                href={project.repoUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-slate-100 text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
-                              >
-                                <Github className="w-4 h-4" />
-                                GitHub
-                                <ArrowUpRight className="w-4 h-4" />
-                              </a>
-                            )}
-                          </div>
-                        </div>
-                      </motion.div>
-                    ))}
+                        </motion.div>
+                      );
+                    })}
                   </div>
                 </div>
               )}
@@ -1345,7 +1427,7 @@ export default function App() {
       <footer className="mt-16 py-8 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 text-center relative z-10 transition-colors duration-300">
         <div className="max-w-5xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">
-            © 2026 {cvData.name}. All rights reserved.
+            © {currentYear} {cvData.name}. All rights reserved.
           </p>
           <span className="text-xs text-slate-400 dark:text-slate-500 font-medium">
             Last updated: {lastUpdatedLabel}
