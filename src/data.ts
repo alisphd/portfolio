@@ -853,6 +853,21 @@ export const cvData = {
       ]
     },
     {
+      title: "PhytoPlan",
+      category: "Experiment Planner",
+      status: "Live",
+      period: "2026",
+      summary: "A browser-based plant science experiment planner that recommends suitable experimental designs, organizes study details, and generates randomized field or pot layouts for practical agricultural trials.",
+      stack: ["React", "TypeScript", "Vite", "Zustand", "Experimental Design", "Randomization"],
+      repoUrl: "https://github.com/alisphd/phytoplan",
+      liveUrl: "https://alisphd.github.io/phytoplan/",
+      highlights: [
+        "Built an interactive planning workflow for setting up agricultural experiments with design guidance based on the study structure.",
+        "Implemented randomized layout generation together with reusable templates, saved plans, and experiment detail views for repeatable planning.",
+        "Shipped it as a fully static browser app with local persistence and GitHub Pages deployment for easy sharing."
+      ]
+    },
+    {
       title: "Research Synthesizer",
       category: "AI Research Tool",
       status: "Live",
