@@ -169,7 +169,7 @@ export const cvData = {
       { text: "Ali, S., Hanjra, Z., Saeed, M., Fatima, T., Khalil, S., Iltaf, B., & Rashid, M. (2025). In-silico analysis of WRKY transcription factors (WRKY) gene family in rice. Submitted to BMC Plant Biology.", pdfUrl: "https://drive.google.com/file/d/1hvu9mAr3NKo9R_vdEHQMbZRJdTPizR2A/view?usp=sharing" },
     ],
     published: [
-      { text: "Hanjra, Z., Ali, S., Fatima, T., Saeed, M., Khalil, S., & Rashid, M. (2026). High-resolution comparative genomics and compositional analysis of WRKY transcription factors across seven cereal and model plant genomes. Accepted in BMC Plant Biology.", pdfUrl: "https://drive.google.com/file/d/1SNoaF7h_k36Bh-VJJWGGI8VrhyyE_Zqx/view?usp=sharing" },
+      { text: "Hanjra, Z., Ali, S., Fatima, T., Saeed, M., Khalil, S., & Rashid, M. (2026). High-resolution comparative genomics and compositional analysis of WRKY transcription factors across seven cereal and model plant genomes. Accepted in BMC Plant Biology.", pdfUrl: "https://drive.google.com/file/d/1MXROO8m3IQNKNp0_tMmaXivHsQmW6IgL/view?usp=sharing" },
       { text: "Ali, S., Khan, S. A., Abbas, H., Khadim, U., Aslam, A. & Anwaar, M. (2025). Incidence of Meloidogyne Graminicola on Maize and Its Integrated Management. Accepted in Pakistan Journal of Zoology.", pdfUrl: "https://drive.google.com/file/d/1PMEwPIcezsJeZNo-jJc00ADV5bfS7GJx/view?usp=sharing" },
       { text: "Tufail, M. M., Abbas, H., Khadim, U., Bashir, M. R., Kamran, M., Khan, S. A., Zafar, M., Shahbaz, M. U., ul Haq, M. E., & Ali, S. (2024). Management of Macrophomina phaseolina infecting sesame germplasm. Journal of Phytobiology, 4(1), 9–17.", pdfUrl: "#" }
     ],
