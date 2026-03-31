@@ -164,11 +164,11 @@ export const cvData = {
   publications: {
     summary: "8 peer-reviewed articles (6 first author), 4 conference presentations",
     submitted: [
-      { text: "Ali, S. (2026). Evolutionary Origins and Structural Mechanism of V2-Mediated Host Immunity Suppression in Soybean Stay-Green Associated Virus (SoSGV). Submitted to Archives of Virology (Springer Nature).", pdfUrl: "#" },
       { text: "Ali, S. (2026). Systematic Characterization of Glycine max IQD Genes Reveals Insights into Drought Stress Adaptation and Hormonal Regulation of Plant Architecture. Submitted to 3 Biotech (Springer Nature).", pdfUrl: "#" },
       { text: "Ali, S., Hanjra, Z., Saeed, M., Fatima, T., Khalil, S., Iltaf, B., & Rashid, M. (2025). In-silico analysis of WRKY transcription factors (WRKY) gene family in rice. Submitted to BMC Plant Biology.", pdfUrl: "https://drive.google.com/file/d/1hvu9mAr3NKo9R_vdEHQMbZRJdTPizR2A/view?usp=sharing" },
     ],
     published: [
+      { text: "Ali, S. (2026). A V2-SKP1 Interface in Soybean Stay-Green Associated Virus: Evidence from Evolutionary and Structural Analyses. Accepted in Archives of Virology.", pdfUrl: "https://drive.google.com/file/d/1_uf7S324h0PFl0pJNL5xcOhPJ1eraDSm/view?usp=sharing" },
       { text: "Hanjra, Z., Ali, S., Fatima, T., Saeed, M., Khalil, S., & Rashid, M. (2026). High-resolution comparative genomics and compositional analysis of WRKY transcription factors across seven cereal and model plant genomes. Accepted in BMC Plant Biology.", pdfUrl: "https://drive.google.com/file/d/1MXROO8m3IQNKNp0_tMmaXivHsQmW6IgL/view?usp=sharing" },
       { text: "Ali, S., Khan, S. A., Abbas, H., Khadim, U., Aslam, A. & Anwaar, M. (2025). Incidence of Meloidogyne Graminicola on Maize and Its Integrated Management. Accepted in Pakistan Journal of Zoology.", pdfUrl: "https://drive.google.com/file/d/1PMEwPIcezsJeZNo-jJc00ADV5bfS7GJx/view?usp=sharing" },
       { text: "Tufail, M. M., Abbas, H., Khadim, U., Bashir, M. R., Kamran, M., Khan, S. A., Zafar, M., Shahbaz, M. U., ul Haq, M. E., & Ali, S. (2024). Management of Macrophomina phaseolina infecting sesame germplasm. Journal of Phytobiology, 4(1), 9–17.", pdfUrl: "#" }
