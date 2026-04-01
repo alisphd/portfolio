@@ -110,10 +110,28 @@ const TYPING_ROLES = [
   'Multi-omics Data Scientist',
 ];
 
+const GOOGLE_DRIVE_FILE_REGEX = /drive\.google\.com\/file\/d\/([^/]+)/i;
+
+const getPublicationPreviewUrl = (url?: string) => {
+  if (!url || url === '#') return null;
+
+  const driveMatch = url.match(GOOGLE_DRIVE_FILE_REGEX);
+  if (driveMatch) {
+    return `https://drive.google.com/file/d/${driveMatch[1]}/preview`;
+  }
+
+  if (/\.pdf($|\?)/i.test(url)) {
+    return url;
+  }
+
+  return null;
+};
+
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabId>('about');
   const [galleryCategory, setGalleryCategory] = useState<string>('All');
   const [lightboxImage, setLightboxImage] = useState<{ file: string; title: string, desc: string, tags: string[] } | null>(null);
+  const [publicationPreview, setPublicationPreview] = useState<{ title: string; previewUrl: string; externalUrl: string } | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -800,29 +818,61 @@ export default function App() {
                           {group.title}
                         </h3>
                         <ul className="space-y-6">
-                          {group.items.map((pub: any, idx) => (
-                            <li key={idx} className="flex flex-col gap-3 group bg-slate-50 dark:bg-slate-700/40 p-6 rounded-2xl border border-slate-100 dark:border-slate-600/50 hover:bg-white dark:hover:bg-slate-700/60 hover:shadow-md hover:border-teal-100 dark:hover:border-teal-500/50 transition-all duration-300">
-                              <div className="flex items-start gap-4 text-slate-600 dark:text-slate-300 text-base leading-relaxed">
-                                <div className="mt-1 w-8 h-8 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 flex items-center justify-center shrink-0 group-hover:bg-teal-50 dark:group-hover:bg-teal-900/40 group-hover:border-teal-100 dark:group-hover:border-teal-800 transition-all duration-300">
-                                  <ArrowUpRight className="w-4 h-4 text-slate-400 dark:text-slate-500 group-hover:text-teal-500 dark:group-hover:text-teal-400 transition-colors" />
+                          {group.items.map((pub: any, idx) => {
+                            const publicationText = typeof pub === 'string' ? pub : pub.text;
+                            const externalUrl = typeof pub === 'object' ? pub.pdfUrl : undefined;
+                            const previewUrl = typeof pub === 'object' ? getPublicationPreviewUrl(pub.pdfUrl) : null;
+                            const hasExternalUrl = !!externalUrl && externalUrl !== '#';
+
+                            return (
+                              <li key={idx} className="flex flex-col gap-4 group bg-slate-50 dark:bg-slate-700/40 p-6 rounded-2xl border border-slate-100 dark:border-slate-600/50 hover:bg-white dark:hover:bg-slate-700/60 hover:shadow-md hover:border-teal-100 dark:hover:border-teal-500/50 transition-all duration-300">
+                                <div className="flex items-start gap-4 text-slate-600 dark:text-slate-300 text-base leading-relaxed">
+                                  <div className="mt-1 w-8 h-8 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 flex items-center justify-center shrink-0 group-hover:bg-teal-50 dark:group-hover:bg-teal-900/40 group-hover:border-teal-100 dark:group-hover:border-teal-800 transition-all duration-300">
+                                    <ArrowUpRight className="w-4 h-4 text-slate-400 dark:text-slate-500 group-hover:text-teal-500 dark:group-hover:text-teal-400 transition-colors" />
+                                  </div>
+                                  <span dangerouslySetInnerHTML={{ __html: publicationText.replace(/Ali, S\./g, '<strong class="text-slate-900 dark:text-white font-bold">Ali, S.</strong>') }} />
                                 </div>
-                                <span dangerouslySetInnerHTML={{ __html: (typeof pub === 'string' ? pub : pub.text).replace(/Ali, S\./g, '<strong class="text-slate-900 dark:text-white font-bold">Ali, S.</strong>') }} />
-                              </div>
-                              {pub.pdfUrl && (
-                                <div className="ml-12">
-                                  <a
-                                    href={pub.pdfUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-50 border border-teal-100 text-teal-700 rounded-lg text-xs font-bold hover:bg-teal-600 hover:text-white hover:border-teal-600 transition-all shadow-sm"
-                                  >
-                                    <FileText className="w-3.5 h-3.5" />
-                                    View PDF Attachment
-                                  </a>
-                                </div>
-                              )}
-                            </li>
-                          ))}
+
+                                {(pub.impactFactor || hasExternalUrl) && (
+                                  <div className="ml-12 flex flex-wrap items-center gap-2.5">
+                                    {pub.impactFactor && (
+                                      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 dark:bg-amber-900/30 border border-amber-100 dark:border-amber-800/50 text-amber-700 dark:text-amber-300 rounded-lg text-xs font-bold shadow-sm">
+                                        <Sparkles className="w-3.5 h-3.5" />
+                                        Impact Factor {pub.impactFactor}
+                                      </span>
+                                    )}
+
+                                    {previewUrl && hasExternalUrl && (
+                                      <button
+                                        type="button"
+                                        onClick={() => setPublicationPreview({
+                                          title: publicationText,
+                                          previewUrl,
+                                          externalUrl,
+                                        })}
+                                        className="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-50 dark:bg-teal-900/40 border border-teal-100 dark:border-teal-800/50 text-teal-700 dark:text-teal-300 rounded-lg text-xs font-bold hover:bg-teal-600 dark:hover:bg-teal-500 hover:text-white dark:hover:text-slate-950 hover:border-teal-600 dark:hover:border-teal-500 transition-all shadow-sm"
+                                      >
+                                        <FileText className="w-3.5 h-3.5" />
+                                        Preview PDF
+                                      </button>
+                                    )}
+
+                                    {hasExternalUrl && (
+                                      <a
+                                        href={externalUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center gap-1.5 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 rounded-lg text-xs font-bold hover:border-teal-200 dark:hover:border-teal-700/50 hover:text-teal-700 dark:hover:text-teal-300 transition-all shadow-sm"
+                                      >
+                                        <ExternalLink className="w-3.5 h-3.5" />
+                                        {previewUrl ? 'Open in New Tab' : 'Open Source Link'}
+                                      </a>
+                                    )}
+                                  </div>
+                                )}
+                              </li>
+                            );
+                          })}
                         </ul>
                       </motion.div>
                     ))}
@@ -1347,6 +1397,61 @@ export default function App() {
       </main>
 
       {/* Lightbox Modal */}
+      <AnimatePresence>
+        {publicationPreview && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[1000] bg-slate-900/95 backdrop-blur-sm p-4 sm:p-8 overflow-y-auto"
+            onClick={() => setPublicationPreview(null)}
+          >
+            <div className="min-h-full flex items-center justify-center pointer-events-none">
+              <motion.div
+                initial={{ scale: 0.95, opacity: 0, y: 20 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.95, opacity: 0, y: 20 }}
+                transition={{ type: 'spring', bounce: 0, duration: 0.3 }}
+                className="relative w-full max-w-6xl bg-white dark:bg-slate-900 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-white/10 flex flex-col overflow-hidden pointer-events-auto"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="flex items-center justify-between gap-4 bg-slate-900 px-6 py-4 border-b border-slate-800">
+                  <div className="min-w-0">
+                    <h4 className="text-white font-bold text-base sm:text-lg line-clamp-2">PDF Preview</h4>
+                    <p className="text-slate-300 text-xs sm:text-sm mt-1 line-clamp-2">{publicationPreview.title}</p>
+                  </div>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <a
+                      href={publicationPreview.externalUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-800 text-slate-200 text-xs font-bold hover:bg-slate-700 transition-colors"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" />
+                      Open
+                    </a>
+                    <button
+                      onClick={() => setPublicationPreview(null)}
+                      className="p-2 rounded-full bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  </div>
+                </div>
+
+                <div className="bg-slate-100 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800">
+                  <iframe
+                    src={publicationPreview.previewUrl}
+                    title={publicationPreview.title}
+                    className="w-full h-[80vh] bg-white"
+                  />
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <AnimatePresence>
         {lightboxImage && (
           <motion.div
