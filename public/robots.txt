@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://alisphd.github.io/portfolio/sitemap.xml
+Sitemap: https://alisphd.github.io/portfolio/sitemap.txt
