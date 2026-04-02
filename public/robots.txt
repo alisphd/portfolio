@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://alisphd.github.io/portfolio/sitemap.xml

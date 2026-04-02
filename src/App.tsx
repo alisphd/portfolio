@@ -326,12 +326,17 @@ export default function App() {
         <title>{cvData.name} - {cvData.title}</title>
         <meta name="description" content={cvData.about.substring(0, 160) + '...'} />
         <meta name="keywords" content={cvData.skills.map(s => s.category.toLowerCase()).join(', ')} />
+        <link rel="canonical" href="https://alisphd.github.io/portfolio/" />
+        <meta name="robots" content="index, follow" />
         <meta property="og:title" content={`${cvData.name} - ${cvData.title}`} />
         <meta property="og:description" content={cvData.about.substring(0, 160) + '...'} />
         <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://alisphd.github.io/portfolio/" />
+        <meta property="og:image" content="https://alisphd.github.io/portfolio/portrait.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={`${cvData.name} - ${cvData.title}`} />
         <meta name="twitter:description" content={cvData.about.substring(0, 160) + '...'} />
+        <meta name="twitter:image" content="https://alisphd.github.io/portfolio/portrait.jpg" />
       </Helmet>
 
       {/* Reading Progress Bar */}
