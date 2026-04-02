@@ -127,11 +127,26 @@ const getPublicationPreviewUrl = (url?: string) => {
   return null;
 };
 
+const resolvePublicationPreviewUrl = (url?: string) => {
+  if (!url || url === '#') return null;
+
+  if (/^https?:\/\//i.test(url)) {
+    return getPublicationPreviewUrl(url) ?? url;
+  }
+
+  return `${import.meta.env.BASE_URL}${url.replace(/^\/+/, '')}`;
+};
+
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabId>('about');
   const [galleryCategory, setGalleryCategory] = useState<string>('All');
   const [lightboxImage, setLightboxImage] = useState<{ file: string; title: string, desc: string, tags: string[] } | null>(null);
-  const [publicationPreview, setPublicationPreview] = useState<{ title: string; previewUrl: string; externalUrl: string } | null>(null);
+  const [publicationPreview, setPublicationPreview] = useState<{
+    title: string;
+    previewUrl: string | null;
+    externalUrl?: string;
+    missingPreviewPath?: string;
+  } | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -172,6 +187,37 @@ export default function App() {
       ...prev,
       [workstreamKey]: !prev[workstreamKey],
     }));
+  }, []);
+  const openPublicationPreview = useCallback(async (pub: any) => {
+    const publicationText = typeof pub === 'string' ? pub : pub.text;
+    const externalUrl = typeof pub === 'object' && pub.pdfUrl && pub.pdfUrl !== '#' ? pub.pdfUrl : undefined;
+    const localPreviewPath = typeof pub === 'object' ? pub.previewUrl : undefined;
+    const localPreviewUrl = resolvePublicationPreviewUrl(localPreviewPath);
+    const fallbackPreviewUrl = typeof pub === 'object' ? getPublicationPreviewUrl(pub.pdfUrl) : null;
+
+    if (localPreviewPath && localPreviewUrl) {
+      try {
+        const response = await fetch(localPreviewUrl, { method: 'HEAD' });
+        if (response.ok) {
+          setPublicationPreview({
+            title: publicationText,
+            previewUrl: localPreviewUrl,
+            externalUrl,
+            missingPreviewPath: localPreviewPath,
+          });
+          return;
+        }
+      } catch {
+        // Ignore and fall back below.
+      }
+    }
+
+    setPublicationPreview({
+      title: publicationText,
+      previewUrl: fallbackPreviewUrl,
+      externalUrl,
+      missingPreviewPath: localPreviewPath,
+    });
   }, []);
   const filterRef = useRef<HTMLDivElement>(null);
 
@@ -821,8 +867,12 @@ export default function App() {
                           {group.items.map((pub: any, idx) => {
                             const publicationText = typeof pub === 'string' ? pub : pub.text;
                             const externalUrl = typeof pub === 'object' ? pub.pdfUrl : undefined;
-                            const previewUrl = typeof pub === 'object' ? getPublicationPreviewUrl(pub.pdfUrl) : null;
+                            const localPreviewPath = typeof pub === 'object' ? pub.previewUrl : undefined;
+                            const previewUrl = typeof pub === 'object'
+                              ? (resolvePublicationPreviewUrl(pub.previewUrl) ?? getPublicationPreviewUrl(pub.pdfUrl))
+                              : null;
                             const hasExternalUrl = !!externalUrl && externalUrl !== '#';
+                            const hasPreviewSlot = !!localPreviewPath || !!previewUrl;
 
                             return (
                               <li key={idx} className="flex flex-col gap-4 group bg-slate-50 dark:bg-slate-700/40 p-6 rounded-2xl border border-slate-100 dark:border-slate-600/50 hover:bg-white dark:hover:bg-slate-700/60 hover:shadow-md hover:border-teal-100 dark:hover:border-teal-500/50 transition-all duration-300">
@@ -830,10 +880,18 @@ export default function App() {
                                   <div className="mt-1 w-8 h-8 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 flex items-center justify-center shrink-0 group-hover:bg-teal-50 dark:group-hover:bg-teal-900/40 group-hover:border-teal-100 dark:group-hover:border-teal-800 transition-all duration-300">
                                     <ArrowUpRight className="w-4 h-4 text-slate-400 dark:text-slate-500 group-hover:text-teal-500 dark:group-hover:text-teal-400 transition-colors" />
                                   </div>
-                                  <span dangerouslySetInnerHTML={{ __html: publicationText.replace(/Ali, S\./g, '<strong class="text-slate-900 dark:text-white font-bold">Ali, S.</strong>') }} />
+                                  <div className="space-y-2">
+                                    <span dangerouslySetInnerHTML={{ __html: publicationText.replace(/Ali, S\./g, '<strong class="text-slate-900 dark:text-white font-bold">Ali, S.</strong>') }} />
+                                    {pub.note && (
+                                      <p
+                                        className="text-sm italic text-slate-500 dark:text-slate-400"
+                                        dangerouslySetInnerHTML={{ __html: pub.note }}
+                                      />
+                                    )}
+                                  </div>
                                 </div>
 
-                                {(pub.impactFactor || hasExternalUrl) && (
+                                {(pub.impactFactor || hasExternalUrl || hasPreviewSlot) && (
                                   <div className="ml-12 flex flex-wrap items-center gap-2.5">
                                     {pub.impactFactor && (
                                       <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 dark:bg-amber-900/30 border border-amber-100 dark:border-amber-800/50 text-amber-700 dark:text-amber-300 rounded-lg text-xs font-bold shadow-sm">
@@ -842,14 +900,10 @@ export default function App() {
                                       </span>
                                     )}
 
-                                    {previewUrl && hasExternalUrl && (
+                                    {hasPreviewSlot && (
                                       <button
                                         type="button"
-                                        onClick={() => setPublicationPreview({
-                                          title: publicationText,
-                                          previewUrl,
-                                          externalUrl,
-                                        })}
+                                        onClick={() => openPublicationPreview(pub)}
                                         className="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-50 dark:bg-teal-900/40 border border-teal-100 dark:border-teal-800/50 text-teal-700 dark:text-teal-300 rounded-lg text-xs font-bold hover:bg-teal-600 dark:hover:bg-teal-500 hover:text-white dark:hover:text-slate-950 hover:border-teal-600 dark:hover:border-teal-500 transition-all shadow-sm"
                                       >
                                         <FileText className="w-3.5 h-3.5" />
@@ -865,7 +919,7 @@ export default function App() {
                                         className="inline-flex items-center gap-1.5 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 rounded-lg text-xs font-bold hover:border-teal-200 dark:hover:border-teal-700/50 hover:text-teal-700 dark:hover:text-teal-300 transition-all shadow-sm"
                                       >
                                         <ExternalLink className="w-3.5 h-3.5" />
-                                        {previewUrl ? 'Open in New Tab' : 'Open Source Link'}
+                                        {hasPreviewSlot ? 'Open in New Tab' : 'Open Source Link'}
                                       </a>
                                     )}
                                   </div>
@@ -1421,15 +1475,17 @@ export default function App() {
                     <p className="text-slate-300 text-xs sm:text-sm mt-1 line-clamp-2">{publicationPreview.title}</p>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
-                    <a
-                      href={publicationPreview.externalUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-800 text-slate-200 text-xs font-bold hover:bg-slate-700 transition-colors"
-                    >
-                      <ExternalLink className="w-3.5 h-3.5" />
-                      Open
-                    </a>
+                    {publicationPreview.externalUrl && (
+                      <a
+                        href={publicationPreview.externalUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-800 text-slate-200 text-xs font-bold hover:bg-slate-700 transition-colors"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5" />
+                        Open
+                      </a>
+                    )}
                     <button
                       onClick={() => setPublicationPreview(null)}
                       className="p-2 rounded-full bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
@@ -1440,11 +1496,30 @@ export default function App() {
                 </div>
 
                 <div className="bg-slate-100 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800">
-                  <iframe
-                    src={publicationPreview.previewUrl}
-                    title={publicationPreview.title}
-                    className="w-full h-[80vh] bg-white"
-                  />
+                  {publicationPreview.previewUrl ? (
+                    <iframe
+                      src={publicationPreview.previewUrl}
+                      title={publicationPreview.title}
+                      className="w-full h-[80vh] bg-white"
+                    />
+                  ) : (
+                    <div className="min-h-[28rem] flex items-center justify-center p-8 sm:p-12">
+                      <div className="max-w-2xl w-full rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 bg-white/80 dark:bg-slate-900/70 p-8 text-center shadow-sm">
+                        <div className="mx-auto mb-5 w-14 h-14 rounded-2xl bg-teal-50 dark:bg-teal-900/40 border border-teal-100 dark:border-teal-800/50 flex items-center justify-center">
+                          <FileText className="w-7 h-7 text-teal-600 dark:text-teal-300" />
+                        </div>
+                        <h5 className="text-lg font-extrabold text-slate-900 dark:text-white mb-2">Local PDF preview not added yet</h5>
+                        <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-5">
+                          This publication already has a preview slot. Once you add the PDF file to the expected path below, the inline preview will start working automatically.
+                        </p>
+                        {publicationPreview.missingPreviewPath && (
+                          <div className="inline-flex max-w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-mono break-all">
+                            {publicationPreview.missingPreviewPath}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </motion.div>
             </div>
