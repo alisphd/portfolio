@@ -110,6 +110,15 @@ const TYPING_ROLES = [
   'Multi-omics Data Scientist',
 ];
 
+const SITE_URL = 'https://alisphd.github.io/portfolio/';
+const SITE_IMAGE_URL = `${SITE_URL}portrait.jpg`;
+const SITE_NAME = 'Saqib Ali Portfolio';
+const SEO_TITLE = 'Saqib Ali | Plant Pathologist & Bioinformatician Portfolio';
+const SEO_DESCRIPTION =
+  'Portfolio of Saqib Ali, a plant pathologist and bioinformatician in Pakistan featuring publications, computational genomics, wet-lab diagnostics, research experience, and digital tools.';
+const HERO_SEARCH_SUMMARY =
+  'Portfolio of Saqib Ali, a plant pathologist and bioinformatician in Pakistan, featuring publications, computational genomics, wet-lab diagnostics, research experience, and digital tools.';
+
 const GOOGLE_DRIVE_FILE_REGEX = /drive\.google\.com\/file\/d\/([^/]+)/i;
 
 const getPublicationPreviewUrl = (url?: string) => {
@@ -174,6 +183,82 @@ export default function App() {
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [expandedWorkstreams, setExpandedWorkstreams] = useState<Record<string, boolean>>({});
   const prevTabIndexRef = useRef(0);
+  const buildDateRaw =
+    import.meta.env.VITE_BUILD_DATE ||
+    (typeof document !== 'undefined' ? document.lastModified : '') ||
+    new Date().toISOString();
+  const parsedBuildDate = new Date(buildDateRaw);
+  const buildDateIso = Number.isNaN(parsedBuildDate.getTime())
+    ? new Date().toISOString()
+    : parsedBuildDate.toISOString();
+  const profileStructuredData = React.useMemo(
+    () => ({
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'WebSite',
+          '@id': `${SITE_URL}#website`,
+          url: SITE_URL,
+          name: SITE_NAME,
+          alternateName: ['Saqib Ali', 'Saqib Ali Portfolio'],
+          description: SEO_DESCRIPTION,
+          inLanguage: 'en',
+        },
+        {
+          '@type': 'ProfilePage',
+          '@id': `${SITE_URL}#profile`,
+          url: SITE_URL,
+          name: SEO_TITLE,
+          description: SEO_DESCRIPTION,
+          dateModified: buildDateIso,
+          isPartOf: { '@id': `${SITE_URL}#website` },
+          mainEntity: { '@id': `${SITE_URL}#person` },
+        },
+        {
+          '@type': 'Person',
+          '@id': `${SITE_URL}#person`,
+          name: cvData.name,
+          alternateName: ['alisphd', 'Saqib Ali Portfolio'],
+          description: cvData.title,
+          image: SITE_IMAGE_URL,
+          url: SITE_URL,
+          email: `mailto:${cvData.contact.email}`,
+          telephone: cvData.contact.phone,
+          jobTitle: cvData.title,
+          knowsAbout: [
+            'Plant pathology',
+            'Bioinformatics',
+            'Computational genomics',
+            'Plant disease diagnostics',
+            'Wet-lab molecular diagnostics',
+            'Multi-omics integration',
+          ],
+          homeLocation: {
+            '@type': 'Place',
+            name: cvData.contact.location,
+          },
+          worksFor: {
+            '@type': 'Organization',
+            name: 'Nuclear Institute for Agriculture and Biology (NIAB)',
+          },
+          alumniOf: [
+            {
+              '@type': 'CollegeOrUniversity',
+              name: 'University of Agriculture Faisalabad',
+              url: 'https://web.uaf.edu.pk/',
+            },
+          ],
+          sameAs: [
+            SITE_URL,
+            `https://linkedin.com/in/${cvData.contact.linkedin}`,
+            `https://github.com/${cvData.contact.github}`,
+          ],
+          mainEntityOfPage: { '@id': `${SITE_URL}#profile` },
+        },
+      ],
+    }),
+    [buildDateIso]
+  );
 
   const handleTabChange = useCallback((newTab: TabId) => {
     const newIndex = TABS.findIndex(t => t.id === newTab);
@@ -306,7 +391,7 @@ export default function App() {
 
   useEffect(() => {
     // Force native document title to ensure it displays correctly in all browsers
-    document.title = `${cvData.name} - ${cvData.title}`;
+    document.title = SEO_TITLE;
   }, []);
 
   const scrollMenu = (direction: 'left' | 'right') => {
@@ -323,20 +408,25 @@ export default function App() {
   return (
     <div className={`min-h-screen text-slate-600 font-sans pb-24 selection:bg-slate-900 selection:text-white transition-colors duration-300 ${darkMode ? 'dark bg-slate-950 text-slate-300' : 'bg-slate-50'}`}>
       <Helmet>
-        <title>{cvData.name} - {cvData.title}</title>
-        <meta name="description" content={cvData.about.substring(0, 160) + '...'} />
-        <meta name="keywords" content={cvData.skills.map(s => s.category.toLowerCase()).join(', ')} />
-        <link rel="canonical" href="https://alisphd.github.io/portfolio/" />
+        <title>{SEO_TITLE}</title>
+        <meta name="description" content={SEO_DESCRIPTION} />
+        <meta name="author" content={cvData.name} />
+        <meta name="creator" content={cvData.name} />
+        <meta name="application-name" content={SITE_NAME} />
+        <link rel="canonical" href={SITE_URL} />
         <meta name="robots" content="index, follow" />
-        <meta property="og:title" content={`${cvData.name} - ${cvData.title}`} />
-        <meta property="og:description" content={cvData.about.substring(0, 160) + '...'} />
+        <meta name="googlebot" content="max-snippet:170, max-image-preview:large, max-video-preview:-1" />
+        <meta property="og:title" content={SEO_TITLE} />
+        <meta property="og:description" content={SEO_DESCRIPTION} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://alisphd.github.io/portfolio/" />
-        <meta property="og:image" content="https://alisphd.github.io/portfolio/portrait.jpg" />
+        <meta property="og:url" content={SITE_URL} />
+        <meta property="og:image" content={SITE_IMAGE_URL} />
+        <meta property="og:site_name" content={SITE_NAME} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`${cvData.name} - ${cvData.title}`} />
-        <meta name="twitter:description" content={cvData.about.substring(0, 160) + '...'} />
-        <meta name="twitter:image" content="https://alisphd.github.io/portfolio/portrait.jpg" />
+        <meta name="twitter:title" content={SEO_TITLE} />
+        <meta name="twitter:description" content={SEO_DESCRIPTION} />
+        <meta name="twitter:image" content={SITE_IMAGE_URL} />
+        <script type="application/ld+json">{JSON.stringify(profileStructuredData)}</script>
       </Helmet>
 
       {/* Reading Progress Bar */}
@@ -470,6 +560,15 @@ export default function App() {
               Seeking PhD & Research positions | Available 2026
             </motion.div>
 
+            <motion.p
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.38 }}
+              className="max-w-3xl mx-auto md:mx-0 mb-6 text-base leading-7 text-slate-600 dark:text-slate-300"
+            >
+              {HERO_SEARCH_SUMMARY}
+            </motion.p>
+
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -493,7 +592,7 @@ export default function App() {
         </motion.div>
 
         {/* Interactive Tabs Navigation */}
-        <div className="mb-12 sticky top-6 z-30 flex justify-center w-full px-4 sm:px-0">
+        <div data-nosnippet className="mb-12 sticky top-6 z-30 flex justify-center w-full px-4 sm:px-0">
           <div className="relative max-w-full group">
             {/* Left fade/button */}
             <AnimatePresence>
@@ -1606,7 +1705,7 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      <footer className="mt-16 py-8 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 text-center relative z-10 transition-colors duration-300">
+      <footer data-nosnippet className="mt-16 py-8 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 text-center relative z-10 transition-colors duration-300">
         <div className="max-w-5xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">
             © {currentYear} {cvData.name}. All rights reserved.
