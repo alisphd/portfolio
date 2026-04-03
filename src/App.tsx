@@ -116,8 +116,6 @@ const SITE_NAME = 'Saqib Ali Portfolio';
 const SEO_TITLE = 'Saqib Ali | Plant Pathologist & Bioinformatician Portfolio';
 const SEO_DESCRIPTION =
   'Portfolio of Saqib Ali, a plant pathologist and bioinformatician in Pakistan featuring publications, computational genomics, wet-lab diagnostics, research experience, and digital tools.';
-const HERO_SEARCH_SUMMARY =
-  'Portfolio of Saqib Ali, a plant pathologist and bioinformatician in Pakistan, featuring publications, computational genomics, wet-lab diagnostics, research experience, and digital tools.';
 
 const GOOGLE_DRIVE_FILE_REGEX = /drive\.google\.com\/file\/d\/([^/]+)/i;
 
@@ -559,15 +557,6 @@ export default function App() {
               <Sparkles className="w-4 h-4 text-teal-600 dark:text-teal-400" />
               Seeking PhD & Research positions | Available 2026
             </motion.div>
-
-            <motion.p
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.38 }}
-              className="max-w-3xl mx-auto md:mx-0 mb-6 text-base leading-7 text-slate-600 dark:text-slate-300"
-            >
-              {HERO_SEARCH_SUMMARY}
-            </motion.p>
 
             <motion.div
               initial={{ opacity: 0, y: 10 }}
