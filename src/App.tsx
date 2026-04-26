@@ -180,6 +180,7 @@ export default function App() {
   const [tabDirection, setTabDirection] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [expandedWorkstreams, setExpandedWorkstreams] = useState<Record<string, boolean>>({});
+  const [publicationFilter, setPublicationFilter] = useState('all');
   const prevTabIndexRef = useRef(0);
   const buildDateRaw =
     import.meta.env.VITE_BUILD_DATE ||
@@ -403,6 +404,29 @@ export default function App() {
     }
   };
 
+  const publicationGroups = [
+    { id: 'submitted', title: "Submitted / Under Review", items: cvData.publications.submitted },
+    { id: 'published', title: "Published / Accepted", items: cvData.publications.published },
+    { id: 'reviews', title: "Review Articles", items: cvData.publications.reviews },
+    { id: 'conferences', title: "Conference Abstracts", items: cvData.publications.conferences }
+  ];
+  const publicationFilterOptions = [
+    {
+      id: 'all',
+      title: 'All',
+      count: publicationGroups.reduce((total, group) => total + group.items.length, 0)
+    },
+    ...publicationGroups.map((group) => ({
+      id: group.id,
+      title: group.title.replace(' / ', ' '),
+      count: group.items.length
+    }))
+  ];
+  const visiblePublicationGroups =
+    publicationFilter === 'all'
+      ? publicationGroups
+      : publicationGroups.filter((group) => group.id === publicationFilter);
+
   return (
     <div className={`min-h-screen text-slate-600 font-sans pb-24 selection:bg-slate-900 selection:text-white transition-colors duration-300 ${darkMode ? 'dark bg-slate-950 text-slate-300' : 'bg-slate-50'}`}>
       <Helmet>
@@ -582,7 +606,7 @@ export default function App() {
 
         {/* Interactive Tabs Navigation */}
         <div data-nosnippet className="mb-12 sticky top-6 z-30 flex justify-center w-full px-4 sm:px-0">
-          <div className="relative max-w-full group">
+          <div className="relative w-full max-w-6xl group">
             {/* Left fade/button */}
             <AnimatePresence>
               {canScrollLeft && (
@@ -606,7 +630,7 @@ export default function App() {
             <div
               ref={scrollContainerRef}
               onScroll={checkScroll}
-              className="bg-slate-900/90 backdrop-blur-xl rounded-full p-1.5 shadow-xl shadow-slate-900/10 border border-slate-800 flex overflow-x-auto hide-scrollbar gap-1 w-full max-w-[88vw] md:max-w-4xl snap-x scroll-smooth relative z-20"
+              className="bg-slate-900/90 backdrop-blur-xl rounded-2xl md:rounded-3xl p-1.5 shadow-xl shadow-slate-900/10 border border-slate-800 flex overflow-x-auto md:overflow-visible md:flex-wrap md:justify-center hide-scrollbar gap-1 w-full max-w-[88vw] md:max-w-none snap-x scroll-smooth relative z-20"
             >
               {TABS.map((tab) => {
                 const Icon = tab.icon;
@@ -616,14 +640,14 @@ export default function App() {
                     key={tab.id}
                     onClick={() => handleTabChange(tab.id)}
                     className={`
-                      snap-start relative flex items-center gap-2 py-2.5 px-5 text-sm font-semibold rounded-full transition-all duration-300 whitespace-nowrap shrink-0
+                      snap-start relative flex items-center gap-2 py-2.5 px-4 text-sm font-semibold rounded-2xl transition-all duration-300 whitespace-nowrap shrink-0 md:grow md:justify-center md:basis-[calc(20%-0.25rem)] lg:basis-auto lg:grow-0
                       ${isActive ? 'text-white' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'}
                     `}
                   >
                     {isActive && (
                       <motion.div
                         layoutId="activeTab"
-                        className="absolute inset-0 bg-blue-600 rounded-full shadow-[0_0_16px_rgba(37,99,235,0.6)] border border-blue-400/30"
+                        className="absolute inset-0 bg-blue-600 rounded-2xl shadow-[0_0_16px_rgba(37,99,235,0.6)] border border-blue-400/30"
                         transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                       />
                     )}
@@ -939,15 +963,37 @@ export default function App() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                    {[
-                      { title: "Submitted / Under Review", items: cvData.publications.submitted },
-                      { title: "Published / Accepted", items: cvData.publications.published },
-                      { title: "Review Articles", items: cvData.publications.reviews },
-                      { title: "Conference Abstracts", items: cvData.publications.conferences }
-                    ].map((group, gIdx) => (
+                  <div className="mb-10 flex flex-wrap gap-2 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 p-2">
+                    {publicationFilterOptions.map((option) => {
+                      const isSelected = publicationFilter === option.id;
+                      return (
+                        <button
+                          key={option.id}
+                          type="button"
+                          onClick={() => setPublicationFilter(option.id)}
+                          className={`inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-bold transition-all ${
+                            isSelected
+                              ? 'bg-slate-900 text-white shadow-md dark:bg-teal-500 dark:text-slate-950'
+                              : 'bg-white text-slate-600 hover:text-slate-900 hover:border-teal-200 dark:bg-slate-900 dark:text-slate-300 dark:hover:text-white border border-slate-200 dark:border-slate-700'
+                          }`}
+                        >
+                          <span>{option.title}</span>
+                          <span className={`rounded-full px-2 py-0.5 text-xs ${
+                            isSelected
+                              ? 'bg-white/15 text-white dark:bg-slate-950/15 dark:text-slate-950'
+                              : 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400'
+                          }`}>
+                            {option.count}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  <div className={`grid grid-cols-1 gap-8 ${publicationFilter === 'all' ? 'lg:grid-cols-2 lg:gap-12' : 'max-w-4xl'}`}>
+                    {visiblePublicationGroups.map((group, gIdx) => (
                       <motion.div
-                        key={gIdx}
+                        key={group.id}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: gIdx * 0.1 }}
@@ -1077,6 +1123,7 @@ export default function App() {
                       const thumbnailSrc = project.thumbnailFile
                         ? `${import.meta.env.BASE_URL}project-thumbs/${project.thumbnailFile}`
                         : null;
+                      const isFeaturedProject = idx === 0;
 
                       return (
                         <motion.div
@@ -1085,9 +1132,13 @@ export default function App() {
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: idx * 0.08 }}
                           whileHover={{ y: -6 }}
-                          className="group rounded-3xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800/70 dark:backdrop-blur-xl shadow-sm hover:shadow-xl hover:border-teal-200 dark:hover:border-teal-500/50 transition-all duration-500 overflow-hidden"
+                          className={`group rounded-3xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800/70 dark:backdrop-blur-xl shadow-sm hover:shadow-xl hover:border-teal-200 dark:hover:border-teal-500/50 transition-all duration-500 overflow-hidden ${
+                            isFeaturedProject ? 'xl:col-span-2 xl:grid xl:grid-cols-[1.18fr_0.82fr]' : ''
+                          }`}
                         >
-                          <div className="relative aspect-[16/10] overflow-hidden border-b border-slate-100 dark:border-slate-700 bg-slate-100 dark:bg-slate-900">
+                          <div className={`relative overflow-hidden border-b border-slate-100 dark:border-slate-700 bg-slate-100 dark:bg-slate-900 ${
+                            isFeaturedProject ? 'aspect-[16/9] xl:aspect-auto xl:min-h-[520px] xl:border-b-0 xl:border-r' : 'aspect-[16/10]'
+                          }`}>
                             {thumbnailSrc ? (
                               <img
                                 src={thumbnailSrc}
@@ -1112,19 +1163,30 @@ export default function App() {
                                 <div className="text-xs font-black uppercase tracking-[0.24em] text-white/70 mb-2">
                                   {project.period}
                                 </div>
-                                <h4 className="text-2xl font-extrabold text-white leading-tight">
+                                <h4 className={`${isFeaturedProject ? 'text-3xl lg:text-4xl' : 'text-2xl'} font-extrabold text-white leading-tight`}>
                                   {project.title}
                                 </h4>
-                              </div>
-                              <div className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-xl bg-black/35 backdrop-blur text-white text-xs font-bold border border-white/15">
-                                <Image className="w-4 h-4" />
-                                Preview
+                            </div>
+                            <div className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-xl bg-black/35 backdrop-blur text-white text-xs font-bold border border-white/15">
+                                {isFeaturedProject ? (
+                                  <>
+                                    <Sparkles className="w-4 h-4" />
+                                    Featured
+                                  </>
+                                ) : (
+                                  <>
+                                    <Image className="w-4 h-4" />
+                                    Preview
+                                  </>
+                                )}
                               </div>
                             </div>
                           </div>
 
-                          <div className="p-8">
-                            <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-8">
+                          <div className={`${isFeaturedProject ? 'p-8 lg:p-10 xl:p-12 flex flex-col justify-center' : 'p-8'}`}>
+                            <p className={`text-slate-600 dark:text-slate-300 leading-relaxed mb-8 ${
+                              isFeaturedProject ? 'text-lg' : ''
+                            }`}>
                               {project.summary}
                             </p>
 
