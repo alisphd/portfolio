@@ -641,7 +641,7 @@ export default function App() {
                     onClick={() => handleTabChange(tab.id)}
                     className={`
                       snap-start relative flex items-center gap-2 py-2.5 px-5 text-sm font-semibold rounded-full transition-all duration-300 whitespace-nowrap shrink-0
-                      ${isActive ? 'text-white' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'}
+                      ${isActive ? 'text-white' : 'text-slate-400 hover:text-white hover:bg-blue-600/30 hover:shadow-[0_0_14px_rgba(37,99,235,0.25)]'}
                     `}
                   >
                     {isActive && (
@@ -651,7 +651,7 @@ export default function App() {
                         transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                       />
                     )}
-                    <Icon className={`w-4 h-4 relative z-10 ${isActive ? 'text-white' : 'text-slate-500 group-hover:text-slate-300'}`} />
+                    <Icon className={`w-4 h-4 relative z-10 transition-colors ${isActive ? 'text-white' : 'text-slate-500 group-hover:text-slate-300'}`} />
                     <span className="relative z-10">{tab.label}</span>
                   </button>
                 );
