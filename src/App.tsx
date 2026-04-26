@@ -606,7 +606,7 @@ export default function App() {
 
         {/* Interactive Tabs Navigation */}
         <div data-nosnippet className="mb-12 sticky top-6 z-30 flex justify-center w-full px-4 sm:px-0">
-          <div className="relative w-full max-w-6xl group">
+          <div className="relative max-w-full group">
             {/* Left fade/button */}
             <AnimatePresence>
               {canScrollLeft && (
@@ -630,7 +630,7 @@ export default function App() {
             <div
               ref={scrollContainerRef}
               onScroll={checkScroll}
-              className="bg-slate-900/90 backdrop-blur-xl rounded-2xl md:rounded-3xl p-1.5 shadow-xl shadow-slate-900/10 border border-slate-800 flex overflow-x-auto md:overflow-visible md:flex-wrap md:justify-center hide-scrollbar gap-1 w-full max-w-[88vw] md:max-w-none snap-x scroll-smooth relative z-20"
+              className="bg-slate-900/90 backdrop-blur-xl rounded-full p-1.5 shadow-xl shadow-slate-900/10 border border-slate-800 flex overflow-x-auto hide-scrollbar gap-1 w-full max-w-[88vw] md:max-w-4xl snap-x scroll-smooth relative z-20"
             >
               {TABS.map((tab) => {
                 const Icon = tab.icon;
@@ -640,14 +640,14 @@ export default function App() {
                     key={tab.id}
                     onClick={() => handleTabChange(tab.id)}
                     className={`
-                      snap-start relative flex items-center gap-2 py-2.5 px-4 text-sm font-semibold rounded-2xl transition-all duration-300 whitespace-nowrap shrink-0 md:grow md:justify-center md:basis-[calc(20%-0.25rem)] lg:basis-auto lg:grow-0
+                      snap-start relative flex items-center gap-2 py-2.5 px-5 text-sm font-semibold rounded-full transition-all duration-300 whitespace-nowrap shrink-0
                       ${isActive ? 'text-white' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'}
                     `}
                   >
                     {isActive && (
                       <motion.div
                         layoutId="activeTab"
-                        className="absolute inset-0 bg-blue-600 rounded-2xl shadow-[0_0_16px_rgba(37,99,235,0.6)] border border-blue-400/30"
+                        className="absolute inset-0 bg-blue-600 rounded-full shadow-[0_0_16px_rgba(37,99,235,0.6)] border border-blue-400/30"
                         transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                       />
                     )}
