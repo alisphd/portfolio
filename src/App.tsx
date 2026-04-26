@@ -1123,7 +1123,6 @@ export default function App() {
                       const thumbnailSrc = project.thumbnailFile
                         ? `${import.meta.env.BASE_URL}project-thumbs/${project.thumbnailFile}`
                         : null;
-                      const isFeaturedProject = idx === 0;
 
                       return (
                         <motion.div
@@ -1132,13 +1131,9 @@ export default function App() {
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: idx * 0.08 }}
                           whileHover={{ y: -6 }}
-                          className={`group rounded-3xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800/70 dark:backdrop-blur-xl shadow-sm hover:shadow-xl hover:border-teal-200 dark:hover:border-teal-500/50 transition-all duration-500 overflow-hidden ${
-                            isFeaturedProject ? 'xl:col-span-2 xl:grid xl:grid-cols-[1.18fr_0.82fr]' : ''
-                          }`}
+                          className="group rounded-3xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800/70 dark:backdrop-blur-xl shadow-sm hover:shadow-xl hover:border-teal-200 dark:hover:border-teal-500/50 transition-all duration-500 overflow-hidden"
                         >
-                          <div className={`relative overflow-hidden border-b border-slate-100 dark:border-slate-700 bg-slate-100 dark:bg-slate-900 ${
-                            isFeaturedProject ? 'aspect-[16/9] xl:aspect-auto xl:min-h-[520px] xl:border-b-0 xl:border-r' : 'aspect-[16/10]'
-                          }`}>
+                          <div className="relative aspect-[16/10] overflow-hidden border-b border-slate-100 dark:border-slate-700 bg-slate-100 dark:bg-slate-900">
                             {thumbnailSrc ? (
                               <img
                                 src={thumbnailSrc}
@@ -1163,30 +1158,19 @@ export default function App() {
                                 <div className="text-xs font-black uppercase tracking-[0.24em] text-white/70 mb-2">
                                   {project.period}
                                 </div>
-                                <h4 className={`${isFeaturedProject ? 'text-3xl lg:text-4xl' : 'text-2xl'} font-extrabold text-white leading-tight`}>
+                                <h4 className="text-2xl font-extrabold text-white leading-tight">
                                   {project.title}
                                 </h4>
                             </div>
                             <div className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-xl bg-black/35 backdrop-blur text-white text-xs font-bold border border-white/15">
-                                {isFeaturedProject ? (
-                                  <>
-                                    <Sparkles className="w-4 h-4" />
-                                    Featured
-                                  </>
-                                ) : (
-                                  <>
-                                    <Image className="w-4 h-4" />
-                                    Preview
-                                  </>
-                                )}
+                                <Image className="w-4 h-4" />
+                                Preview
                               </div>
                             </div>
                           </div>
 
-                          <div className={`${isFeaturedProject ? 'p-8 lg:p-10 xl:p-12 flex flex-col justify-center' : 'p-8'}`}>
-                            <p className={`text-slate-600 dark:text-slate-300 leading-relaxed mb-8 ${
-                              isFeaturedProject ? 'text-lg' : ''
-                            }`}>
+                          <div className="p-8">
+                            <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-8">
                               {project.summary}
                             </p>
 
