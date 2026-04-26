@@ -838,6 +838,23 @@ export const cvData = {
   ],
   digitalProjects: [
     {
+      title: "BioWorkbench Starter",
+      category: "Bioinformatics Workbench",
+      status: "Live",
+      period: "2026",
+      summary: "A modular bioinformatics workbench with a PySide6 desktop application for local sequence workflows and a Streamlit demo for quick public testing, built to grow into a broader genomics toolkit.",
+      stack: ["Python", "Streamlit", "PySide6", "Bioinformatics", "Sequence Analysis", "Desktop App"],
+      repoUrl: "https://github.com/alisphd/bioworkbench-starter",
+      liveUrl: "https://bioworkbench-starter.streamlit.app/",
+      thumbnailFile: "bioworkbench-starter.png",
+      thumbnailAlt: "BioWorkbench Starter project page preview",
+      highlights: [
+        "Built practical sequence-analysis tools for FASTA formatting, sequence summaries, transforms, motif search, ORF finding, GC-window scanning, k-mer counting, and simple primer suggestions.",
+        "Structured the project so the desktop dashboard and web demo reuse the same pure-Python sequence logic and central tool registry instead of duplicating workflow code.",
+        "Published it with a live Streamlit demo and a GitHub Pages documentation hub while keeping the architecture ready for future BLAST, HMMER, alignment, and phylogenetics modules."
+      ]
+    },
+    {
       title: "PhytoAid",
       category: "Web App",
       status: "Live",
@@ -905,21 +922,6 @@ export const cvData = {
         "Added demo-mode execution, smoke-testable inputs, container deployment files, and CI support for reproducible development."
       ]
     },
-    {
-      title: "BioWorkbench Starter",
-      category: "Bioinformatics Workbench",
-      status: "Live",
-      period: "2026",
-      summary: "A modular bioinformatics workbench with a PySide6 desktop application for local sequence workflows and a Streamlit demo for quick public testing, built to grow into a broader genomics toolkit.",
-      stack: ["Python", "Streamlit", "PySide6", "Bioinformatics", "Sequence Analysis", "Desktop App"],
-      repoUrl: "https://github.com/alisphd/bioworkbench-starter",
-      liveUrl: "https://bioworkbench-starter.streamlit.app/",
-      highlights: [
-        "Built practical sequence-analysis tools for FASTA formatting, sequence summaries, transforms, motif search, ORF finding, GC-window scanning, k-mer counting, and simple primer suggestions.",
-        "Structured the project so the desktop dashboard and web demo reuse the same pure-Python sequence logic and central tool registry instead of duplicating workflow code.",
-        "Published it with a live Streamlit demo and a GitHub Pages documentation hub while keeping the architecture ready for future BLAST, HMMER, alignment, and phylogenetics modules."
-      ]
-    }
   ],
   gallery: [
     {
