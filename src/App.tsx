@@ -179,7 +179,6 @@ export default function App() {
   const [filterOpen, setFilterOpen] = useState(false);
   const [tabDirection, setTabDirection] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
-  const [expandedWorkstreams, setExpandedWorkstreams] = useState<Record<string, boolean>>({});
   const [publicationFilter, setPublicationFilter] = useState('all');
   const prevTabIndexRef = useRef(0);
   const buildDateRaw =
@@ -265,12 +264,6 @@ export default function App() {
     setTabDirection(newIndex > oldIndex ? 1 : -1);
     prevTabIndexRef.current = newIndex;
     setActiveTab(newTab);
-  }, []);
-  const toggleWorkstreams = useCallback((workstreamKey: string) => {
-    setExpandedWorkstreams((prev) => ({
-      ...prev,
-      [workstreamKey]: !prev[workstreamKey],
-    }));
   }, []);
   const openPublicationPreview = useCallback(async (pub: any) => {
     const publicationText = typeof pub === 'string' ? pub : pub.text;
@@ -737,9 +730,6 @@ export default function App() {
                   <SectionHeading title="Work Experience" icon={FlaskConical} />
                   <div className="space-y-16 mt-12">
                     {cvData.experience.map((exp, idx) => {
-                      const workstreamKey = `${exp.title}-${idx}`;
-                      const isExpanded = expandedWorkstreams[workstreamKey] ?? false;
-
                       return (
                         <motion.div
                           key={idx}
@@ -827,60 +817,23 @@ export default function App() {
                                       <div className="h-px flex-1 bg-slate-200 dark:bg-slate-700"></div>
                                     </div>
 
-                                    <div className="rounded-2xl border border-slate-100 dark:border-slate-600/50 bg-slate-50/80 dark:bg-slate-700/40 overflow-hidden">
-                                      <button
-                                        type="button"
-                                        onClick={() => toggleWorkstreams(workstreamKey)}
-                                        className="w-full px-6 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-left hover:bg-white dark:hover:bg-slate-700/60 transition-colors"
-                                        aria-expanded={isExpanded}
-                                      >
-                                        <div>
-                                          <div className="text-sm font-black uppercase tracking-[0.24em] text-teal-500 dark:text-teal-400 mb-2">
-                                            Research Fellow Portfolio
-                                          </div>
-                                          <div className="text-lg font-bold text-slate-900 dark:text-white">
-                                            {exp.projects.length} detailed workstreams
-                                          </div>
-                                          <div className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-                                            {isExpanded ? 'Hide the detailed breakdown.' : 'Expand to view the full research workstream details.'}
-                                          </div>
+                                    <div className="space-y-6">
+                                      {exp.projects.map((proj, pIdx) => (
+                                        <div key={pIdx} className="bg-white dark:bg-slate-800/70 rounded-2xl p-8 border border-slate-100 dark:border-slate-600/50 hover:shadow-md transition-all duration-300">
+                                          <h4 className="font-bold text-slate-900 dark:text-slate-100 mb-6 text-xl flex items-center gap-3">
+                                            <div className="w-2 h-8 bg-teal-500 rounded-full"></div>
+                                            {proj.name}
+                                          </h4>
+                                          <ul className="space-y-4">
+                                            {proj.details.map((detail, dIdx) => (
+                                              <li key={dIdx} className="flex items-start gap-4 text-slate-600 dark:text-slate-300 text-base">
+                                                <ChevronRight className="w-5 h-5 text-teal-400 mt-1 shrink-0" />
+                                                <span className="leading-relaxed">{detail}</span>
+                                              </li>
+                                            ))}
+                                          </ul>
                                         </div>
-                                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 text-sm font-bold shadow-sm">
-                                          {isExpanded ? 'Hide details' : 'View details'}
-                                          <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
-                                        </div>
-                                      </button>
-
-                                      <AnimatePresence initial={false}>
-                                        {isExpanded && (
-                                          <motion.div
-                                            initial={{ height: 0, opacity: 0 }}
-                                            animate={{ height: 'auto', opacity: 1 }}
-                                            exit={{ height: 0, opacity: 0 }}
-                                            transition={{ duration: 0.3, ease: 'easeOut' }}
-                                            className="overflow-hidden"
-                                          >
-                                            <div className="px-6 pb-6 pt-2 space-y-6 border-t border-slate-100 dark:border-slate-600/50">
-                                              {exp.projects.map((proj, pIdx) => (
-                                                <div key={pIdx} className="bg-white dark:bg-slate-800/70 rounded-2xl p-8 border border-slate-100 dark:border-slate-600/50 hover:shadow-md transition-all duration-300">
-                                                  <h4 className="font-bold text-slate-900 dark:text-slate-100 mb-6 text-xl flex items-center gap-3">
-                                                    <div className="w-2 h-8 bg-teal-500 rounded-full"></div>
-                                                    {proj.name}
-                                                  </h4>
-                                                  <ul className="space-y-4">
-                                                    {proj.details.map((detail, dIdx) => (
-                                                      <li key={dIdx} className="flex items-start gap-4 text-slate-600 dark:text-slate-300 text-base">
-                                                        <ChevronRight className="w-5 h-5 text-teal-400 mt-1 shrink-0" />
-                                                        <span className="leading-relaxed">{detail}</span>
-                                                      </li>
-                                                    ))}
-                                                  </ul>
-                                                </div>
-                                              ))}
-                                            </div>
-                                          </motion.div>
-                                        )}
-                                      </AnimatePresence>
+                                      ))}
                                     </div>
                                   </div>
                                 ) : (

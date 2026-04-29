@@ -152,10 +152,14 @@ export const cvData = {
           ]
         },
         {
-          name: "Systematic Characterization of Glycine max IQD Genes Reveals Insights into Drought Stress Adaptation and Hormonal Regulation of Plant Architecture",
+          name: "Genome-Wide Identification and Integrative Characterization of the IQD Gene Family in Soybean Wm82.a6",
           details: [
-            "Identified 12 soybean IQD genes (HMMER, SMART); characterized protein physicochemical properties, subcellular localization, reconstructed phylogenetic relationships (iTOL).",
-            "Analyzed gene structure, conserved motifs, synteny, promoter cis-elements, RNA-seq expression, and STRING-based interactions using TBtools, SoyAtlas, and Phytozome."
+            "Retrieved and validated 69 non-redundant GmIQD proteins from the Wm82.a6 soybean genome (48,387 gene models) using a combined HMMER, NCBI Batch CD-Search (CDD/Pfam PF00612), and manual domain-validation pipeline across 83 preliminary candidates.",
+            "Reconstructed a maximum-likelihood comparative phylogeny of 131 IQD proteins from soybean, Arabidopsis, and rice using MAFFT L-INS-i and IQ-TREE/ModelFinder (JTT+R6), classifying GmIQD proteins into four major groups and identifying a soybean-expanded clade consistent with polyploidy-driven retention.",
+            "Performed MCScanX whole-genome self-collinearity analysis to identify 37 unique GmIQD duplicated pairs; estimated Ka/Ks ratios for 30 pairs (median 0.281, range 0.100–0.592), confirming dominant purifying selection after duplication.",
+            "Scanned 2 kb upstream promoter regions using PlantCARE, detecting enrichment of W-box (88.4%), ABRE (73.9%), AuxRE, ERE, MeJA, MBS, DRE/CRT, and GARE motifs across 69 GmIQD promoters.",
+            "Mined public soybean drought time-course RNA-seq data (GSE69469; 36 libraries, BR16 leaves, ZT0–ZT20, six timepoints) to identify 13 edgeR-supported drought-responsive GmIQD events across 11 genes (FDR ≤0.01, |FC| ≥2).",
+            "Developed a multi-evidence integrated scoring framework combining promoter strength, MCScanX support, Ka/Ks constraint, drought log2FC magnitude, edgeR DEG status, and Wm82.a6-novel candidate status to prioritize GmIQD26 and GmIQD16 as top candidates for functional validation."
           ]
         }
       ]
@@ -164,7 +168,7 @@ export const cvData = {
   publications: {
     summary: "8 peer-reviewed articles (6 first author), 4 conference presentations",
     submitted: [
-      { text: "Ali, S. (2026). Systematic Characterization of Glycine max IQD Genes Reveals Insights into Drought Stress Adaptation and Hormonal Regulation of Plant Architecture. Submitted to 3 Biotech (Springer Nature).", pdfUrl: "#", previewUrl: "papers/systematic-characterization-glycine-max-iqd.pdf", impactFactor: "2.9 (2024)" },
+      { text: "Ali, S. (2026). Genome-Wide Identification and Integrative Characterization of the IQD Gene Family in Soybean Wm82.a6: Updated Gene Set, Conserved Duplications, and Candidate Drought-Responsive Regulators. Submitted to Plant Science (Elsevier, ISSN 0168-9452).", pdfUrl: "#", previewUrl: "papers/soybean-wm82-a6-iqd-gene-family.pdf" },
       { text: "Ali, S., Hanjra, Z., Saeed, M., Fatima, T., Khalil, S., Iltaf, B., & Rashid, M. (2025). Genome-wide identification and comparative characterization of WRKY transcription factors across three cultivated Oryza species reveals lineage-specific regulatory divergence. Submitted to BMC Plant Biology.", pdfUrl: "https://drive.google.com/file/d/1g_hxejY7ex4vHViSB6o_Jp9LCCBN-asv/view?usp=sharing", previewUrl: "papers/oryza-wrky-lineage-specific-regulatory-divergence.pdf", impactFactor: "4.8 (2024)" },
     ],
     published: [
