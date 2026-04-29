@@ -147,8 +147,9 @@ export const cvData = {
         {
           name: "Evolutionary Origins and Structural Mechanism of V2-Mediated Host Immunity Suppression in Soybean Stay-Green Associated Virus (SoSGV)",
           details: [
-            "Compiled 54 complete SoSGV genomes plus outgroups from GenBank; performed MAFFT alignment, maximum-likelihood phylogeny (MEGA11/ggtree).",
-            "Estimated population diversity (DnaSP), detected recombination (RDP5), identified episodic positive selection on the V2 gene (Datamonkey MEME), predicted V2 and soybean SKP1 structures (ColabFold), docked the complex with HDOCK, and evaluated complex stability by GROMACS molecular dynamics simulations."
+            "Compiled 54 complete SoSGV genomes plus 15 begomovirus/curtovirus/mastrevirus outgroups from GenBank; performed MAFFT L-INS-i alignment, manual curation in BioEdit, V2 ORF extraction, and reconstructed maximum-likelihood (96% bootstrap) and Bayesian phylogenies in MEGA11/ggtree/MrBayes under the GTR+G+I model, recovering SoSGV as a distinct monophyletic lineage.",
+            "Estimated population genetic parameters in DnaSP (Hd = 0.962, π = 0.022, Tajima's D = −1.49), consistent with recent demographic expansion; detected two robust CP-region recombination events (p < 1×10⁻⁶) using RDP5 with seven algorithms and independently verified mosaic structure via custom Python SimPlot-style sliding-window analysis.",
+            "Identified episodic positive selection at V2 codons 35 and 36 (MEME, p < 0.1), gene-wide adaptive signal (BUSTED, p = 0.035), and independent support from FEL, FUBAR, and CODEML (M8 vs M8a: 2ΔlnL = 31.99, p = 1.55×10⁻⁸); predicted V2 structure (mean pLDDT = 73.36) using ColabFold, docked the complex with ASK1/SKP1 via HDOCK (score = −209.25, 39 interface residues), and assessed short-timescale structural behavior by GROMACS molecular dynamics simulation (10 ns, CHARMM36m)."
           ]
         },
         {
