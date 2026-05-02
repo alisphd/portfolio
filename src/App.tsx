@@ -115,7 +115,9 @@ const SITE_IMAGE_URL = `${SITE_URL}portrait.jpg`;
 const SITE_NAME = 'Saqib Ali Portfolio';
 const SEO_TITLE = 'Saqib Ali | Plant Pathologist & Bioinformatician Portfolio';
 const SEO_DESCRIPTION =
-  'Portfolio of Saqib Ali, a plant pathologist and bioinformatician in Pakistan featuring publications, computational genomics, wet-lab diagnostics, research experience, and digital tools.';
+  'Saqib Ali is a plant pathologist and bioinformatician in Pakistan focused on computational genomics, plant disease diagnostics, rice stress biology, and digital tools.';
+const SEO_KEYWORDS =
+  'Saqib Ali, plant pathologist, bioinformatician, computational genomics researcher, plant pathology Pakistan, rice stress biology, plant disease diagnostics, WRKY transcription factors, IQD gene family, bioinformatics portfolio';
 
 const GOOGLE_DRIVE_FILE_REGEX = /drive\.google\.com\/file\/d\/([^/]+)/i;
 
@@ -425,12 +427,13 @@ export default function App() {
       <Helmet>
         <title>{SEO_TITLE}</title>
         <meta name="description" content={SEO_DESCRIPTION} />
+        <meta name="keywords" content={SEO_KEYWORDS} />
         <meta name="author" content={cvData.name} />
         <meta name="creator" content={cvData.name} />
         <meta name="application-name" content={SITE_NAME} />
         <link rel="canonical" href={SITE_URL} />
         <meta name="robots" content="index, follow" />
-        <meta name="googlebot" content="max-snippet:170, max-image-preview:large, max-video-preview:-1" />
+        <meta name="googlebot" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
         <meta property="og:title" content={SEO_TITLE} />
         <meta property="og:description" content={SEO_DESCRIPTION} />
         <meta property="og:type" content="website" />
