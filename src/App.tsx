@@ -440,6 +440,7 @@ export default function App() {
     };
 
     const handlePointerMove = (event: PointerEvent) => {
+      if (event.pointerType !== 'mouse') return;
       if (!(event.target instanceof Element)) return;
       const nextLiquid = event.target.closest(liquidSelector) as HTMLElement | null;
       if (!nextLiquid) return;
@@ -455,6 +456,17 @@ export default function App() {
       }
     };
 
+    const handlePointerDown = (event: PointerEvent) => {
+      if (event.pointerType === 'mouse') return;
+      if (activeLiquid) resetLiquid(activeLiquid);
+      if (event.target instanceof Element) {
+        const tappedLiquid = event.target.closest(liquidSelector) as HTMLElement | null;
+        if (tappedLiquid) resetLiquid(tappedLiquid);
+      }
+      activeLiquid = null;
+      latestEvent = null;
+    };
+
     const handlePointerOut = (event: PointerEvent) => {
       if (!activeLiquid) return;
       if (event.relatedTarget instanceof Node && activeLiquid.contains(event.relatedTarget)) return;
@@ -464,10 +476,12 @@ export default function App() {
     };
 
     document.addEventListener('pointermove', handlePointerMove, { passive: true });
+    document.addEventListener('pointerdown', handlePointerDown, { passive: true });
     document.addEventListener('pointerout', handlePointerOut, { passive: true });
 
     return () => {
       document.removeEventListener('pointermove', handlePointerMove);
+      document.removeEventListener('pointerdown', handlePointerDown);
       document.removeEventListener('pointerout', handlePointerOut);
       if (frame) window.cancelAnimationFrame(frame);
     };
@@ -513,7 +527,7 @@ export default function App() {
       : publicationGroups.filter((group) => group.id === publicationFilter);
 
   return (
-    <div className={`min-h-screen text-slate-600 font-sans pb-24 selection:bg-slate-900 selection:text-white transition-colors duration-300 ${darkMode ? 'dark bg-slate-950 text-slate-300' : 'bg-slate-50'}`}>
+    <div className={`portfolio-shell min-h-screen text-slate-600 font-sans pb-24 selection:bg-slate-900 selection:text-white transition-colors duration-300 ${darkMode ? 'dark bg-slate-950 text-slate-300' : 'bg-slate-50'}`}>
       <Helmet>
         <title>{SEO_TITLE}</title>
         <meta name="description" content={SEO_DESCRIPTION} />
@@ -543,7 +557,7 @@ export default function App() {
       />
 
       {/* Static Hero Background for better performance */}
-      <div className="h-64 bg-slate-900 dark:bg-[#030712] relative overflow-hidden transition-colors duration-300">
+      <div className="portfolio-hero-bg h-64 bg-slate-900 dark:bg-[#030712] relative overflow-hidden transition-colors duration-300">
         {/* Grid pattern (light mode) */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#27272a_1px,transparent_1px),linear-gradient(to_bottom,#27272a_1px,transparent_1px)] bg-[size:3rem_3rem] opacity-20 dark:opacity-0 transition-opacity duration-300"></div>
         {/* Stars layer - tiny dots (dark mode) */}
