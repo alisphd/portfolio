@@ -1,11 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Segoe UI", Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Segoe UI Variable Display", "Segoe UI", Inter, ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer base {
@@ -73,4 +72,357 @@
     radial-gradient(2px 2px at 600px 40px, #f1f5f9, transparent),
     radial-gradient(1px 1px at 650px 90px, #e2e8f0, transparent);
   background-size: 700px 180px;
+}
+
+/* Liquid glass UI layer */
+.liquid-panel,
+.liquid-menu,
+.liquid-card,
+.liquid-note,
+.liquid-toolbar,
+.liquid-dropdown,
+.liquid-option,
+.liquid-action,
+.liquid-chip,
+.liquid-icon-button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  --liquid-rgb: 20, 184, 166;
+  --liquid-rgb-2: 59, 130, 246;
+  --liquid-glow-rgb: 15, 23, 42;
+  --liquid-tint-a: 0.3;
+  --liquid-tint-b: 0.22;
+  --liquid-motion: 0;
+  --liquid-border: rgba(var(--liquid-rgb), 0.32);
+  --liquid-hover-border: rgba(var(--liquid-rgb), 0.62);
+  border-color: var(--liquid-border);
+  background:
+    linear-gradient(135deg, rgba(var(--liquid-rgb), 0.16), rgba(255, 255, 255, 0.2) 36%, rgba(var(--liquid-rgb-2), 0.2)),
+    radial-gradient(circle at 12% 5%, rgba(var(--liquid-rgb), var(--liquid-tint-a)), transparent 34%),
+    radial-gradient(circle at 88% 18%, rgba(var(--liquid-rgb-2), var(--liquid-tint-b)), transparent 30%),
+    linear-gradient(160deg, rgba(15, 23, 42, 0.16), transparent 42%, rgba(255, 255, 255, 0.14));
+  box-shadow:
+    0 18px 48px rgba(var(--liquid-glow-rgb), 0.16),
+    0 0 0 1px rgba(var(--liquid-rgb), 0.08),
+    inset 0 1px 1px rgba(255, 255, 255, 0.68),
+    inset 0 -18px 40px rgba(var(--liquid-rgb), 0.14),
+    inset 0 -1px 0 rgba(15, 23, 42, 0.12);
+  backdrop-filter: blur(18px) saturate(1.65) contrast(1.04);
+  -webkit-backdrop-filter: blur(18px) saturate(1.65) contrast(1.04);
+  transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease, background 220ms ease;
+}
+
+.liquid-panel::before,
+.liquid-menu::before,
+.liquid-card::before,
+.liquid-note::before,
+.liquid-toolbar::before,
+.liquid-dropdown::before,
+.liquid-option::before,
+.liquid-action::before,
+.liquid-chip::before,
+.liquid-icon-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    radial-gradient(180px 110px at var(--glass-x, 18%) var(--glass-y, 0%), rgba(255, 255, 255, 0.38), rgba(var(--liquid-rgb), 0.2) 38%, transparent 72%),
+    radial-gradient(260px 150px at 80% 92%, rgba(var(--liquid-rgb-2), 0.18), transparent 74%),
+    conic-gradient(from 145deg at var(--glass-x, 18%) var(--glass-y, 0%), rgba(255, 255, 255, 0.24), transparent 24%, rgba(var(--liquid-rgb), 0.18), transparent 58%, rgba(255, 255, 255, 0.12));
+  opacity: calc(0.64 + (var(--liquid-motion, 0) * 0.28));
+  transition: opacity 180ms ease, background 180ms ease;
+}
+
+.liquid-panel::after,
+.liquid-menu::after,
+.liquid-card::after,
+.liquid-option::after,
+.liquid-action::after,
+.liquid-icon-button::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    linear-gradient(112deg, transparent 0%, rgba(255, 255, 255, 0.24) 38%, rgba(var(--liquid-rgb), 0.22) 52%, transparent 68%),
+    radial-gradient(90px 90px at var(--glass-x, 70%) var(--glass-y, 28%), rgba(255, 255, 255, 0.44), transparent 72%);
+  opacity: calc(0.2 + (var(--liquid-motion, 0) * 0.5));
+  transform: translate3d(var(--liquid-shift-x, -8px), var(--liquid-shift-y, 0), 0);
+  transition: opacity 220ms ease, transform 260ms ease, background 180ms ease;
+}
+
+.liquid-card:hover,
+.liquid-option:hover,
+.liquid-action:hover,
+.liquid-icon-button:hover {
+  border-color: var(--liquid-hover-border);
+  box-shadow:
+    0 22px 56px rgba(var(--liquid-glow-rgb), 0.2),
+    0 0 0 1px rgba(var(--liquid-rgb), 0.14),
+    inset 0 1px 1px rgba(255, 255, 255, 0.82),
+    inset 0 -20px 44px rgba(var(--liquid-rgb), 0.12);
+  transform: translateY(-1px);
+}
+
+.liquid-card:hover::after,
+.liquid-option:hover::after,
+.liquid-action:hover::after,
+.liquid-icon-button:hover::after {
+  opacity: 1;
+  transform: translate3d(var(--liquid-shift-x, 8px), var(--liquid-shift-y, 0), 0);
+}
+
+.liquid-card:active,
+.liquid-option:active,
+.liquid-action:active,
+.liquid-icon-button:active {
+  transform: translateY(1px) scale(0.992);
+  box-shadow:
+    0 10px 30px rgba(var(--liquid-glow-rgb), 0.16),
+    inset 0 1px 1px rgba(255, 255, 255, 0.72),
+    inset 0 -8px 24px rgba(var(--liquid-rgb), 0.16);
+}
+
+.liquid-teal {
+  --liquid-rgb: 20, 184, 166;
+  --liquid-rgb-2: 6, 182, 212;
+  --liquid-glow-rgb: 20, 184, 166;
+  --liquid-border: rgba(20, 184, 166, 0.26);
+  --liquid-hover-border: rgba(20, 184, 166, 0.55);
+}
+
+.liquid-blue {
+  --liquid-rgb: 37, 99, 235;
+  --liquid-rgb-2: 14, 165, 233;
+  --liquid-glow-rgb: 37, 99, 235;
+  --liquid-border: rgba(37, 99, 235, 0.24);
+  --liquid-hover-border: rgba(37, 99, 235, 0.5);
+}
+
+.liquid-emerald {
+  --liquid-rgb: 16, 185, 129;
+  --liquid-rgb-2: 20, 184, 166;
+  --liquid-glow-rgb: 16, 185, 129;
+  --liquid-border: rgba(16, 185, 129, 0.24);
+  --liquid-hover-border: rgba(16, 185, 129, 0.5);
+}
+
+.liquid-violet {
+  --liquid-rgb: 124, 58, 237;
+  --liquid-rgb-2: 59, 130, 246;
+  --liquid-glow-rgb: 124, 58, 237;
+  --liquid-border: rgba(124, 58, 237, 0.2);
+  --liquid-hover-border: rgba(124, 58, 237, 0.42);
+}
+
+.liquid-amber {
+  --liquid-rgb: 245, 158, 11;
+  --liquid-rgb-2: 20, 184, 166;
+  --liquid-glow-rgb: 245, 158, 11;
+  --liquid-tint-a: 0.2;
+  --liquid-tint-b: 0.14;
+  --liquid-border: rgba(245, 158, 11, 0.24);
+  --liquid-hover-border: rgba(245, 158, 11, 0.44);
+}
+
+.liquid-slate {
+  --liquid-rgb: 71, 85, 105;
+  --liquid-rgb-2: 14, 165, 233;
+  --liquid-glow-rgb: 71, 85, 105;
+  --liquid-tint-a: 0.2;
+  --liquid-tint-b: 0.16;
+  --liquid-border: rgba(100, 116, 139, 0.24);
+  --liquid-hover-border: rgba(14, 165, 233, 0.38);
+}
+
+.liquid-menu {
+  --liquid-rgb: 14, 165, 233;
+  --liquid-rgb-2: 6, 182, 212;
+  --liquid-glow-rgb: 14, 165, 233;
+  --liquid-tint-a: 0.2;
+  --liquid-tint-b: 0.15;
+  --liquid-border: rgba(14, 165, 233, 0.22);
+  --liquid-hover-border: rgba(6, 182, 212, 0.5);
+  box-shadow:
+    0 20px 60px rgba(var(--liquid-glow-rgb), 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.86),
+    inset 0 -1px 0 rgba(15, 23, 42, 0.06);
+}
+
+.liquid-tab {
+  color: #475569;
+}
+
+.liquid-tab:hover {
+  color: #0f172a;
+  background: rgba(255, 255, 255, 0.48);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.68), 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+.liquid-tab-active {
+  background:
+    linear-gradient(135deg, rgba(15, 118, 110, 0.92), rgba(37, 99, 235, 0.86)),
+    radial-gradient(circle at 20% 0%, rgba(255, 255, 255, 0.44), transparent 38%);
+  box-shadow:
+    0 12px 30px rgba(37, 99, 235, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.36),
+    inset 0 -1px 0 rgba(15, 23, 42, 0.2);
+}
+
+.liquid-menu-fade-left {
+  background: linear-gradient(to right, rgba(248, 250, 252, 0.92), rgba(248, 250, 252, 0.48), transparent);
+}
+
+.liquid-menu-fade-right {
+  background: linear-gradient(to left, rgba(248, 250, 252, 0.92), rgba(248, 250, 252, 0.48), transparent);
+}
+
+.liquid-action-primary,
+.liquid-option.is-selected,
+.liquid-chip-accent {
+  color: #ffffff;
+  --liquid-rgb: 15, 118, 110;
+  --liquid-rgb-2: 37, 99, 235;
+  --liquid-glow-rgb: 15, 118, 110;
+  border-color: rgba(var(--liquid-rgb), 0.42);
+  background:
+    linear-gradient(135deg, rgba(var(--liquid-rgb), 0.94), rgba(var(--liquid-rgb-2), 0.9)),
+    radial-gradient(circle at 24% 0%, rgba(255, 255, 255, 0.34), transparent 36%);
+  box-shadow:
+    0 16px 36px rgba(var(--liquid-glow-rgb), 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.38);
+}
+
+.liquid-option.is-selected .liquid-count {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.liquid-count {
+  background: rgba(255, 255, 255, 0.58);
+  color: #64748b;
+  border: 1px solid rgba(255, 255, 255, 0.56);
+}
+
+.liquid-mini {
+  border-color: rgba(var(--liquid-rgb, 20, 184, 166), 0.18);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(var(--liquid-rgb, 20, 184, 166), 0.1)),
+    radial-gradient(circle at var(--glass-x, 18%) var(--glass-y, 0%), rgba(var(--liquid-rgb, 20, 184, 166), 0.18), transparent 62%);
+  backdrop-filter: blur(14px) saturate(1.35);
+  -webkit-backdrop-filter: blur(14px) saturate(1.35);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.64), 0 8px 24px rgba(var(--liquid-glow-rgb, 15, 23, 42), 0.08);
+}
+
+.dark .liquid-panel,
+.dark .liquid-menu,
+.dark .liquid-card,
+.dark .liquid-note,
+.dark .liquid-toolbar,
+.dark .liquid-dropdown,
+.dark .liquid-option,
+.dark .liquid-action,
+.dark .liquid-chip,
+.dark .liquid-icon-button {
+  border-color: rgba(var(--liquid-rgb), 0.26);
+  background:
+    linear-gradient(135deg, rgba(15, 23, 42, 0.66), rgba(30, 41, 59, 0.38) 48%, rgba(var(--liquid-rgb-2), 0.18)),
+    radial-gradient(circle at 15% 0%, rgba(var(--liquid-rgb), 0.18), transparent 36%),
+    radial-gradient(circle at 88% 18%, rgba(var(--liquid-rgb-2), 0.2), transparent 32%);
+  box-shadow:
+    0 22px 70px rgba(0, 0, 0, 0.36),
+    0 0 0 1px rgba(var(--liquid-rgb), 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.28);
+}
+
+.dark .liquid-tab {
+  color: #cbd5e1;
+}
+
+.dark .liquid-tab:hover {
+  color: #ffffff;
+  background: rgba(15, 23, 42, 0.48);
+}
+
+.dark .liquid-menu-fade-left {
+  background: linear-gradient(to right, rgba(15, 23, 42, 0.86), rgba(15, 23, 42, 0.42), transparent);
+}
+
+.dark .liquid-menu-fade-right {
+  background: linear-gradient(to left, rgba(15, 23, 42, 0.86), rgba(15, 23, 42, 0.42), transparent);
+}
+
+.dark .liquid-action-primary,
+.dark .liquid-option.is-selected,
+.dark .liquid-chip-accent {
+  color: #ecfeff;
+  border-color: rgba(var(--liquid-rgb), 0.42);
+  background:
+    linear-gradient(135deg, rgba(var(--liquid-rgb), 0.78), rgba(var(--liquid-rgb-2), 0.68)),
+    radial-gradient(circle at 24% 0%, rgba(255, 255, 255, 0.22), transparent 38%);
+}
+
+.dark .liquid-count {
+  background: rgba(15, 23, 42, 0.42);
+  color: #cbd5e1;
+  border-color: rgba(var(--liquid-rgb), 0.2);
+}
+
+.dark .liquid-mini {
+  border-color: rgba(var(--liquid-rgb), 0.22);
+  background:
+    linear-gradient(135deg, rgba(15, 23, 42, 0.38), rgba(15, 23, 42, 0.24)),
+    radial-gradient(circle at var(--glass-x, 18%) var(--glass-y, 0%), rgba(var(--liquid-rgb), 0.16), transparent 62%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .liquid-panel,
+  .liquid-menu,
+  .liquid-card,
+  .liquid-note,
+  .liquid-toolbar,
+  .liquid-dropdown,
+  .liquid-option,
+  .liquid-action,
+  .liquid-chip,
+  .liquid-icon-button {
+    background: rgba(255, 255, 255, 0.94);
+  }
+
+  .dark .liquid-panel,
+  .dark .liquid-menu,
+  .dark .liquid-card,
+  .dark .liquid-note,
+  .dark .liquid-toolbar,
+  .dark .liquid-dropdown,
+  .dark .liquid-option,
+  .dark .liquid-action,
+  .dark .liquid-chip,
+  .dark .liquid-icon-button {
+    background: rgba(15, 23, 42, 0.92);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .liquid-card,
+  .liquid-option,
+  .liquid-action,
+  .liquid-icon-button,
+  .liquid-panel::after,
+  .liquid-menu::after,
+  .liquid-card::after,
+  .liquid-option::after,
+  .liquid-action::after,
+  .liquid-icon-button::after {
+    transition: none;
+    transform: none;
+  }
 }
