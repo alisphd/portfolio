@@ -653,6 +653,265 @@
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
+/* Windows 7 Aero refinement: hero/menu glass, calmer content panels */
+.portfolio-shell {
+  background:
+    radial-gradient(circle at 14% 7%, rgba(56, 189, 248, 0.14), transparent 32rem),
+    radial-gradient(circle at 84% 12%, rgba(14, 165, 233, 0.12), transparent 34rem),
+    linear-gradient(180deg, #eef8fb 0%, #f8fbff 38%, #edf6f9 100%) !important;
+}
+
+.portfolio-shell.dark {
+  color: #cbd5e1;
+  background:
+    radial-gradient(circle at 14% 7%, rgba(56, 189, 248, 0.18), transparent 34rem),
+    radial-gradient(circle at 88% 16%, rgba(37, 99, 235, 0.16), transparent 34rem),
+    linear-gradient(180deg, #06111f 0%, #0a1727 44%, #07111e 100%) !important;
+}
+
+.portfolio-hero-bg {
+  background:
+    linear-gradient(145deg, #071426 0%, #0b3150 48%, #0c6372 100%) !important;
+}
+
+.dark .portfolio-hero-bg {
+  background:
+    linear-gradient(145deg, #020817 0%, #071f35 48%, #073b4c 100%) !important;
+}
+
+.liquid-panel:not(.hero-glass-panel),
+.liquid-card,
+.liquid-note,
+.liquid-toolbar,
+.liquid-dropdown,
+.liquid-option {
+  border-color: rgba(133, 161, 177, 0.32);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.93), rgba(243, 249, 252, 0.88)),
+    linear-gradient(135deg, rgba(56, 189, 248, 0.055), rgba(14, 165, 233, 0.045));
+  box-shadow:
+    0 12px 30px rgba(15, 23, 42, 0.075),
+    inset 0 1px 0 rgba(255, 255, 255, 0.88),
+    inset 0 -1px 0 rgba(15, 23, 42, 0.045);
+  backdrop-filter: blur(8px) saturate(1.1);
+  -webkit-backdrop-filter: blur(8px) saturate(1.1);
+}
+
+.liquid-panel:not(.hero-glass-panel)::before,
+.liquid-card::before,
+.liquid-note::before,
+.liquid-toolbar::before,
+.liquid-dropdown::before,
+.liquid-option::before {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.66), rgba(255, 255, 255, 0.08) 46%, transparent 74%),
+    radial-gradient(circle at 16% 0%, rgba(56, 189, 248, 0.07), transparent 42%),
+    radial-gradient(circle at 88% 12%, rgba(37, 99, 235, 0.055), transparent 42%);
+  opacity: 0.72;
+}
+
+.liquid-panel:not(.hero-glass-panel)::after,
+.liquid-card::after,
+.liquid-option::after {
+  background:
+    linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.36) 36%, rgba(125, 211, 252, 0.12) 50%, transparent 68%);
+  opacity: 0.13;
+  transform: none;
+}
+
+.dark .liquid-panel:not(.hero-glass-panel),
+.dark .liquid-card,
+.dark .liquid-note,
+.dark .liquid-toolbar,
+.dark .liquid-dropdown,
+.dark .liquid-option {
+  border-color: rgba(96, 165, 250, 0.22);
+  background:
+    linear-gradient(180deg, rgba(15, 28, 45, 0.92), rgba(10, 22, 36, 0.88)),
+    linear-gradient(135deg, rgba(56, 189, 248, 0.07), rgba(37, 99, 235, 0.06));
+  box-shadow:
+    0 14px 34px rgba(0, 0, 0, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+}
+
+.dark .liquid-panel:not(.hero-glass-panel)::before,
+.dark .liquid-card::before,
+.dark .liquid-note::before,
+.dark .liquid-toolbar::before,
+.dark .liquid-dropdown::before,
+.dark .liquid-option::before {
+  background:
+    linear-gradient(180deg, rgba(125, 211, 252, 0.08), rgba(255, 255, 255, 0.025) 48%, transparent 76%),
+    radial-gradient(circle at 18% 0%, rgba(56, 189, 248, 0.08), transparent 42%),
+    radial-gradient(circle at 88% 12%, rgba(96, 165, 250, 0.08), transparent 42%);
+  opacity: 0.86;
+}
+
+.dark .liquid-panel:not(.hero-glass-panel)::after,
+.dark .liquid-card::after,
+.dark .liquid-option::after {
+  background:
+    linear-gradient(115deg, transparent 0%, rgba(186, 230, 253, 0.1) 36%, rgba(59, 130, 246, 0.08) 50%, transparent 68%);
+  opacity: 0.16;
+}
+
+.hero-glass-panel {
+  --liquid-rgb: 42, 171, 224;
+  --liquid-rgb-2: 0, 120, 215;
+  --liquid-glow-rgb: 0, 120, 215;
+  border-color: rgba(125, 211, 252, 0.46);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.34) 0%, rgba(80, 190, 224, 0.34) 38%, rgba(230, 249, 255, 0.3) 100%),
+    linear-gradient(135deg, rgba(0, 120, 215, 0.4), rgba(94, 234, 212, 0.18)),
+    radial-gradient(circle at 16% 0%, rgba(255, 255, 255, 0.28), transparent 40%),
+    radial-gradient(circle at 96% 16%, rgba(0, 120, 215, 0.28), transparent 44%);
+  box-shadow:
+    0 22px 58px rgba(0, 120, 215, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.86),
+    inset 0 -22px 38px rgba(0, 120, 215, 0.11);
+  backdrop-filter: blur(20px) saturate(1.36);
+  -webkit-backdrop-filter: blur(20px) saturate(1.36);
+}
+
+.hero-glass-panel::before {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.52), rgba(255, 255, 255, 0.12) 42%, transparent 68%),
+    radial-gradient(190px 120px at var(--glass-x, 18%) var(--glass-y, 0%), rgba(255, 255, 255, 0.28), rgba(125, 211, 252, 0.14) 46%, transparent 78%),
+    radial-gradient(280px 160px at 86% 94%, rgba(59, 130, 246, 0.16), transparent 78%);
+  opacity: 0.82;
+}
+
+.hero-glass-panel::after {
+  background:
+    linear-gradient(112deg, transparent 4%, rgba(255, 255, 255, 0.28) 36%, rgba(125, 211, 252, 0.2) 54%, transparent 72%),
+    radial-gradient(120px 90px at var(--glass-x, 65%) var(--glass-y, 26%), rgba(255, 255, 255, 0.22), transparent 74%);
+  opacity: 0.24;
+}
+
+.dark .hero-glass-panel {
+  border-color: rgba(56, 189, 248, 0.38);
+  background:
+    linear-gradient(180deg, rgba(186, 230, 253, 0.14) 0%, rgba(14, 116, 144, 0.34) 42%, rgba(8, 47, 73, 0.5) 100%),
+    linear-gradient(135deg, rgba(0, 120, 215, 0.36), rgba(45, 212, 191, 0.13)),
+    radial-gradient(circle at 16% 0%, rgba(255, 255, 255, 0.13), transparent 42%),
+    radial-gradient(circle at 96% 16%, rgba(59, 130, 246, 0.2), transparent 46%);
+  box-shadow:
+    0 22px 60px rgba(0, 0, 0, 0.38),
+    0 0 0 1px rgba(56, 189, 248, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -22px 38px rgba(0, 0, 0, 0.18);
+}
+
+.hero-glass-panel .liquid-action,
+.hero-glass-panel .liquid-chip {
+  border-color: rgba(125, 211, 252, 0.46);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.48), rgba(214, 240, 249, 0.34)),
+    linear-gradient(135deg, rgba(56, 189, 248, 0.14), rgba(0, 120, 215, 0.16));
+  box-shadow:
+    0 10px 24px rgba(0, 120, 215, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.62);
+}
+
+.hero-glass-panel .liquid-action-primary,
+.hero-glass-panel .liquid-chip-accent,
+.liquid-action-primary,
+.liquid-option.is-selected,
+.liquid-chip-accent {
+  color: #ffffff;
+  border-color: rgba(0, 120, 215, 0.5);
+  background:
+    linear-gradient(180deg, rgba(91, 192, 235, 0.82), rgba(0, 120, 215, 0.78) 58%, rgba(0, 84, 159, 0.78)),
+    radial-gradient(circle at 24% 0%, rgba(255, 255, 255, 0.38), transparent 38%);
+  box-shadow:
+    0 12px 28px rgba(0, 120, 215, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.46),
+    inset 0 -1px 0 rgba(0, 49, 93, 0.28);
+}
+
+.dark .hero-glass-panel .liquid-action,
+.dark .hero-glass-panel .liquid-chip {
+  border-color: rgba(56, 189, 248, 0.34);
+  background:
+    linear-gradient(180deg, rgba(14, 116, 144, 0.48), rgba(8, 47, 73, 0.42)),
+    linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(37, 99, 235, 0.12));
+  color: #e0f2fe;
+}
+
+.liquid-menu {
+  --liquid-rgb: 0, 120, 215;
+  --liquid-rgb-2: 91, 192, 235;
+  --liquid-glow-rgb: 0, 120, 215;
+  border-color: rgba(125, 211, 252, 0.5);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.64), rgba(210, 238, 249, 0.5)),
+    linear-gradient(135deg, rgba(91, 192, 235, 0.2), rgba(0, 120, 215, 0.14));
+  box-shadow:
+    0 16px 38px rgba(0, 120, 215, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78),
+    inset 0 -1px 0 rgba(0, 49, 93, 0.08);
+}
+
+.liquid-menu::before {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0.08) 48%, transparent 72%),
+    radial-gradient(circle at var(--glass-x, 20%) var(--glass-y, 0%), rgba(255, 255, 255, 0.24), rgba(91, 192, 235, 0.12) 44%, transparent 76%);
+  opacity: 0.68;
+}
+
+.liquid-menu::after {
+  background:
+    linear-gradient(112deg, transparent 4%, rgba(255, 255, 255, 0.26) 38%, rgba(91, 192, 235, 0.16) 54%, transparent 72%);
+  opacity: 0.18;
+}
+
+.liquid-tab {
+  color: #334155;
+}
+
+.liquid-tab-active,
+.liquid-tab-active:hover,
+.liquid-tab-active:active {
+  color: #ffffff;
+  background:
+    linear-gradient(180deg, rgba(91, 192, 235, 0.88), rgba(0, 120, 215, 0.84) 58%, rgba(0, 84, 159, 0.84)),
+    radial-gradient(circle at 22% 0%, rgba(255, 255, 255, 0.46), transparent 40%);
+  box-shadow:
+    0 10px 24px rgba(0, 120, 215, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(0, 49, 93, 0.28);
+}
+
+.dark .liquid-menu {
+  border-color: rgba(56, 189, 248, 0.34);
+  background:
+    linear-gradient(180deg, rgba(15, 55, 85, 0.72), rgba(8, 35, 58, 0.62)),
+    linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(37, 99, 235, 0.12));
+  box-shadow:
+    0 16px 42px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.28);
+}
+
+.dark .liquid-tab {
+  color: #c7d2e2;
+}
+
+.dark .liquid-tab-active,
+.dark .liquid-tab-active:hover,
+.dark .liquid-tab-active:active {
+  color: #ffffff;
+  background:
+    linear-gradient(180deg, rgba(56, 189, 248, 0.68), rgba(0, 120, 215, 0.64) 58%, rgba(7, 89, 133, 0.68)),
+    radial-gradient(circle at 22% 0%, rgba(255, 255, 255, 0.22), transparent 42%);
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+}
+
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .liquid-panel,
   .liquid-menu,
