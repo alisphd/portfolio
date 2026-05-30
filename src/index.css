@@ -517,6 +517,108 @@
       0 10px 24px rgba(37, 99, 235, 0.14),
       inset 0 1px 0 rgba(255, 255, 255, 0.34);
   }
+
+  .liquid-panel:not(.hero-glass-panel),
+  .liquid-card,
+  .liquid-note,
+  .liquid-toolbar,
+  .liquid-dropdown,
+  .liquid-option {
+    border-color: rgba(125, 159, 174, 0.28);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(241, 248, 250, 0.86)),
+      linear-gradient(135deg, rgba(20, 184, 166, 0.06), rgba(59, 130, 246, 0.06));
+    box-shadow:
+      0 10px 26px rgba(15, 23, 42, 0.07),
+      inset 0 1px 0 rgba(255, 255, 255, 0.82),
+      inset 0 -1px 0 rgba(15, 23, 42, 0.04);
+    backdrop-filter: blur(8px) saturate(1.12);
+    -webkit-backdrop-filter: blur(8px) saturate(1.12);
+  }
+
+  .liquid-panel:not(.hero-glass-panel)::before,
+  .liquid-card::before,
+  .liquid-note::before,
+  .liquid-toolbar::before,
+  .liquid-dropdown::before,
+  .liquid-option::before {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.64), rgba(255, 255, 255, 0.08) 46%, transparent 72%),
+      radial-gradient(circle at 16% 0%, rgba(20, 184, 166, 0.06), transparent 42%),
+      radial-gradient(circle at 88% 12%, rgba(59, 130, 246, 0.06), transparent 42%);
+    opacity: 0.7;
+  }
+
+  .liquid-panel:not(.hero-glass-panel)::after,
+  .liquid-card::after,
+  .liquid-option::after {
+    background:
+      linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.34) 36%, rgba(148, 197, 213, 0.12) 50%, transparent 66%);
+    opacity: 0.12;
+    transform: none;
+  }
+
+  .hero-glass-panel {
+    border-color: rgba(94, 234, 212, 0.42);
+    background:
+      linear-gradient(180deg, rgba(15, 118, 125, 0.5) 0%, rgba(255, 255, 255, 0.28) 44%, rgba(222, 248, 250, 0.48) 100%),
+      radial-gradient(circle at 18% 0%, rgba(45, 212, 191, 0.22), transparent 42%),
+      radial-gradient(circle at 92% 16%, rgba(96, 165, 250, 0.18), transparent 44%);
+    box-shadow:
+      0 18px 42px rgba(13, 148, 136, 0.16),
+      0 0 0 1px rgba(255, 255, 255, 0.24),
+      inset 0 1px 0 rgba(255, 255, 255, 0.72),
+      inset 0 -18px 36px rgba(14, 165, 233, 0.08);
+    backdrop-filter: blur(18px) saturate(1.28);
+    -webkit-backdrop-filter: blur(18px) saturate(1.28);
+  }
+
+  .hero-glass-panel::before {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.36), rgba(255, 255, 255, 0.08) 42%, transparent 70%),
+      radial-gradient(170px 110px at 18% 0%, rgba(255, 255, 255, 0.2), rgba(20, 184, 166, 0.12) 46%, transparent 76%),
+      radial-gradient(250px 150px at 86% 94%, rgba(96, 165, 250, 0.12), transparent 76%);
+    opacity: 0.78;
+  }
+
+  .hero-glass-panel::after {
+    background:
+      linear-gradient(112deg, transparent 4%, rgba(255, 255, 255, 0.24) 38%, rgba(125, 211, 252, 0.18) 54%, transparent 72%);
+    opacity: 0.2;
+    transform: none;
+  }
+
+  .hero-glass-panel .liquid-action,
+  .hero-glass-panel .liquid-chip {
+    border-color: rgba(82, 183, 204, 0.42);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.42), rgba(210, 239, 247, 0.34)),
+      linear-gradient(135deg, rgba(20, 184, 166, 0.12), rgba(59, 130, 246, 0.12));
+    box-shadow:
+      0 10px 24px rgba(14, 116, 144, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.58);
+  }
+
+  .hero-glass-panel .liquid-action-primary,
+  .hero-glass-panel .liquid-chip-accent {
+    background:
+      linear-gradient(135deg, rgba(15, 118, 110, 0.58), rgba(37, 99, 235, 0.54)),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.04));
+    box-shadow:
+      0 10px 24px rgba(37, 99, 235, 0.13),
+      inset 0 1px 0 rgba(255, 255, 255, 0.36);
+  }
+
+  .liquid-menu {
+    border-color: rgba(125, 211, 252, 0.46);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.62), rgba(223, 246, 250, 0.52)),
+      linear-gradient(135deg, rgba(20, 184, 166, 0.08), rgba(59, 130, 246, 0.1));
+    box-shadow:
+      0 12px 28px rgba(14, 116, 144, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.76),
+      inset 0 -1px 0 rgba(15, 23, 42, 0.06);
+  }
 }
 
 .dark .liquid-menu-fade-left {

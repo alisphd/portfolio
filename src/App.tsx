@@ -618,7 +618,7 @@ export default function App() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="liquid-panel liquid-teal rounded-3xl border p-8 sm:p-8 mb-10 flex flex-col md:flex-row gap-8 items-center md:items-start transition-colors duration-300"
+          className="liquid-panel hero-glass-panel liquid-teal rounded-3xl border p-8 sm:p-8 mb-10 flex flex-col md:flex-row gap-8 items-center md:items-start transition-colors duration-300"
         >
           {/* Picture - Modern Frame with Shake Effect */}
           <div className="shrink-0 relative group">
