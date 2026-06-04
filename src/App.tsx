@@ -35,11 +35,6 @@ const TABS: TabConfig[] = [
   { id: 'references', label: 'References', icon: Briefcase },
 ];
 
-const GLASS_TINTS = ['liquid-teal', 'liquid-blue', 'liquid-emerald', 'liquid-violet', 'liquid-amber', 'liquid-slate'];
-const ABOUT_GLASS_TINTS = ['liquid-teal', 'liquid-blue', 'liquid-emerald'];
-const PUBLICATION_GLASS_TINTS = ['liquid-blue', 'liquid-violet', 'liquid-teal', 'liquid-slate'];
-const PROJECT_GLASS_TINTS = ['liquid-teal', 'liquid-blue', 'liquid-emerald'];
-
 // Scroll-reveal wrapper
 function RevealOnScroll({ children, className = '', ...rest }: { children: React.ReactNode, className?: string, [key: string]: any }) {
   const ref = React.useRef<HTMLDivElement>(null);
@@ -305,18 +300,10 @@ export default function App() {
 
   // Typing effect state
   const [roleIndex, setRoleIndex] = useState(0);
-  const [charIndex, setCharIndex] = useState(TYPING_ROLES[0].length);
+  const [charIndex, setCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [typingReady, setTypingReady] = useState(false);
 
   useEffect(() => {
-    const timeout = window.setTimeout(() => setTypingReady(true), 1200);
-    return () => window.clearTimeout(timeout);
-  }, []);
-
-  useEffect(() => {
-    if (!typingReady) return;
-
     const currentRole = TYPING_ROLES[roleIndex];
     const speed = isDeleting ? 30 : 60;
     const pauseAfterType = 2000;
@@ -338,7 +325,7 @@ export default function App() {
       setCharIndex((prev) => prev + (isDeleting ? -1 : 1));
     }, speed);
     return () => clearTimeout(timeout);
-  }, [charIndex, isDeleting, roleIndex, typingReady]);
+  }, [charIndex, isDeleting, roleIndex]);
 
   // Close filter dropdown on outside click
   useEffect(() => {
@@ -395,99 +382,6 @@ export default function App() {
   }, [checkScroll]);
 
   useEffect(() => {
-    const liquidSelector = [
-      '.liquid-panel',
-      '.liquid-menu',
-      '.liquid-card',
-      '.liquid-note',
-      '.liquid-toolbar',
-      '.liquid-dropdown',
-      '.liquid-option',
-      '.liquid-action',
-      '.liquid-chip',
-      '.liquid-icon-button',
-    ].join(',');
-
-    let frame = 0;
-    let activeLiquid: HTMLElement | null = null;
-    let latestEvent: PointerEvent | null = null;
-
-    const resetLiquid = (element: HTMLElement) => {
-      element.style.setProperty('--glass-x', '50%');
-      element.style.setProperty('--glass-y', '18%');
-      element.style.setProperty('--liquid-motion', '0');
-      element.style.setProperty('--liquid-shift-x', '0px');
-      element.style.setProperty('--liquid-shift-y', '0px');
-    };
-
-    const updateLiquid = () => {
-      frame = 0;
-      if (!activeLiquid || !latestEvent) return;
-
-      const rect = activeLiquid.getBoundingClientRect();
-      if (!rect.width || !rect.height) return;
-
-      const x = Math.min(100, Math.max(0, ((latestEvent.clientX - rect.left) / rect.width) * 100));
-      const y = Math.min(100, Math.max(0, ((latestEvent.clientY - rect.top) / rect.height) * 100));
-      const shiftX = ((x - 50) / 50) * 10;
-      const shiftY = ((y - 50) / 50) * 8;
-
-      activeLiquid.style.setProperty('--glass-x', `${x.toFixed(1)}%`);
-      activeLiquid.style.setProperty('--glass-y', `${y.toFixed(1)}%`);
-      activeLiquid.style.setProperty('--liquid-motion', '1');
-      activeLiquid.style.setProperty('--liquid-shift-x', `${shiftX.toFixed(1)}px`);
-      activeLiquid.style.setProperty('--liquid-shift-y', `${shiftY.toFixed(1)}px`);
-    };
-
-    const handlePointerMove = (event: PointerEvent) => {
-      if (event.pointerType !== 'mouse') return;
-      if (!(event.target instanceof Element)) return;
-      const nextLiquid = event.target.closest(liquidSelector) as HTMLElement | null;
-      if (!nextLiquid) return;
-
-      if (activeLiquid && activeLiquid !== nextLiquid) {
-        resetLiquid(activeLiquid);
-      }
-
-      activeLiquid = nextLiquid;
-      latestEvent = event;
-      if (!frame) {
-        frame = window.requestAnimationFrame(updateLiquid);
-      }
-    };
-
-    const handlePointerDown = (event: PointerEvent) => {
-      if (event.pointerType === 'mouse') return;
-      if (activeLiquid) resetLiquid(activeLiquid);
-      if (event.target instanceof Element) {
-        const tappedLiquid = event.target.closest(liquidSelector) as HTMLElement | null;
-        if (tappedLiquid) resetLiquid(tappedLiquid);
-      }
-      activeLiquid = null;
-      latestEvent = null;
-    };
-
-    const handlePointerOut = (event: PointerEvent) => {
-      if (!activeLiquid) return;
-      if (event.relatedTarget instanceof Node && activeLiquid.contains(event.relatedTarget)) return;
-      resetLiquid(activeLiquid);
-      activeLiquid = null;
-      latestEvent = null;
-    };
-
-    document.addEventListener('pointermove', handlePointerMove, { passive: true });
-    document.addEventListener('pointerdown', handlePointerDown, { passive: true });
-    document.addEventListener('pointerout', handlePointerOut, { passive: true });
-
-    return () => {
-      document.removeEventListener('pointermove', handlePointerMove);
-      document.removeEventListener('pointerdown', handlePointerDown);
-      document.removeEventListener('pointerout', handlePointerOut);
-      if (frame) window.cancelAnimationFrame(frame);
-    };
-  }, []);
-
-  useEffect(() => {
     // Force native document title to ensure it displays correctly in all browsers
     document.title = SEO_TITLE;
   }, []);
@@ -527,7 +421,7 @@ export default function App() {
       : publicationGroups.filter((group) => group.id === publicationFilter);
 
   return (
-    <div className={`portfolio-shell min-h-screen text-slate-600 font-sans pb-24 selection:bg-slate-900 selection:text-white transition-colors duration-300 ${darkMode ? 'dark bg-slate-950 text-slate-300' : 'bg-slate-50'}`}>
+    <div className={`min-h-screen text-slate-600 font-sans pb-24 selection:bg-slate-900 selection:text-white transition-colors duration-300 ${darkMode ? 'dark bg-slate-950 text-slate-300' : 'bg-slate-50'}`}>
       <Helmet>
         <title>{SEO_TITLE}</title>
         <meta name="description" content={SEO_DESCRIPTION} />
@@ -557,7 +451,7 @@ export default function App() {
       />
 
       {/* Static Hero Background for better performance */}
-      <div className="portfolio-hero-bg h-64 bg-slate-900 dark:bg-[#030712] relative overflow-hidden transition-colors duration-300">
+      <div className="h-64 bg-slate-900 dark:bg-[#030712] relative overflow-hidden transition-colors duration-300">
         {/* Grid pattern (light mode) */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#27272a_1px,transparent_1px),linear-gradient(to_bottom,#27272a_1px,transparent_1px)] bg-[size:3rem_3rem] opacity-20 dark:opacity-0 transition-opacity duration-300"></div>
         {/* Stars layer - tiny dots (dark mode) */}
@@ -603,7 +497,7 @@ export default function App() {
         <div className="absolute top-4 right-4 z-50">
           <button
             onClick={() => setDarkMode(!darkMode)}
-            className="liquid-icon-button liquid-blue p-2.5 rounded-full text-slate-900 dark:text-white transition-all shadow-lg"
+            className="p-2.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 transition-all shadow-lg"
             aria-label="Toggle Dark Mode"
           >
             {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
@@ -618,7 +512,7 @@ export default function App() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="liquid-panel hero-glass-panel liquid-teal rounded-3xl border p-8 sm:p-8 mb-10 flex flex-col md:flex-row gap-8 items-center md:items-start transition-colors duration-300"
+          className="bg-white dark:bg-slate-800/70 dark:backdrop-blur-xl rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-black/40 border border-slate-100 dark:border-slate-600/50 p-8 sm:p-8 mb-10 flex flex-col md:flex-row gap-8 items-center md:items-start transition-colors duration-300"
         >
           {/* Picture - Modern Frame with Shake Effect */}
           <div className="shrink-0 relative group">
@@ -634,9 +528,6 @@ export default function App() {
                 src={`${import.meta.env.BASE_URL}portrait.jpg`}
                 alt={cvData.name}
                 className="w-full h-full object-cover object-[center_20%]"
-                loading="eager"
-                decoding="async"
-                fetchPriority="high"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </motion.div>
@@ -660,7 +551,7 @@ export default function App() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-4xl md:text-5xl font-extrabold mb-2 tracking-tight bg-gradient-to-r from-teal-900 via-teal-600 to-blue-600 md:from-slate-50 md:via-teal-100 md:to-sky-200 dark:from-white dark:via-teal-300 dark:to-sky-300 bg-clip-text text-transparent md:drop-shadow-[0_2px_12px_rgba(0,0,0,0.28)]"
+              className="text-4xl md:text-5xl font-extrabold mb-2 tracking-tight bg-gradient-to-r from-slate-900 via-teal-600 to-blue-600 dark:from-white dark:via-teal-400 dark:to-blue-400 bg-clip-text text-transparent"
             >
               {cvData.name}
             </motion.h1>
@@ -668,17 +559,17 @@ export default function App() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-lg sm:text-xl font-medium leading-snug text-slate-600 md:text-slate-100/90 dark:text-slate-300 mb-3 min-h-[3rem] sm:min-h-[2rem] md:drop-shadow-[0_2px_10px_rgba(0,0,0,0.22)]"
+              className="text-xl font-medium text-slate-500 dark:text-slate-400 mb-3 min-h-[2rem]"
             >
               <span>{TYPING_ROLES[roleIndex].substring(0, charIndex)}</span>
-              <span className="inline-block w-[2px] h-4 sm:h-5 bg-teal-500 dark:bg-teal-400 ml-0.5 align-middle animate-pulse" />
+              <span className="inline-block w-[2px] h-5 bg-teal-500 dark:bg-teal-400 ml-0.5 align-middle animate-pulse" />
             </motion.h2>
 
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.35 }}
-              className="liquid-chip liquid-blue liquid-chip-accent inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full border text-sm font-bold"
+              className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full bg-teal-50 dark:bg-teal-900/40 border border-teal-100 dark:border-teal-800/60 text-teal-800 dark:text-teal-300 text-sm font-bold shadow-sm"
             >
               <Sparkles className="w-4 h-4 text-teal-600 dark:text-teal-400" />
               Seeking PhD & Research positions | Available 2026
@@ -690,15 +581,15 @@ export default function App() {
               transition={{ delay: 0.4 }}
               className="flex flex-wrap items-center justify-center md:justify-start gap-3"
             >
-              <a href={`mailto:${cvData.contact.email}`} className="liquid-action liquid-action-primary flex items-center gap-2.5 px-5 py-2.5 text-white rounded-2xl transition-all text-sm font-medium group border">
+              <a href={`mailto:${cvData.contact.email}`} className="flex items-center gap-2.5 px-5 py-2.5 bg-slate-900 dark:bg-teal-500 text-white hover:bg-slate-800 dark:hover:bg-teal-400 rounded-2xl transition-all shadow-lg shadow-slate-900/20 dark:shadow-teal-500/20 text-sm font-medium group">
                 <Mail className="w-4 h-4 text-slate-400 dark:text-teal-100 group-hover:text-white transition-colors" />
                 {cvData.contact.email}
               </a>
-              <a href={`tel:${cvData.contact.phone}`} className="liquid-action liquid-slate flex items-center gap-2.5 px-5 py-2.5 text-slate-700 dark:text-slate-200 rounded-2xl border transition-all text-sm font-medium">
+              <a href={`tel:${cvData.contact.phone}`} className="flex items-center gap-2.5 px-5 py-2.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-2xl border border-slate-200 dark:border-slate-700 transition-all shadow-sm text-sm font-medium">
                 <Phone className="w-4 h-4 text-slate-400 dark:text-slate-400" />
                 {cvData.contact.phone}
               </a>
-              <a href={`https://linkedin.com/in/${cvData.contact.linkedin}`} target="_blank" rel="noopener noreferrer" className="liquid-action liquid-blue flex items-center gap-2.5 px-5 py-2.5 text-slate-700 dark:text-slate-200 rounded-2xl border transition-all text-sm font-medium hover:text-blue-700 dark:hover:text-blue-400 group">
+              <a href={`https://linkedin.com/in/${cvData.contact.linkedin}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 px-5 py-2.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-2xl border border-slate-200 dark:border-slate-700 transition-all shadow-sm text-sm font-medium hover:border-blue-200 dark:hover:border-blue-700/50 hover:text-blue-700 dark:hover:text-blue-400 group">
                 <Linkedin className="w-4 h-4 text-slate-400 dark:text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors" />
                 LinkedIn
               </a>
@@ -716,11 +607,11 @@ export default function App() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="absolute -left-12 top-1/2 z-40 w-10 -translate-y-1/2 pointer-events-none hidden md:flex items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent z-40 rounded-l-full pointer-events-none hidden md:flex items-center pl-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 >
                   <button
                     onClick={(e) => { e.preventDefault(); scrollMenu('left'); }}
-                    className="liquid-icon-button liquid-blue p-2 rounded-full text-slate-900 dark:text-white hover:scale-110 pointer-events-auto transition-all shadow-lg"
+                    className="p-2 rounded-full bg-slate-800/80 text-white hover:bg-slate-700 hover:scale-110 pointer-events-auto backdrop-blur-sm transition-all shadow-lg"
                     aria-label="Scroll left"
                   >
                     <ChevronLeft className="w-4 h-4" />
@@ -732,7 +623,7 @@ export default function App() {
             <div
               ref={scrollContainerRef}
               onScroll={checkScroll}
-              className="liquid-menu liquid-blue rounded-full p-1.5 border flex overflow-x-auto hide-scrollbar gap-1 w-full max-w-[88vw] md:max-w-4xl snap-x scroll-smooth relative z-20"
+              className="bg-slate-900/90 backdrop-blur-xl rounded-full p-1.5 shadow-xl shadow-slate-900/10 border border-slate-800 flex overflow-x-auto hide-scrollbar gap-1 w-full max-w-[88vw] md:max-w-4xl snap-x scroll-smooth relative z-20"
             >
               {TABS.map((tab) => {
                 const Icon = tab.icon;
@@ -742,11 +633,18 @@ export default function App() {
                     key={tab.id}
                     onClick={() => handleTabChange(tab.id)}
                     className={`
-                      liquid-tab snap-start relative flex items-center gap-2 py-2.5 px-5 text-sm font-semibold rounded-full transition-all duration-300 whitespace-nowrap shrink-0 overflow-hidden
-                      ${isActive ? 'liquid-tab-active !text-white border border-white/25' : 'border border-transparent'}
+                      snap-start relative flex items-center gap-2 py-2.5 px-5 text-sm font-semibold rounded-full transition-all duration-300 whitespace-nowrap shrink-0
+                      ${isActive ? 'text-white' : 'text-slate-400 hover:text-white hover:bg-blue-600/30 hover:shadow-[0_0_14px_rgba(37,99,235,0.25)]'}
                     `}
                   >
-                    <Icon className={`w-4 h-4 relative z-10 transition-colors ${isActive ? 'text-white' : 'text-slate-500 dark:text-slate-300'}`} />
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeTab"
+                        className="absolute inset-0 bg-blue-600 rounded-full shadow-[0_0_16px_rgba(37,99,235,0.6)] border border-blue-400/30"
+                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                      />
+                    )}
+                    <Icon className={`w-4 h-4 relative z-10 transition-colors ${isActive ? 'text-white' : 'text-slate-500 group-hover:text-slate-300'}`} />
                     <span className="relative z-10">{tab.label}</span>
                   </button>
                 );
@@ -760,11 +658,11 @@ export default function App() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="absolute -right-12 top-1/2 z-40 w-10 -translate-y-1/2 pointer-events-none hidden md:flex items-center justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-slate-900 via-slate-900/80 to-transparent z-40 rounded-r-full pointer-events-none hidden md:flex items-center justify-end pr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 >
                   <button
                     onClick={(e) => { e.preventDefault(); scrollMenu('right'); }}
-                    className="liquid-icon-button liquid-blue p-2 rounded-full text-slate-900 dark:text-white hover:scale-110 pointer-events-auto transition-all shadow-lg"
+                    className="p-2 rounded-full bg-slate-800/80 text-white hover:bg-slate-700 hover:scale-110 pointer-events-auto backdrop-blur-sm transition-all shadow-lg"
                     aria-label="Scroll right"
                   >
                     <ChevronRight className="w-4 h-4" />
@@ -784,7 +682,7 @@ export default function App() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: tabDirection * -60 }}
               transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
-              className="liquid-panel liquid-slate rounded-2xl border p-8 md:p-14 relative overflow-hidden transition-colors duration-300"
+              className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl shadow-slate-200/50 dark:shadow-black/30 border border-slate-100 dark:border-slate-700 p-8 md:p-14 relative overflow-hidden transition-colors duration-300"
             >
               {/* Subtle background graphic for content area */}
               <div className="absolute top-0 right-0 w-96 h-96 bg-slate-50 dark:bg-slate-800/20 rounded-full blur-3xl -z-10 opacity-50 translate-x-1/2 -translate-y-1/2 transition-colors duration-300"></div>
@@ -797,7 +695,7 @@ export default function App() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2 }}
-                    className="liquid-note liquid-teal border-l-4 border-teal-500 p-6 md:p-8 rounded-r-2xl text-slate-700 dark:text-slate-300 font-medium italic mb-12 text-lg leading-relaxed transition-colors duration-300"
+                    className="bg-slate-50 dark:bg-slate-700/40 border-l-4 border-teal-500 p-6 md:p-8 rounded-r-2xl text-slate-700 dark:text-slate-300 font-medium italic shadow-sm mb-12 text-lg leading-relaxed transition-colors duration-300"
                     dangerouslySetInnerHTML={{ __html: cvData.about }}
                   />
 
@@ -807,8 +705,8 @@ export default function App() {
                       { icon: Dna, title: "Computational Biology", desc: ["Genome-wide & synteny mapping", "Protein structure & dynamics", "Phylogenomics & evolution"] },
                       { icon: Leaf, title: "Data Workflows", desc: ["R/Python pipelines", "Plant-pathogen interactions", "Stress-responsive gene discovery"] }
                     ].map((item, i) => (
-                      <div key={i} className={`liquid-card ${ABOUT_GLASS_TINTS[i % ABOUT_GLASS_TINTS.length]} p-8 rounded-2xl border transition-all duration-300 group`}>
-                        <div className="liquid-mini w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-all duration-300">
+                      <div key={i} className="p-8 rounded-2xl bg-white dark:bg-slate-700/40 border border-slate-200 dark:border-slate-600/50 shadow-sm hover:bg-teal-50 dark:hover:bg-slate-700/60 hover:shadow-md hover:border-teal-200 dark:hover:border-teal-500/50 transition-all duration-300 group">
+                        <div className="w-14 h-14 bg-slate-50 dark:bg-slate-800/50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-white dark:group-hover:bg-slate-800 group-hover:shadow-sm transition-all duration-300">
                           <item.icon className="w-7 h-7 text-slate-400 dark:text-slate-500 group-hover:text-teal-500 transition-colors group-hover:scale-110 duration-300" />
                         </div>
                         <h4 className="font-extrabold text-slate-900 dark:text-slate-100 mb-4 text-[19px]">{item.title}</h4>
@@ -867,7 +765,7 @@ export default function App() {
                                     href={exp.certificateUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="liquid-action liquid-mini liquid-teal flex items-center gap-1.5 px-3 py-1 text-teal-700 dark:text-teal-300 rounded-lg text-xs font-bold transition-all border"
+                                    className="flex items-center gap-1.5 px-3 py-1 bg-teal-50 dark:bg-teal-900/40 text-teal-600 dark:text-teal-400 rounded-lg text-xs font-bold hover:bg-teal-100 dark:hover:bg-teal-800/60 transition-colors"
                                   >
                                     <FileText className="w-3 h-3" />
                                     View PDF
@@ -879,8 +777,8 @@ export default function App() {
                                 {(exp.supervisor || exp.thesis) && (
                                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     {exp.supervisor && (
-                                      <div className="liquid-card liquid-teal p-5 rounded-2xl border flex items-center gap-4">
-                                        <div className="liquid-mini w-10 h-10 rounded-full flex items-center justify-center">
+                                      <div className="bg-slate-50 dark:bg-slate-700/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-600/50 flex items-center gap-4">
+                                        <div className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center shadow-sm">
                                           <User className="w-5 h-5 text-slate-400 dark:text-slate-500" />
                                         </div>
                                         <div>
@@ -896,8 +794,8 @@ export default function App() {
                                       </div>
                                     )}
                                     {exp.thesis && (
-                                      <div className="liquid-card liquid-slate p-5 rounded-2xl border flex items-center gap-4">
-                                        <div className="liquid-mini w-10 h-10 rounded-full flex items-center justify-center">
+                                      <div className="bg-slate-50 dark:bg-slate-700/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-600/50 flex items-center gap-4">
+                                        <div className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center shadow-sm">
                                           <BookOpen className="w-5 h-5 text-slate-400 dark:text-slate-500" />
                                         </div>
                                         <div>
@@ -921,7 +819,7 @@ export default function App() {
 
                                     <div className="space-y-6">
                                       {exp.projects.map((proj, pIdx) => (
-                                        <div key={pIdx} className={`liquid-card ${pIdx % 2 === 0 ? 'liquid-teal' : 'liquid-slate'} rounded-2xl p-8 border transition-all duration-300`}>
+                                        <div key={pIdx} className="bg-white dark:bg-slate-800/70 rounded-2xl p-8 border border-slate-100 dark:border-slate-600/50 hover:shadow-md transition-all duration-300">
                                           <h4 className="font-bold text-slate-900 dark:text-slate-100 mb-6 text-xl flex items-center gap-3">
                                             <div className="w-2 h-8 bg-teal-500 rounded-full"></div>
                                             {proj.name}
@@ -967,10 +865,10 @@ export default function App() {
                       <motion.div
                         key={idx}
                         whileHover={{ y: -5 }}
-                        className={`liquid-card ${idx % 2 === 0 ? 'liquid-teal' : 'liquid-slate'} p-8 rounded-2xl border flex flex-col h-full transition-all duration-500 group relative overflow-hidden`}
+                        className="p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col h-full hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:shadow-md hover:border-teal-200 dark:hover:border-teal-500/50 transition-all duration-500 group relative overflow-hidden"
                       >
                         <div className="absolute top-0 right-0 w-32 h-32 bg-teal-50 dark:bg-teal-900/20 rounded-bl-full -z-10 opacity-50 group-hover:scale-110 transition-transform duration-500"></div>
-                        <div className="liquid-chip liquid-teal text-xs font-bold text-teal-700 dark:text-teal-300 mb-6 border px-4 py-1.5 rounded-full w-max tracking-wide">{edu.period}</div>
+                        <div className="text-xs font-bold text-teal-700 dark:text-teal-300 mb-6 bg-teal-50 dark:bg-teal-900/40 border border-teal-100 dark:border-teal-800/50 px-4 py-1.5 rounded-full w-max shadow-sm tracking-wide">{edu.period}</div>
                         <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white mb-3 leading-tight group-hover:text-teal-700 dark:group-hover:text-teal-400 transition-colors">{edu.degree}</h3>
                         <p className="text-slate-600 dark:text-slate-300 font-medium mb-8 flex-1 text-lg flex items-center gap-2">
                           <GraduationCap className="w-5 h-5 text-slate-400 dark:text-slate-500 shrink-0" />
@@ -984,7 +882,7 @@ export default function App() {
                         </p>
 
                         {(edu as any).thesis && (
-                          <div className="liquid-note liquid-slate mb-8 p-4 rounded-xl border">
+                          <div className="mb-8 p-4 bg-white dark:bg-slate-700/40 rounded-xl border border-slate-100 dark:border-slate-600/50 shadow-sm">
                             <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider block mb-1.5">Thesis Topic</span>
                             <p className="text-slate-700 dark:text-slate-300 text-sm font-medium leading-relaxed">{(edu as any).thesis}</p>
                           </div>
@@ -995,7 +893,7 @@ export default function App() {
                             <MapPin className="w-4 h-4 text-slate-400 dark:text-slate-500" />
                             <span>{edu.location}</span>
                           </div>
-                          <div className="liquid-chip liquid-chip-accent text-white dark:text-teal-100 px-4 py-1.5 rounded-xl text-sm font-bold">
+                          <div className="bg-slate-800 dark:bg-teal-500/20 text-white dark:text-teal-300 px-4 py-1.5 rounded-xl text-sm font-bold shadow-md">
                             CGPA: {edu.cgpa}
                           </div>
                         </div>
@@ -1010,30 +908,34 @@ export default function App() {
                 <div>
                   <SectionHeading title="Research Publications" icon={FileSearch} />
                   <div className="mb-12">
-                    <div className="liquid-chip liquid-blue inline-flex items-center gap-4 px-6 py-4 text-teal-700 dark:text-teal-300 rounded-2xl text-lg font-bold border">
-                      <div className="liquid-mini w-10 h-10 rounded-xl flex items-center justify-center">
+                    <div className="inline-flex items-center gap-4 px-6 py-4 bg-teal-50 dark:bg-teal-900/40 text-teal-700 dark:text-teal-300 rounded-2xl text-lg font-bold border border-teal-100 dark:border-teal-800 shadow-sm">
+                      <div className="w-10 h-10 bg-white dark:bg-teal-900/60 rounded-xl flex items-center justify-center shadow-sm">
                         <FileText className="w-5 h-5 text-teal-500 dark:text-teal-400" />
                       </div>
                       {cvData.publications.summary}
                     </div>
                   </div>
 
-                  <div className="liquid-toolbar liquid-violet mb-10 flex flex-wrap gap-2 rounded-2xl border p-2">
-                    {publicationFilterOptions.map((option, oIdx) => {
+                  <div className="mb-10 flex flex-wrap gap-2 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 p-2">
+                    {publicationFilterOptions.map((option) => {
                       const isSelected = publicationFilter === option.id;
                       return (
                         <button
                           key={option.id}
                           type="button"
                           onClick={() => setPublicationFilter(option.id)}
-                          className={`liquid-option ${PUBLICATION_GLASS_TINTS[oIdx % PUBLICATION_GLASS_TINTS.length]} inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-bold transition-all border ${
+                          className={`inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-bold transition-all ${
                             isSelected
-                              ? 'is-selected text-white'
-                              : 'text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white'
+                              ? 'bg-slate-900 text-white shadow-md dark:bg-teal-500 dark:text-slate-950'
+                              : 'bg-white text-slate-600 hover:text-slate-900 hover:border-teal-200 dark:bg-slate-900 dark:text-slate-300 dark:hover:text-white border border-slate-200 dark:border-slate-700'
                           }`}
                         >
                           <span>{option.title}</span>
-                          <span className="liquid-count rounded-full px-2 py-0.5 text-xs">
+                          <span className={`rounded-full px-2 py-0.5 text-xs ${
+                            isSelected
+                              ? 'bg-white/15 text-white dark:bg-slate-950/15 dark:text-slate-950'
+                              : 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400'
+                          }`}>
                             {option.count}
                           </span>
                         </button>
@@ -1065,9 +967,9 @@ export default function App() {
                             const hasPreviewSlot = !!localPreviewPath || !!previewUrl;
 
                             return (
-                              <li key={idx} className={`liquid-card ${PUBLICATION_GLASS_TINTS[idx % PUBLICATION_GLASS_TINTS.length]} flex flex-col gap-4 group p-6 rounded-2xl border transition-all duration-300`}>
+                              <li key={idx} className="flex flex-col gap-4 group bg-slate-50 dark:bg-slate-700/40 p-6 rounded-2xl border border-slate-100 dark:border-slate-600/50 hover:bg-white dark:hover:bg-slate-700/60 hover:shadow-md hover:border-teal-100 dark:hover:border-teal-500/50 transition-all duration-300">
                                 <div className="flex items-start gap-4 text-slate-600 dark:text-slate-300 text-base leading-relaxed">
-                                  <div className="liquid-mini mt-1 w-8 h-8 rounded-xl border flex items-center justify-center shrink-0 transition-all duration-300">
+                                  <div className="mt-1 w-8 h-8 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 flex items-center justify-center shrink-0 group-hover:bg-teal-50 dark:group-hover:bg-teal-900/40 group-hover:border-teal-100 dark:group-hover:border-teal-800 transition-all duration-300">
                                     <ArrowUpRight className="w-4 h-4 text-slate-400 dark:text-slate-500 group-hover:text-teal-500 dark:group-hover:text-teal-400 transition-colors" />
                                   </div>
                                   <div className="space-y-2">
@@ -1094,7 +996,7 @@ export default function App() {
                                       <button
                                         type="button"
                                         onClick={() => openPublicationPreview(pub)}
-                                        className="liquid-action liquid-mini liquid-blue inline-flex items-center gap-1.5 px-4 py-2 border text-teal-700 dark:text-teal-300 rounded-lg text-xs font-bold hover:text-teal-900 dark:hover:text-white transition-all"
+                                        className="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-50 dark:bg-teal-900/40 border border-teal-100 dark:border-teal-800/50 text-teal-700 dark:text-teal-300 rounded-lg text-xs font-bold hover:bg-teal-600 dark:hover:bg-teal-500 hover:text-white dark:hover:text-slate-950 hover:border-teal-600 dark:hover:border-teal-500 transition-all shadow-sm"
                                       >
                                         <FileText className="w-3.5 h-3.5" />
                                         Preview PDF
@@ -1106,7 +1008,7 @@ export default function App() {
                                         href={externalUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="liquid-action liquid-mini liquid-violet inline-flex items-center gap-1.5 px-4 py-2 border text-slate-700 dark:text-slate-200 rounded-lg text-xs font-bold hover:text-teal-700 dark:hover:text-teal-300 transition-all"
+                                        className="inline-flex items-center gap-1.5 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 rounded-lg text-xs font-bold hover:border-teal-200 dark:hover:border-teal-700/50 hover:text-teal-700 dark:hover:text-teal-300 transition-all shadow-sm"
                                       >
                                         <ExternalLink className="w-3.5 h-3.5" />
                                         {hasPreviewSlot ? 'Open in New Tab' : 'Open Source Link'}
@@ -1132,14 +1034,14 @@ export default function App() {
                     {cvData.skills.map((skill, idx) => (
                       <div
                         key={idx}
-                        className={`liquid-card ${GLASS_TINTS[idx % GLASS_TINTS.length]} p-8 rounded-2xl border transition-all duration-500`}
+                        className="p-8 rounded-2xl border border-slate-100 dark:border-slate-600/50 bg-slate-50 dark:bg-slate-700/40 hover:bg-white dark:hover:bg-slate-700/60 hover:shadow-md hover:border-teal-100 dark:hover:border-teal-500/50 transition-all duration-500"
                       >
                         <h3 className="text-xs font-black text-teal-500 dark:text-teal-400 mb-6 uppercase tracking-[0.2em]">{skill.category}</h3>
                         <div className="flex flex-wrap gap-2.5">
                           {(Array.isArray(skill.details) ? skill.details : [skill.details]).map((detail, dIdx) => (
                             <span
                               key={dIdx}
-                              className="liquid-mini px-3 py-1.5 border text-slate-700 dark:text-slate-300 text-sm font-bold rounded-lg hover:text-teal-600 dark:hover:text-teal-400 transition-all duration-300 cursor-default flex items-center gap-2"
+                              className="px-3 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-300 text-sm font-bold rounded-lg shadow-sm hover:border-teal-400 dark:hover:border-teal-500 hover:text-teal-600 dark:hover:text-teal-400 hover:shadow transition-all duration-300 cursor-default flex items-center gap-2"
                             >
                               <div className="w-1.5 h-1.5 rounded-full bg-teal-400 dark:bg-teal-500"></div>
                               {detail}
@@ -1160,7 +1062,7 @@ export default function App() {
                       <MonitorPlay className="w-6 h-6 text-slate-400 dark:text-slate-500" />
                       <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">Software, Tools & Pipelines</h3>
                     </div>
-                    <div className="liquid-chip liquid-blue liquid-chip-accent text-white dark:text-teal-100 px-5 py-2 rounded-2xl text-sm font-bold">
+                    <div className="bg-slate-900 dark:bg-slate-800 text-white dark:text-slate-200 px-5 py-2 rounded-2xl text-sm font-bold shadow-lg shadow-slate-900/20 dark:shadow-none">
                       {cvData.digitalProjects.length} Featured
                     </div>
                   </div>
@@ -1182,7 +1084,7 @@ export default function App() {
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: idx * 0.08 }}
                           whileHover={{ y: -6 }}
-                          className={`liquid-card ${PROJECT_GLASS_TINTS[idx % PROJECT_GLASS_TINTS.length]} group rounded-3xl border transition-all duration-500 overflow-hidden`}
+                          className="group rounded-3xl border border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800/70 dark:backdrop-blur-xl shadow-sm hover:shadow-xl hover:border-teal-200 dark:hover:border-teal-500/50 transition-all duration-500 overflow-hidden"
                         >
                           <div className="relative aspect-[16/10] overflow-hidden border-b border-slate-100 dark:border-slate-700 bg-slate-100 dark:bg-slate-900">
                             {thumbnailSrc ? (
@@ -1191,17 +1093,16 @@ export default function App() {
                                 alt={project.thumbnailAlt || `${project.title} preview`}
                                 className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.02]"
                                 loading="lazy"
-                                decoding="async"
                               />
                             ) : (
                               <div className="w-full h-full bg-gradient-to-br from-teal-500 via-cyan-500 to-slate-900"></div>
                             )}
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/10 to-transparent"></div>
                             <div className="absolute top-5 left-5 flex flex-wrap gap-2">
-                              <span className="liquid-mini px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider text-slate-700 dark:text-slate-200 border">
+                              <span className="px-3 py-1 rounded-full bg-white/90 dark:bg-slate-900/80 backdrop-blur text-[10px] font-black uppercase tracking-wider text-slate-700 dark:text-slate-200">
                                 {project.category}
                               </span>
-                              <span className={`liquid-mini px-3 py-1 rounded-full border text-[10px] font-black uppercase tracking-wider ${project.status === 'Live' ? 'text-emerald-800 dark:text-emerald-200' : 'text-amber-800 dark:text-amber-200'}`}>
+                              <span className={`px-3 py-1 rounded-full backdrop-blur text-[10px] font-black uppercase tracking-wider ${project.status === 'Live' ? 'bg-emerald-100/90 text-emerald-800 dark:bg-emerald-900/80 dark:text-emerald-200' : 'bg-amber-100/90 text-amber-800 dark:bg-amber-900/80 dark:text-amber-200'}`}>
                                 {project.status}
                               </span>
                             </div>
@@ -1214,7 +1115,7 @@ export default function App() {
                                   {project.title}
                                 </h4>
                             </div>
-                            <div className="liquid-mini hidden sm:flex items-center gap-2 px-3 py-2 rounded-xl text-white text-xs font-bold border">
+                            <div className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-xl bg-black/35 backdrop-blur text-white text-xs font-bold border border-white/15">
                                 <Image className="w-4 h-4" />
                                 Preview
                               </div>
@@ -1234,7 +1135,7 @@ export default function App() {
                                 {project.stack.map((item: string, stackIdx: number) => (
                                   <span
                                     key={stackIdx}
-                                    className="liquid-mini px-3 py-1.5 rounded-lg border text-slate-700 dark:text-slate-300 text-sm font-bold"
+                                    className="px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm font-bold"
                                   >
                                     {item}
                                   </span>
@@ -1262,7 +1163,7 @@ export default function App() {
                                   href={project.liveUrl}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="liquid-action liquid-teal liquid-action-primary inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-white text-sm font-bold transition-all border"
+                                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-teal-600 text-white text-sm font-bold hover:bg-teal-700 transition-colors shadow-sm"
                                 >
                                   <Globe className="w-4 h-4" />
                                   Live Demo
@@ -1274,7 +1175,7 @@ export default function App() {
                                   href={project.repoUrl}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="liquid-action liquid-slate inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-slate-800 dark:text-slate-100 text-sm font-bold transition-all border"
+                                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-slate-100 text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
                                 >
                                   <Github className="w-4 h-4" />
                                   GitHub
@@ -1298,7 +1199,7 @@ export default function App() {
                       <Library className="w-6 h-6 text-slate-400 dark:text-slate-500" />
                       <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">Completed Courses</h3>
                     </div>
-                    <div className="liquid-chip liquid-violet liquid-chip-accent text-white dark:text-teal-100 px-5 py-2 rounded-2xl text-sm font-bold">
+                    <div className="bg-slate-900 dark:bg-slate-800 text-white dark:text-slate-200 px-5 py-2 rounded-2xl text-sm font-bold shadow-lg shadow-slate-900/20 dark:shadow-none">
                       {cvData.courses.length} Total
                     </div>
                   </div>
@@ -1317,20 +1218,20 @@ export default function App() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: specIdx * 0.1 }}
-                        className={`liquid-card ${GLASS_TINTS[specIdx % GLASS_TINTS.length]} rounded-2xl border overflow-hidden`}
+                        className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm"
                       >
                         <div className={`px-6 py-4 border-b flex items-center justify-between ${getSpecColor(spec).split(' ')[1]} ${getSpecColor(spec).split(' ')[0]}`}>
                           <h4 className="font-bold text-sm uppercase tracking-wider flex items-center gap-2">
                             <Library className="w-4 h-4" />
                             {spec}
                           </h4>
-                          <span className="liquid-mini text-xs font-bold px-2 py-1 rounded-full border">
+                          <span className="text-xs font-bold px-2 py-1 rounded-full bg-white/60 dark:bg-slate-900/80 backdrop-blur-sm border border-white/20 dark:border-slate-700/50 shadow-sm">
                             {courses.length} Courses
                           </span>
                         </div>
                         <div className="divide-y divide-slate-100 dark:divide-slate-800/50">
                           {courses.map((course, idx) => (
-                            <div key={idx} className="p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-white/35 dark:hover:bg-slate-800/35 transition-colors group">
+                            <div key={idx} className="p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
                               <div className="flex-1">
                                 <h5 className="font-bold text-slate-900 dark:text-slate-100 text-base mb-1 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">{course.name}</h5>
                                 <div className="flex items-center gap-3 text-sm text-slate-500 dark:text-slate-400">
@@ -1341,7 +1242,7 @@ export default function App() {
                                 </div>
                               </div>
                               <div className="flex items-center gap-4 sm:justify-end">
-                                <span className="liquid-mini text-xs font-mono font-bold text-slate-600 dark:text-slate-300 px-3 py-1.5 rounded-lg border">
+                                <span className="text-xs font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-3 py-1.5 rounded-lg border border-transparent dark:border-slate-700">
                                   {(course as any).grade || 'Completed'}
                                 </span>
                                 {course.certificateUrl && course.certificateUrl !== '#' && (
@@ -1349,7 +1250,7 @@ export default function App() {
                                     href={course.certificateUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="liquid-action liquid-mini liquid-emerald inline-flex items-center gap-1.5 px-4 py-2 border text-teal-700 dark:text-teal-300 rounded-lg text-xs font-bold hover:text-teal-900 dark:hover:text-white transition-all"
+                                    className="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-50 dark:bg-teal-900/40 border border-teal-100 dark:border-teal-800/50 text-teal-700 dark:text-teal-300 rounded-lg text-xs font-bold hover:bg-teal-600 dark:hover:bg-teal-500 hover:text-white dark:hover:text-slate-900 hover:border-teal-600 dark:hover:border-teal-500 transition-all shadow-sm"
                                   >
                                     <FileText className="w-3.5 h-3.5" />
                                     PDF Certificate
@@ -1375,9 +1276,9 @@ export default function App() {
                         <motion.div
                           key={idx}
                           whileHover={{ x: 10 }}
-                          className={`liquid-card ${GLASS_TINTS[idx % GLASS_TINTS.length]} flex gap-6 p-8 rounded-2xl border transition-all duration-300`}
+                          className="flex gap-6 p-8 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-700/40 hover:bg-white dark:hover:bg-slate-700/60 hover:shadow-md hover:border-teal-100 dark:hover:border-teal-500/50 transition-all duration-300"
                         >
-                          <div className="liquid-mini w-14 h-14 rounded-2xl border flex items-center justify-center shrink-0">
+                          <div className="w-14 h-14 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-700 flex items-center justify-center shrink-0 shadow-sm">
                             <Award className="w-7 h-7 text-teal-500 dark:text-teal-400" />
                           </div>
                           <div>
@@ -1388,7 +1289,7 @@ export default function App() {
                                   href={item.certificateUrl}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="liquid-icon-button liquid-teal shrink-0 p-2 border rounded-xl text-slate-400 dark:text-slate-500 hover:text-teal-600 dark:hover:text-teal-400 transition-all"
+                                  className="shrink-0 p-2 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl text-slate-400 dark:text-slate-500 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-100 dark:hover:border-teal-500/50 transition-all shadow-sm"
                                   title="View PDF"
                                 >
                                   <FileText className="w-4 h-4" />
@@ -1410,7 +1311,7 @@ export default function App() {
                         <motion.div
                           key={idx}
                           whileHover={{ y: -5 }}
-                          className={`liquid-card ${GLASS_TINTS[(idx + 2) % GLASS_TINTS.length]} p-8 rounded-2xl border transition-all duration-500 flex flex-col h-full group`}
+                          className="p-8 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-700/40 hover:bg-white dark:hover:bg-slate-700/60 hover:shadow-md hover:border-teal-100 dark:hover:border-teal-500/50 transition-all duration-500 flex flex-col h-full group"
                         >
                           <div className="flex items-start justify-between gap-4 mb-6">
                             <h4 className="font-bold text-slate-900 dark:text-white text-lg leading-snug flex-1 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">{cert.title}</h4>
@@ -1419,7 +1320,7 @@ export default function App() {
                                 href={cert.certificateUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="liquid-icon-button liquid-blue shrink-0 p-2 border rounded-xl text-slate-400 dark:text-slate-500 hover:text-teal-600 dark:hover:text-teal-400 transition-all"
+                                className="shrink-0 p-2 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl text-slate-400 dark:text-slate-500 hover:text-teal-600 dark:hover:text-teal-400 hover:border-teal-100 dark:hover:border-teal-500/50 transition-all shadow-sm"
                                 title="View PDF"
                               >
                                 <FileText className="w-4 h-4" />
@@ -1428,7 +1329,7 @@ export default function App() {
                           </div>
                           <div className="pt-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between mt-auto">
                             <span className="text-slate-400 dark:text-slate-500 text-xs font-bold uppercase tracking-wider truncate pr-4">{cert.organization}</span>
-                            <span className="liquid-mini shrink-0 font-black text-slate-900 dark:text-white text-xs px-3 py-1 rounded-lg border">{cert.period}</span>
+                            <span className="shrink-0 font-black text-slate-900 dark:text-white text-xs bg-slate-100 dark:bg-slate-700 px-3 py-1 rounded-lg">{cert.period}</span>
                           </div>
                         </motion.div>
                       ))}
@@ -1444,9 +1345,9 @@ export default function App() {
                           <motion.div
                             key={idx}
                             whileHover={{ scale: 1.01 }}
-                            className={`liquid-card ${idx % 2 === 0 ? 'liquid-blue' : 'liquid-violet'} flex items-start gap-4 p-5 sm:p-6 rounded-2xl border transition-all duration-300 group`}
+                            className="flex items-start gap-4 p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-700/40 border border-slate-100 dark:border-slate-600/50 shadow-sm hover:border-teal-200 dark:hover:border-teal-500/50 hover:shadow-md transition-all duration-300 group"
                           >
-                            <div className="liquid-mini w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-colors duration-300">
+                            <div className="w-10 h-10 rounded-full bg-slate-50 dark:bg-slate-900 flex items-center justify-center shrink-0 group-hover:bg-teal-50 dark:group-hover:bg-teal-900/40 transition-colors duration-300">
                               <ShieldCheck className="w-5 h-5 text-slate-400 dark:text-slate-500 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors" />
                             </div>
                             <span dangerouslySetInnerHTML={{ __html: service.replace(/Ad-hoc Reviewer,/g, '<strong class="text-slate-900 dark:text-white font-bold">Ad-hoc Reviewer,</strong>') }} className="text-slate-700 dark:text-slate-300 font-medium leading-relaxed mt-2" />
@@ -1467,10 +1368,10 @@ export default function App() {
                       <motion.div
                         key={idx}
                         whileHover={{ y: -5 }}
-                        className={`liquid-card ${GLASS_TINTS[(idx + 1) % GLASS_TINTS.length]} p-8 rounded-2xl border transition-all duration-500 relative overflow-hidden group`}
+                        className="p-8 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-700/40 hover:bg-white dark:hover:bg-slate-700/60 hover:shadow-md hover:border-teal-100 dark:hover:border-teal-500/50 transition-all duration-500 relative overflow-hidden group"
                       >
                         <div className="absolute top-0 right-0 w-32 h-32 bg-slate-200/20 dark:bg-slate-900/40 rounded-bl-full -z-10 opacity-50 group-hover:bg-teal-50 dark:group-hover:bg-teal-900/40 transition-colors duration-500"></div>
-                        <div className="liquid-mini w-14 h-14 rounded-full border flex items-center justify-center mb-6 transition-all duration-300">
+                        <div className="w-14 h-14 rounded-full bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-700 flex items-center justify-center shadow-sm mb-6 group-hover:border-teal-200 dark:group-hover:border-teal-500/50 transition-all duration-300">
                           <User className="w-6 h-6 text-slate-400 dark:text-slate-500 group-hover:text-teal-500 dark:group-hover:text-teal-400 transition-colors" />
                         </div>
                         <h3 className="text-xl font-extrabold text-slate-900 dark:text-white mb-2 leading-snug">{rec.name}</h3>
@@ -1482,7 +1383,7 @@ export default function App() {
                             <Briefcase className="w-4 h-4 text-slate-400 dark:text-slate-500" />
                             <span className="text-sm font-bold text-slate-700 dark:text-slate-300">{rec.relationship}</span>
                           </div>
-                          <div className="liquid-mini flex items-center gap-3 p-3 rounded-xl border mt-2">
+                          <div className="flex items-center gap-3 bg-slate-100/50 dark:bg-slate-900/50 p-3 rounded-xl border border-slate-200/50 dark:border-slate-700/50 mt-2">
                             <Mail className="w-4 h-4 text-slate-400 dark:text-slate-500" />
                             <span className="text-sm font-medium text-slate-500 dark:text-slate-400 italic">Contact info available upon request</span>
                           </div>
@@ -1502,7 +1403,7 @@ export default function App() {
                       <Image className="w-6 h-6 text-slate-400 dark:text-slate-500" />
                       <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">Research Gallery</h3>
                     </div>
-                    <div className="liquid-chip liquid-emerald liquid-chip-accent text-white dark:text-teal-100 px-5 py-2 rounded-2xl text-sm font-bold">
+                    <div className="bg-slate-900 dark:bg-slate-800 text-white dark:text-slate-200 px-5 py-2 rounded-2xl text-sm font-bold shadow-lg shadow-slate-900/20 dark:shadow-none">
                       {cvData.gallery.reduce((sum, cat) => sum + cat.figures.length, 0)} Figures
                     </div>
                   </div>
@@ -1517,7 +1418,7 @@ export default function App() {
                   <div className="relative mb-10" ref={filterRef}>
                     <button
                       onClick={() => setFilterOpen(!filterOpen)}
-                      className="liquid-action liquid-blue flex items-center gap-2.5 px-5 py-2.5 rounded-xl border text-sm font-bold text-slate-700 dark:text-slate-200 transition-all duration-300"
+                      className="flex items-center gap-2.5 px-5 py-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-bold text-slate-700 dark:text-slate-200 hover:border-teal-300 dark:hover:border-teal-600 hover:shadow-sm transition-all duration-300"
                     >
                       <Filter className="w-4 h-4 text-slate-400 dark:text-slate-500" />
                       {galleryCategory === 'All' ? 'All Categories' : galleryCategory}
@@ -1530,21 +1431,21 @@ export default function App() {
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: -8, scale: 0.95 }}
                           transition={{ duration: 0.15 }}
-                          className="liquid-dropdown liquid-violet absolute left-0 top-full mt-2 z-50 w-72 border rounded-xl overflow-hidden"
+                          className="absolute left-0 top-full mt-2 z-50 w-72 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-xl shadow-slate-200/50 dark:shadow-none overflow-hidden"
                         >
                           <button
                             onClick={() => { setGalleryCategory('All'); setFilterOpen(false); }}
-                            className={`liquid-option liquid-blue w-full text-left px-5 py-3 text-sm font-bold transition-all ${galleryCategory === 'All' ? 'is-selected text-white' : 'text-slate-600 dark:text-slate-300'}`}
+                            className={`w-full text-left px-5 py-3 text-sm font-bold transition-colors ${galleryCategory === 'All' ? 'bg-teal-50 dark:bg-teal-900/40 text-teal-700 dark:text-teal-300' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50'}`}
                           >
                             All Categories
                           </button>
-                          {cvData.gallery.map((cat, catIdx) => {
+                          {cvData.gallery.map((cat) => {
                             const CatIcon = GALLERY_CATEGORY_ICONS[cat.icon] || Layers;
                             return (
                               <button
                                 key={cat.category}
                                 onClick={() => { setGalleryCategory(cat.category); setFilterOpen(false); }}
-                                className={`liquid-option ${GLASS_TINTS[catIdx % GLASS_TINTS.length]} w-full text-left px-5 py-3 text-sm font-bold transition-all flex items-center gap-2.5 ${galleryCategory === cat.category ? 'is-selected text-white' : 'text-slate-600 dark:text-slate-300'}`}
+                                className={`w-full text-left px-5 py-3 text-sm font-bold transition-colors flex items-center gap-2.5 ${galleryCategory === cat.category ? 'bg-teal-50 dark:bg-teal-900/40 text-teal-700 dark:text-teal-300' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50'}`}
                               >
                                 <CatIcon className="w-4 h-4 text-slate-400 dark:text-slate-500" />
                                 {cat.category}
@@ -1592,7 +1493,7 @@ export default function App() {
                                   transition={{ delay: catIdx * 0.08 + figIdx * 0.05 }}
                                   whileHover={{ y: -6, scale: 1.02 }}
                                   onClick={() => setLightboxImage(fig)}
-                                  className={`liquid-card ${GLASS_TINTS[(catIdx + figIdx) % GLASS_TINTS.length]} group cursor-pointer rounded-2xl border overflow-hidden transition-all duration-500`}
+                                  className="group cursor-pointer bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl hover:border-teal-200 dark:hover:border-teal-500/50 transition-all duration-500"
                                 >
                                   {/* Image Container */}
                                   <div className="relative aspect-[16/10] bg-slate-50 dark:bg-slate-800 overflow-hidden">
@@ -1601,7 +1502,6 @@ export default function App() {
                                       alt={fig.title}
                                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                                       loading="lazy"
-                                      decoding="async"
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
                                       <span className="text-white text-xs font-bold flex items-center gap-1.5">
@@ -1621,7 +1521,7 @@ export default function App() {
                                     <p className="text-slate-500 dark:text-slate-400 text-xs leading-relaxed mb-3">{fig.desc}</p>
                                     <div className="flex flex-wrap gap-1.5">
                                       {fig.tags.map((tag, tIdx) => (
-                                        <span key={tIdx} className="liquid-mini text-[10px] font-bold px-2 py-0.5 rounded-md text-slate-500 dark:text-slate-400 border">
+                                        <span key={tIdx} className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-100 dark:border-slate-700">
                                           {tag}
                                         </span>
                                       ))}
@@ -1658,7 +1558,7 @@ export default function App() {
                 animate={{ scale: 1, opacity: 1, y: 0 }}
                 exit={{ scale: 0.95, opacity: 0, y: 20 }}
                 transition={{ type: 'spring', bounce: 0, duration: 0.3 }}
-                className="liquid-panel liquid-blue relative w-full max-w-6xl rounded-2xl border flex flex-col overflow-hidden pointer-events-auto"
+                className="relative w-full max-w-6xl bg-white dark:bg-slate-900 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-white/10 flex flex-col overflow-hidden pointer-events-auto"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="flex items-center justify-between gap-4 bg-slate-900 px-6 py-4 border-b border-slate-800">
@@ -1672,7 +1572,7 @@ export default function App() {
                         href={publicationPreview.externalUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="liquid-action liquid-mini liquid-teal inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-slate-200 text-xs font-bold transition-all border"
+                        className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-800 text-slate-200 text-xs font-bold hover:bg-slate-700 transition-colors"
                       >
                         <ExternalLink className="w-3.5 h-3.5" />
                         Open
@@ -1680,7 +1580,7 @@ export default function App() {
                     )}
                     <button
                       onClick={() => setPublicationPreview(null)}
-                      className="liquid-icon-button liquid-blue p-2 rounded-full text-slate-300 hover:text-white transition-all border"
+                      className="p-2 rounded-full bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
                     >
                       <X className="w-5 h-5" />
                     </button>
@@ -1693,12 +1593,11 @@ export default function App() {
                       src={publicationPreview.previewUrl}
                       title={publicationPreview.title}
                       className="w-full h-[80vh] bg-white"
-                      loading="lazy"
                     />
                   ) : (
                     <div className="min-h-[28rem] flex items-center justify-center p-8 sm:p-12">
-                      <div className="liquid-card liquid-amber max-w-2xl w-full rounded-2xl border border-dashed p-8 text-center">
-                        <div className="liquid-mini mx-auto mb-5 w-14 h-14 rounded-2xl border flex items-center justify-center">
+                      <div className="max-w-2xl w-full rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 bg-white/80 dark:bg-slate-900/70 p-8 text-center shadow-sm">
+                        <div className="mx-auto mb-5 w-14 h-14 rounded-2xl bg-teal-50 dark:bg-teal-900/40 border border-teal-100 dark:border-teal-800/50 flex items-center justify-center">
                           <FileText className="w-7 h-7 text-teal-600 dark:text-teal-300" />
                         </div>
                         <h5 className="text-lg font-extrabold text-slate-900 dark:text-white mb-2">Local PDF preview not added yet</h5>
@@ -1706,7 +1605,7 @@ export default function App() {
                           This publication already has a preview slot. Once you add the PDF file to the expected path below, the inline preview will start working automatically.
                         </p>
                         {publicationPreview.missingPreviewPath && (
-                          <div className="liquid-mini inline-flex max-w-full px-4 py-3 rounded-xl border text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-mono break-all">
+                          <div className="inline-flex max-w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-mono break-all">
                             {publicationPreview.missingPreviewPath}
                           </div>
                         )}
@@ -1735,7 +1634,7 @@ export default function App() {
                 animate={{ scale: 1, opacity: 1, y: 0 }}
                 exit={{ scale: 0.95, opacity: 0, y: 20 }}
                 transition={{ type: 'spring', bounce: 0, duration: 0.3 }}
-                className="liquid-panel liquid-violet relative w-full max-w-5xl rounded-2xl border flex flex-col overflow-hidden pointer-events-auto"
+                className="relative w-full max-w-5xl bg-white rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-white/10 flex flex-col overflow-hidden pointer-events-auto"
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Top Bar */}
@@ -1743,7 +1642,7 @@ export default function App() {
                   <h4 className="text-white font-bold text-lg">{lightboxImage.title}</h4>
                   <button
                     onClick={() => setLightboxImage(null)}
-                    className="liquid-icon-button liquid-violet p-1.5 rounded-full text-slate-300 hover:text-white transition-all border"
+                    className="p-1.5 rounded-full bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
                   >
                     <X className="w-5 h-5" />
                   </button>
@@ -1757,7 +1656,6 @@ export default function App() {
                     alt={lightboxImage.title}
                     className="max-w-full"
                     style={{ maxHeight: 'calc(80vh - 160px)', objectFit: 'contain' }}
-                    decoding="async"
                   />
                 </div>
 
@@ -1766,7 +1664,7 @@ export default function App() {
                   <p className="text-slate-700 dark:text-slate-300 text-sm sm:text-base leading-relaxed mb-5">{lightboxImage.desc}</p>
                   <div className="flex flex-wrap gap-2">
                     {lightboxImage.tags.map((tag, tIdx) => (
-                      <span key={tIdx} className="liquid-mini text-xs font-bold px-3 py-1.5 rounded-lg text-teal-700 dark:text-teal-400 border">
+                      <span key={tIdx} className="text-xs font-bold px-3 py-1.5 rounded-lg bg-teal-50 dark:bg-teal-900/40 text-teal-700 dark:text-teal-400 border border-teal-100 dark:border-teal-800/50 shadow-sm">
                         {tag}
                       </span>
                     ))}
@@ -1787,7 +1685,7 @@ export default function App() {
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
             transition={{ duration: 0.2 }}
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="liquid-icon-button liquid-action-primary fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full text-white hover:scale-110 transition-all duration-300 flex items-center justify-center border"
+            className="fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full bg-teal-500 dark:bg-teal-600 text-white shadow-lg shadow-teal-500/30 dark:shadow-teal-600/30 hover:bg-teal-600 dark:hover:bg-teal-500 hover:shadow-xl hover:scale-110 transition-all duration-300 flex items-center justify-center"
             aria-label="Back to top"
           >
             <ArrowUp className="w-5 h-5" />
