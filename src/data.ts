@@ -167,22 +167,28 @@ export const cvData = {
     }
   ],
   publications: {
-    summary: "10 research publications and accepted/submitted manuscripts, 4 conference presentations",
+    summary: "12 publications, preprints, and submitted manuscripts; 4 conference presentations",
     submitted: [
-      { text: "Ali, S. (2026). Genome-Wide Identification and Integrative Characterization of the IQD Gene Family in Soybean Wm82.a6: Updated Gene Set, Conserved Duplications, and Candidate Drought-Responsive Regulators. Submitted to Plant Science (Elsevier, ISSN 0168-9452).", pdfUrl: "#", previewUrl: "papers/soybean-wm82-a6-iqd-gene-family.pdf" },
-      { text: "Ali, S., Hanjra, Z., Saeed, M., Fatima, T., Khalil, S., Iltaf, B., & Rashid, M. (2025). Genome-wide identification and comparative characterization of WRKY transcription factors across three cultivated Oryza species reveals lineage-specific regulatory divergence. Submitted to BMC Plant Biology.", pdfUrl: "https://drive.google.com/file/d/1g_hxejY7ex4vHViSB6o_Jp9LCCBN-asv/view?usp=sharing", previewUrl: "papers/oryza-wrky-lineage-specific-regulatory-divergence.pdf", impactFactor: "4.8 (2024)" },
-      { text: "Ali, S., Fatima, T., Hanjra, Z., & Rashid, M. (2026). Modern Bioinformatics, AI, and Computational Genomics for Biotic and Abiotic Stress Tolerance in Field Crops: From Variant Mapping to Functional Inference. Submitted to Springer Nature.", pdfUrl: "#", previewUrl: "papers/modern-bioinformatics-ai-computational-genomics-field-crops.pdf" },
+      { text: "Ali, S.<sup>^</sup>, Che Hussian, C. H. A.<sup>^</sup>, & Goh, H.-H.<sup>*</sup> (2026). Systems biology and multi-omics approaches for understanding yeast probiotics. Submitted to Biotechnology Advances (Elsevier), Manuscript ID: JBA-D-26-01033.", pdfUrl: "#", note: "^Saqib Ali and C. H. A. Che Hussian contributed equally to this work; *Corresponding author." },
+      { text: "Ali, S. (2026). Reassessing the Soybean IQD Gene Family in the Wm82.a6 Genome: Duplication Patterns and Drought-Responsive Candidates. Submitted to Journal of the Saudi Society of Agricultural Sciences.", pdfUrl: "#", previewUrl: "papers/soybean-wm82-a6-iqd-gene-family.pdf" },
+      { text: "Ali, S., Hanjra, Z., Saeed, M., Fatima, T., Khalil, S., Iltaf, B., & Rashid, M. (2026). Genome-wide identification and comparative characterization of WRKY transcription factors across three cultivated Oryza species reveals lineage-specific regulatory divergence. Submitted to Rice Science (ricesci.org, ISSN 1672-6308), Manuscript ID: RiceSci-2026-0181.", pdfUrl: "https://drive.google.com/file/d/1g_hxejY7ex4vHViSB6o_Jp9LCCBN-asv/view?usp=sharing", previewUrl: "papers/oryza-wrky-lineage-specific-regulatory-divergence.pdf" },
     ],
     published: [
-      { text: "Ali, S., & Goh, Hoe-Han. (2026). Multi-Omics Integration for Abiotic Stress Acclimation in Tropical and Underutilized Plants. Accepted in Phyton-International Journal of Experimental Botany.", pdfUrl: "#", previewUrl: "papers/multi-omics-abiotic-stress-tropical-underutilized-plants.pdf" },
-      { text: "Ali S. A V2-SKP1 interface in soybean stay-green associated virus: evidence from evolutionary and structural analyses. Arch Virol. 2026 May 3;171(6):170. doi: 10.1007/s00705-026-06622-4. PMID: 42070170.", pdfUrl: "https://doi.org/10.1007/s00705-026-06622-4", previewUrl: "papers/v2-skp1-interface-sosgv.pdf", impactFactor: "2.5 (2024)" },
-      { text: "Hanjra, Z.&dagger;, Ali, S.&dagger;, Fatima, T., Saeed, M., Khalil, S., & Rashid, M. (2026). High-resolution comparative genomics and compositional analysis of WRKY transcription factors across seven cereal and model plant genomes. Accepted in BMC Plant Biology.", pdfUrl: "https://drive.google.com/file/d/1MXROO8m3IQNKNp0_tMmaXivHsQmW6IgL/view?usp=sharing", previewUrl: "papers/high-resolution-comparative-genomics-wrky-seven-genomes.pdf", impactFactor: "4.8 (2024)", note: "&dagger; Both authors contributed equally." },
+      { text: "Ali, S., & Goh, H.-H. (2026). Multi-Omics Integration for Abiotic Stress Acclimation in Tropical and Underutilized Plants. Phyton-International Journal of Experimental Botany, 95(6), 3. https://doi.org/10.32604/phyton.2026.084657.", pdfUrl: "https://doi.org/10.32604/phyton.2026.084657" },
+      { text: "Ali, S. (2026). A V2-SKP1 interface in soybean stay-green associated virus: evidence from evolutionary and structural analyses. Archives of Virology, 171, 170. https://doi.org/10.1007/s00705-026-06622-4", pdfUrl: "https://doi.org/10.1007/s00705-026-06622-4", previewUrl: "papers/v2-skp1-interface-sosgv.pdf", impactFactor: "2.5 (2024)" },
+      { text: "Hanjra, Z.<sup>^</sup>, Ali, S.<sup>^</sup>, Fatima, T., et al. (2026). High-resolution comparative genomics and compositional analysis of WRKY transcription factors across seven cereal and model plant genomes. BMC Plant Biology. https://doi.org/10.1186/s12870-026-08661-0", pdfUrl: "https://doi.org/10.1186/s12870-026-08661-0", previewUrl: "papers/high-resolution-comparative-genomics-wrky-seven-genomes.pdf", impactFactor: "4.8 (2024)", note: "^Zainab Hanjra and Saqib Ali contributed equally to this work." },
       { text: "Ali, S., Khan, S. A., Abbas, H., Khadim, U., Aslam, A. & Anwaar, M. (2025). Incidence of Meloidogyne Graminicola on Maize and Its Integrated Management. Accepted in Pakistan Journal of Zoology.", pdfUrl: "https://drive.google.com/file/d/1PMEwPIcezsJeZNo-jJc00ADV5bfS7GJx/view?usp=sharing", previewUrl: "papers/meloidogyne-graminicola-maize-management.pdf" },
       { text: "Tufail, M. M., Abbas, H., Khadim, U., Bashir, M. R., Kamran, M., Khan, S. A., Zafar, M., Shahbaz, M. U., ul Haq, M. E., & Ali, S. (2024). Management of Macrophomina phaseolina infecting sesame germplasm. Journal of Phytobiology, 4(1), 9–17.", pdfUrl: "http://researchgate.net/publication/393083884_Management_of_Macrophomina_phaseolina_Infecting_Sesame_Germplasm", previewUrl: "papers/macrophomina-phaseolina-sesame-germplasm.pdf" }
+    ],
+    reviewSubmitted: [
+      { text: "Ali, S., Fatima, T., Hanjra, Z., & Rashid, M. (2026). Modern Bioinformatics, AI, and Computational Genomics for Biotic and Abiotic Stress Tolerance in Field Crops: From Variant Mapping to Functional Inference. Submitted to Springer Nature.", pdfUrl: "#", previewUrl: "papers/modern-bioinformatics-ai-computational-genomics-field-crops.pdf" }
     ],
     reviews: [
       { text: "Ali, S., Mithal, U., Bibi, J., Hanif, A., Zohaib, M., Asghar, J., ... & Sohail, A. (2025). Revolutionizing Cotton Leaf Curl Disease Detection: CRISPR-Based Diagnostics for Rapid, Field-Deployable Solutions. Planta Animalia, 4(4), 347-362.", pdfUrl: "https://www.researchgate.net/publication/395593235_Revolutionizing_Cotton_Leaf_Curl_Disease_Detection_CRISPR-Based_Diagnostics_for_Rapid_Field-Deployable_Solutions", previewUrl: "papers/revolutionizing-cotton-leaf-curl-disease-detection-crispr.pdf" },
       { text: "Ali, S., Anwaar, M., Khadim, U., & Bakhsh, B. P. (2025). CRISPR-based biosensors for plant disease diagnostics: Innovations, applications, and future prospects. Annual Methodological Archive Research Review, 3(8).", pdfUrl: "https://www.researchgate.net/publication/395112383_CRISPR-Based_Biosensors_for_Plant_Disease_Diagnostics_Innovations_Applications_and_Future_Prospects", previewUrl: "papers/crispr-based-biosensors-plant-disease-diagnostics.pdf" }
+    ],
+    preprints: [
+      { text: "Hanjra, Z., Ali, S., & Fatima, T. (2026). Molecular Interactions Between ChiLCV and Capsicum Hosts: Mechanisms, Detection, Resistance Strategies, and Future Perspectives. ResearchGate Preprint. https://doi.org/10.13140/RG.2.2.11634.57289", pdfUrl: "https://doi.org/10.13140/RG.2.2.11634.57289" }
     ],
     conferences: [
       { text: "Ali, S. (2025). Multi-Omics and Machine Learning for Predicting Biocontrol Efficacy under Climate-Driven Pathogen Shifts. [Abstract] 9th ICCPS PMAS UAAR, Pakistan", pdfUrl: "https://www.researchgate.net/publication/398940434_Multi-Omics_and_Machine_Learning_for_Predicting_Biocontrol_Efficacy_Under_Climate-Driven_Pathogen_Shifts", previewUrl: "papers/multiomics-machine-learning-biocontrol-efficacy.pdf" },
@@ -192,6 +198,7 @@ export const cvData = {
     ]
   },
   professionalService: [
+    "Ad-hoc Reviewer, Computational Biology and Chemistry | Springer Nature (2026).",
     "Ad-hoc Reviewer, Journal of Plant Diseases and Protection | Springer Nature (2025).",
     "Ad-hoc Reviewer, Journal of Advances in Biology & Biotechnology (2025)."
   ],

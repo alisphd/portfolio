@@ -398,9 +398,11 @@ export default function App() {
   };
 
   const publicationGroups = [
-    { id: 'submitted', title: "Submitted / Under Review", items: cvData.publications.submitted },
-    { id: 'published', title: "Published / Accepted", items: cvData.publications.published },
-    { id: 'reviews', title: "Review Articles", items: cvData.publications.reviews },
+    { id: 'published', title: "Research Articles (Published/Accepted)", items: cvData.publications.published },
+    { id: 'submitted', title: "Research Articles (Submitted/Under Review)", items: cvData.publications.submitted },
+    { id: 'reviewSubmitted', title: "Review/Book Chapter (Submitted/Under Review)", items: cvData.publications.reviewSubmitted },
+    { id: 'reviews', title: "Review Articles (Published)", items: cvData.publications.reviews },
+    { id: 'preprints', title: "Preprints", items: cvData.publications.preprints },
     { id: 'conferences', title: "Conference Abstracts", items: cvData.publications.conferences }
   ];
   const publicationFilterOptions = [
@@ -972,8 +974,8 @@ export default function App() {
                                   <div className="mt-1 w-8 h-8 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 flex items-center justify-center shrink-0 group-hover:bg-teal-50 dark:group-hover:bg-teal-900/40 group-hover:border-teal-100 dark:group-hover:border-teal-800 transition-all duration-300">
                                     <ArrowUpRight className="w-4 h-4 text-slate-400 dark:text-slate-500 group-hover:text-teal-500 dark:group-hover:text-teal-400 transition-colors" />
                                   </div>
-                                  <div className="space-y-2">
-                                    <span dangerouslySetInnerHTML={{ __html: publicationText.replace(/Ali, S\./g, '<strong class="text-slate-900 dark:text-white font-bold">Ali, S.</strong>') }} />
+                                  <div className="space-y-2 min-w-0">
+                                    <span className="break-words [overflow-wrap:anywhere]" dangerouslySetInnerHTML={{ __html: publicationText.replace(/Ali, S\./g, '<strong class="text-slate-900 dark:text-white font-bold">Ali, S.</strong>') }} />
                                     {pub.note && (
                                       <p
                                         className="text-sm italic text-slate-500 dark:text-slate-400"
