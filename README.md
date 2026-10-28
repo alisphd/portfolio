@@ -6,7 +6,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178c6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-6.x-646cff?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
 
-Personal portfolio website for **Saqib Ali**, a Plant Pathologist and Bioinformatician working across plant disease research, molecular diagnostics, computational genomics, and research software.
+Personal portfolio website for **Saqib Ali**, a Ph.D. student in Plant Pathology at Nanjing Agricultural University (Chinese Government Scholarship – High-Level Graduate Program) and a bioinformatician working across plant disease research, molecular diagnostics, computational genomics, and research software.
 
 ## Live Portfolio
 

@@ -106,7 +106,7 @@ const GALLERY_CATEGORY_COLORS: Record<string, string> = {
 const TYPING_ROLES = [
   'Plant Pathologist & Bioinformatician',
   'Computational Genomics Researcher',
-  'Rice Stress Biology Specialist',
+  'Ph.D. Student in Plant Pathology',
   'Multi-omics Data Scientist',
 ];
 
@@ -115,7 +115,7 @@ const SITE_IMAGE_URL = `${SITE_URL}portrait.jpg`;
 const SITE_NAME = 'Saqib Ali Portfolio';
 const SEO_TITLE = 'Saqib Ali | Plant Pathologist & Bioinformatician Portfolio';
 const SEO_DESCRIPTION =
-  'Portfolio of Saqib Ali, a plant pathologist and bioinformatician in Pakistan featuring publications, computational genomics, wet-lab diagnostics, research experience, and digital tools.';
+  'Portfolio of Saqib Ali, a Ph.D. student in plant pathology at Nanjing Agricultural University and a bioinformatician working on computational genomics, phylogenomics, wet-lab diagnostics, and digital research tools.';
 
 const GOOGLE_DRIVE_FILE_REGEX = /drive\.google\.com\/file\/d\/([^/]+)/i;
 
@@ -222,7 +222,7 @@ export default function App() {
           url: SITE_URL,
           email: `mailto:${cvData.contact.email}`,
           telephone: cvData.contact.phone,
-          jobTitle: cvData.title,
+          jobTitle: cvData.role,
           knowsAbout: [
             'Plant pathology',
             'Bioinformatics',
@@ -236,6 +236,11 @@ export default function App() {
             name: cvData.contact.location,
           },
           worksFor: {
+            '@type': 'CollegeOrUniversity',
+            name: 'Nanjing Agricultural University',
+            url: 'https://www.njau.edu.cn/',
+          },
+          affiliation: {
             '@type': 'Organization',
             name: 'Nuclear Institute for Agriculture and Biology (NIAB)',
           },
@@ -543,7 +548,7 @@ export default function App() {
               transition={{ delay: 0.5, type: "spring" }}
               className="absolute -bottom-2 -right-2 bg-white p-2 rounded-full shadow-lg border border-slate-100 z-20"
             >
-              <div className="w-4 h-4 bg-emerald-500 rounded-full border-2 border-white animate-pulse" title="Available for work"></div>
+              <div className="w-4 h-4 bg-emerald-500 rounded-full border-2 border-white animate-pulse" title="Ph.D. student at Nanjing Agricultural University"></div>
             </motion.div>
           </div>
 
@@ -571,10 +576,16 @@ export default function App() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.35 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full bg-teal-50 dark:bg-teal-900/40 border border-teal-100 dark:border-teal-800/60 text-teal-800 dark:text-teal-300 text-sm font-bold shadow-sm"
+              className="flex flex-wrap items-center justify-center md:justify-start gap-2 mb-8"
             >
-              <Sparkles className="w-4 h-4 text-teal-600 dark:text-teal-400" />
-              Seeking PhD & Research positions | Available 2026
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-50 dark:bg-teal-900/40 border border-teal-100 dark:border-teal-800/60 text-teal-800 dark:text-teal-300 text-sm font-bold shadow-sm">
+                <GraduationCap className="w-4 h-4 text-teal-600 dark:text-teal-400" />
+                {cvData.role}
+              </span>
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-50 dark:bg-amber-900/30 border border-amber-100 dark:border-amber-800/50 text-amber-800 dark:text-amber-300 text-sm font-bold shadow-sm">
+                <Award className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                CSC High-Level Graduate Program Scholar
+              </span>
             </motion.div>
 
             <motion.div
@@ -762,7 +773,7 @@ export default function App() {
                               <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white mb-2 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-300">{exp.title}</h3>
                               <div className="flex flex-wrap items-center gap-4 mb-6">
                                 <p className="text-slate-500 dark:text-slate-400 font-semibold text-lg">{exp.organization}</p>
-                                {exp.certificateUrl && (
+                                {exp.certificateUrl && exp.certificateUrl !== '#' && (
                                   <a
                                     href={exp.certificateUrl}
                                     target="_blank"
@@ -867,10 +878,21 @@ export default function App() {
                       <motion.div
                         key={idx}
                         whileHover={{ y: -5 }}
-                        className="p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col h-full hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:shadow-md hover:border-teal-200 dark:hover:border-teal-500/50 transition-all duration-500 group relative overflow-hidden"
+                        className={`p-8 rounded-2xl bg-white dark:bg-slate-900 border shadow-sm flex flex-col h-full hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:shadow-md transition-all duration-500 group relative overflow-hidden ${(edu as any).featured
+                          ? 'md:col-span-2 border-teal-200 dark:border-teal-500/40 ring-1 ring-teal-100 dark:ring-teal-500/20 hover:border-teal-300 dark:hover:border-teal-500/50'
+                          : 'border-slate-200 dark:border-slate-800 hover:border-teal-200 dark:hover:border-teal-500/50'
+                          }`}
                       >
                         <div className="absolute top-0 right-0 w-32 h-32 bg-teal-50 dark:bg-teal-900/20 rounded-bl-full -z-10 opacity-50 group-hover:scale-110 transition-transform duration-500"></div>
-                        <div className="text-xs font-bold text-teal-700 dark:text-teal-300 mb-6 bg-teal-50 dark:bg-teal-900/40 border border-teal-100 dark:border-teal-800/50 px-4 py-1.5 rounded-full w-max shadow-sm tracking-wide">{edu.period}</div>
+                        <div className="flex flex-wrap items-center gap-2 mb-6">
+                          <div className="text-xs font-bold text-teal-700 dark:text-teal-300 bg-teal-50 dark:bg-teal-900/40 border border-teal-100 dark:border-teal-800/50 px-4 py-1.5 rounded-full w-max shadow-sm tracking-wide">{edu.period}</div>
+                          {(edu as any).featured && (
+                            <div className="flex items-center gap-1.5 text-xs font-bold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-900/30 border border-amber-100 dark:border-amber-800/50 px-4 py-1.5 rounded-full w-max shadow-sm tracking-wide">
+                              <Award className="w-3.5 h-3.5" />
+                              Current Programme
+                            </div>
+                          )}
+                        </div>
                         <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white mb-3 leading-tight group-hover:text-teal-700 dark:group-hover:text-teal-400 transition-colors">{edu.degree}</h3>
                         <p className="text-slate-600 dark:text-slate-300 font-medium mb-8 flex-1 text-lg flex items-center gap-2">
                           <GraduationCap className="w-5 h-5 text-slate-400 dark:text-slate-500 shrink-0" />
@@ -883,21 +905,49 @@ export default function App() {
                           )}
                         </p>
 
-                        {(edu as any).thesis && (
-                          <div className="mb-8 p-4 bg-white dark:bg-slate-700/40 rounded-xl border border-slate-100 dark:border-slate-600/50 shadow-sm">
-                            <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider block mb-1.5">Thesis Topic</span>
-                            <p className="text-slate-700 dark:text-slate-300 text-sm font-medium leading-relaxed">{(edu as any).thesis}</p>
+                        {((edu as any).advisor || (edu as any).award || (edu as any).thesis) && (
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                            {(edu as any).advisor && (
+                              <div className="bg-slate-50 dark:bg-slate-700/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-600/50 flex items-center gap-4">
+                                <div className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center shadow-sm">
+                                  <User className="w-5 h-5 text-slate-400 dark:text-slate-500" />
+                                </div>
+                                <div>
+                                  <div className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Advisor</div>
+                                  <div className="text-sm font-bold text-slate-700 dark:text-slate-300">{(edu as any).advisor}</div>
+                                </div>
+                              </div>
+                            )}
+                            {(edu as any).award && (
+                              <div className="bg-amber-50/60 dark:bg-amber-900/20 p-5 rounded-2xl border border-amber-100 dark:border-amber-800/50 flex items-center gap-4">
+                                <div className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 flex items-center justify-center shadow-sm">
+                                  <Award className="w-5 h-5 text-amber-500 dark:text-amber-400" />
+                                </div>
+                                <div>
+                                  <div className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Award</div>
+                                  <div className="text-sm font-bold text-slate-700 dark:text-slate-300">{(edu as any).award}</div>
+                                </div>
+                              </div>
+                            )}
+                            {(edu as any).thesis && (
+                              <div className="bg-slate-50 dark:bg-slate-700/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-600/50 sm:col-span-2">
+                                <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider block mb-1.5">Thesis Topic</span>
+                                <p className="text-slate-700 dark:text-slate-300 text-sm font-medium leading-relaxed">{(edu as any).thesis}</p>
+                              </div>
+                            )}
                           </div>
                         )}
 
-                        <div className="flex items-center justify-between pt-6 border-t border-slate-100 dark:border-slate-800 mt-auto">
+                        <div className="flex items-center justify-between gap-4 pt-6 border-t border-slate-100 dark:border-slate-800 mt-auto">
                           <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 font-medium">
-                            <MapPin className="w-4 h-4 text-slate-400 dark:text-slate-500" />
+                            <MapPin className="w-4 h-4 text-slate-400 dark:text-slate-500 shrink-0" />
                             <span>{edu.location}</span>
                           </div>
-                          <div className="bg-slate-800 dark:bg-teal-500/20 text-white dark:text-teal-300 px-4 py-1.5 rounded-xl text-sm font-bold shadow-md">
-                            CGPA: {edu.cgpa}
-                          </div>
+                          {(edu as any).cgpa && (
+                            <div className="bg-slate-800 dark:bg-teal-500/20 text-white dark:text-teal-300 px-4 py-1.5 rounded-xl text-sm font-bold shadow-md shrink-0">
+                              CGPA: {(edu as any).cgpa}
+                            </div>
+                          )}
                         </div>
                       </motion.div>
                     ))}
@@ -1286,7 +1336,7 @@ export default function App() {
                           <div>
                             <div className="flex items-center justify-between gap-4 mb-1">
                               <h4 className="font-extrabold text-slate-900 dark:text-white text-xl">{item.title}</h4>
-                              {item.certificateUrl && (
+                              {item.certificateUrl && item.certificateUrl !== '#' && (
                                 <a
                                   href={item.certificateUrl}
                                   target="_blank"
@@ -1317,7 +1367,7 @@ export default function App() {
                         >
                           <div className="flex items-start justify-between gap-4 mb-6">
                             <h4 className="font-bold text-slate-900 dark:text-white text-lg leading-snug flex-1 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">{cert.title}</h4>
-                            {cert.certificateUrl && (
+                            {cert.certificateUrl && cert.certificateUrl !== '#' && (
                               <a
                                 href={cert.certificateUrl}
                                 target="_blank"

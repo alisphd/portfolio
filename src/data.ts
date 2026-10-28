@@ -1,6 +1,7 @@
 export const cvData = {
   name: "Saqib Ali",
   title: "Plant Pathologist & Bioinformatician",
+  role: "Ph.D. Student in Plant Pathology, Nanjing Agricultural University",
   contact: {
     phone: "+92-347-1158-223",
     email: "saqibalilogan223@gmail.com",
@@ -9,8 +10,18 @@ export const cvData = {
     wechat: "saqibali01",
     location: "Chiniot, Punjab, Pakistan"
   },
-  about: "<strong>Plant Pathologist and Bioinformatician (M.Sc. Hons.)</strong> combining wet-lab molecular diagnostics with advanced computational pipelines to solve complex research challenges in plant-pathogen interactions and stress-responsive gene discovery.<br/><br/>Specializing in multi-omics integration, network pharmacology, phylogenomics, and applied machine learning, with a proven ability to bridge the critical gap between predictive analytics and physiological validation.",
+  about: "<strong>Plant pathologist and bioinformatician (M.Sc. Hons.)</strong> specializing in comparative genomics, phylogenomics, molecular evolution, structural bioinformatics, and network pharmacology. Combines wet-lab experience in molecular diagnostics, SSR genotyping, marker-assisted selection, and physiological stress screening with computational expertise in genome-wide gene family analysis, synteny mapping, protein structure prediction, docking, molecular dynamics, population genetics, and integrative R/Python workflows for plant–pathogen interaction and functional genomics research.<br/><br/>Currently a <strong>Ph.D. student in Plant Pathology at Nanjing Agricultural University</strong> (Chinese Government Scholarship – High-Level Graduate Program), working with Prof. Dr. Yi Xu.",
   education: [
+    {
+      degree: "Ph.D. Plant Pathology",
+      institution: "Nanjing Agricultural University",
+      institutionUrl: "https://www.njau.edu.cn/",
+      location: "Nanjing, Jiangsu, China",
+      period: "Sep 2026 – Present",
+      advisor: "Prof. Dr. Yi Xu",
+      award: "Chinese Government Scholarship (CSC) – High-Level Graduate Program",
+      featured: true
+    },
     {
       degree: "M.Sc. (Hons.) Agriculture Plant Pathology",
       institution: "University of Agriculture Faisalabad",
@@ -33,7 +44,7 @@ export const cvData = {
       title: "Research Fellow",
       organization: "Nuclear Institute for Agriculture and Biology - (PAEC-IAEC)",
       location: "Faisalabad, Pakistan",
-      period: "Sep 2025 – Present",
+      period: "Sep 2025 – Aug 2026",
       supervisor: "Dr. Muhammad Rashid",
       supervisorUrl: "https://www.researchgate.net/profile/Muhammad-Rashid-66",
       certificateUrl: "https://drive.google.com/file/d/14XRTN_t0_nuX0CChL30IpVVl99rK-1Jl/view?usp=sharing",
@@ -74,6 +85,18 @@ export const cvData = {
             "Performed plant pathology assays including inoculum preparation, pathogen staining, varietal screening, and plant–pathogen interaction studies."
           ]
         }
+      ]
+    },
+    {
+      title: "Agriculture Finance Officer (OG-III)",
+      organization: "National Bank of Pakistan",
+      location: "Faisalabad, Pakistan",
+      period: "Oct 2025 – Aug 2026",
+      details: [
+        "Agricultural portfolio management: managed and evaluated agricultural credit portfolios for local farming communities across the 229 RB and 66 GB branch territories, ensuring financial viability and alignment with national agricultural lending policies.",
+        "Corporate farm feasibility: conducted on-site technical assessments and operational evaluations for large-scale corporate farming enterprises (e.g., Kasuri Farm) to guide strategic financial planning and loan disbursement.",
+        "Agro-financial extension: bridged agronomic expertise with financial advisory, providing direct, farmer-facing support to improve farm resource management, optimize crop yields, and promote sustainable agricultural practices.",
+        "Risk assessment & compliance: analyzed agricultural production risks, verified crop and land data, and managed complex financial documentation to secure agricultural loans and monitor ongoing farm operations."
       ]
     },
     {
@@ -141,7 +164,7 @@ export const cvData = {
       title: "Independent Research Projects",
       organization: "Personal Projects",
       location: "Faisalabad, Pakistan",
-      period: "2024 – Present",
+      period: "Jan 2026 – Present",
       certificateUrl: "#",
       projects: [
         {
@@ -170,8 +193,8 @@ export const cvData = {
     summary: "12 publications, preprints, and submitted manuscripts; 4 conference presentations",
     submitted: [
       { text: "Ali, S.<sup>^</sup>, Che Hussian, C. H. A.<sup>^</sup>, & Goh, H.-H.<sup>*</sup> (2026). Systems biology and multi-omics approaches for understanding yeast probiotics. Submitted to Biotechnology Advances (Elsevier), Manuscript ID: JBA-D-26-01033.", pdfUrl: "#", note: "^Saqib Ali and C. H. A. Che Hussian contributed equally to this work; *Corresponding author." },
-      { text: "Ali, S. (2026). Reassessing the Soybean IQD Gene Family in the Wm82.a6 Genome: Duplication Patterns and Drought-Responsive Candidates. Submitted to Journal of the Saudi Society of Agricultural Sciences.", pdfUrl: "#", previewUrl: "papers/soybean-wm82-a6-iqd-gene-family.pdf" },
-      { text: "Ali, S., Hanjra, Z., Saeed, M., Fatima, T., Khalil, S., Iltaf, B., & Rashid, M. (2026). Genome-wide identification and comparative characterization of WRKY transcription factors across three cultivated Oryza species reveals lineage-specific regulatory divergence. Submitted to Rice Science (ricesci.org, ISSN 1672-6308), Manuscript ID: RiceSci-2026-0181.", pdfUrl: "https://drive.google.com/file/d/1g_hxejY7ex4vHViSB6o_Jp9LCCBN-asv/view?usp=sharing", previewUrl: "papers/oryza-wrky-lineage-specific-regulatory-divergence.pdf" },
+      { text: "Ali, S. (2026). Reassessing the Soybean IQD Gene Family in the Wm82.a6 Genome: Duplication Patterns and Drought-Responsive Candidates. Submitted to Discover Plant.", pdfUrl: "#", previewUrl: "papers/soybean-wm82-a6-iqd-gene-family.pdf" },
+      { text: "Ali, S., Hanjra, Z., Saeed, M., Fatima, T., Khalil, S., Iltaf, B., & Rashid, M. (2026). Genome-wide identification and comparative characterization of WRKY transcription factors across three cultivated Oryza species reveals lineage-specific regulatory divergence. Submitted to BMC Plant Biology.", pdfUrl: "https://drive.google.com/file/d/1g_hxejY7ex4vHViSB6o_Jp9LCCBN-asv/view?usp=sharing", previewUrl: "papers/oryza-wrky-lineage-specific-regulatory-divergence.pdf" },
     ],
     published: [
       { text: "Ali, S., & Goh, H.-H. (2026). Multi-Omics Integration for Abiotic Stress Acclimation in Tropical and Underutilized Plants. Phyton-International Journal of Experimental Botany, 95(6), 3. https://doi.org/10.32604/phyton.2026.084657.", pdfUrl: "https://doi.org/10.32604/phyton.2026.084657" },
@@ -203,6 +226,12 @@ export const cvData = {
     "Ad-hoc Reviewer, Journal of Advances in Biology & Biotechnology (2025)."
   ],
   honors: [
+    {
+      title: "Chinese Government Scholarship (CSC) – High-Level Graduate Program",
+      organization: "China Scholarship Council",
+      location: "Nanjing, China",
+      period: "Sep 2026 – Present"
+    },
     {
       title: "Ehsaas Undergraduate Scholarship",
       organization: "HEC Pakistan",
@@ -769,7 +798,7 @@ export const cvData = {
         "Motif discovery (MEME Suite)",
         "Chromosomal mapping, synteny and duplication analysis (MCScanX)",
         "Promoter cis-element analysis (PlantCARE)",
-        "RNA-seq expression profiling"
+        "RNA-seq expression profiling and differential expression (edgeR, DESeq2)"
       ]
     },
     {
