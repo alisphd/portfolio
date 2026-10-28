@@ -1,7 +1,7 @@
 export const cvData = {
   name: "Saqib Ali",
   title: "Plant Pathologist & Bioinformatician",
-  role: "Ph.D. Student in Plant Pathology, Nanjing Agricultural University",
+  role: "Ph.D. Student · Plant Molecular Virology & Genomics AI",
   contact: {
     phone: "+92-347-1158-223",
     email: "saqibalilogan223@gmail.com",
@@ -10,7 +10,7 @@ export const cvData = {
     wechat: "saqibali01",
     location: "Chiniot, Punjab, Pakistan"
   },
-  about: "<strong>Plant pathologist and bioinformatician (M.Sc. Hons.)</strong> specializing in comparative genomics, phylogenomics, molecular evolution, structural bioinformatics, and network pharmacology. Combines wet-lab experience in molecular diagnostics, SSR genotyping, marker-assisted selection, and physiological stress screening with computational expertise in genome-wide gene family analysis, synteny mapping, protein structure prediction, docking, molecular dynamics, population genetics, and integrative R/Python workflows for plant–pathogen interaction and functional genomics research.<br/><br/>Currently a <strong>Ph.D. student in Plant Pathology at Nanjing Agricultural University</strong> (Chinese Government Scholarship – High-Level Graduate Program), working with Prof. Dr. Yi Xu.",
+  about: "<strong>Plant pathologist and bioinformatician (M.Sc. Hons.)</strong> specializing in comparative genomics, phylogenomics, molecular evolution, structural bioinformatics, and network pharmacology. Combines wet-lab experience in molecular diagnostics, SSR genotyping, marker-assisted selection, and physiological stress screening with computational expertise in genome-wide gene family analysis, synteny mapping, protein structure prediction, docking, molecular dynamics, population genetics, and integrative R/Python workflows for plant–pathogen interaction and functional genomics research.<br/><br/>Currently a <strong>Ph.D. student in Plant Pathology at Nanjing Agricultural University</strong> (Chinese Government Scholarship – High-Level Graduate Program), working in the <strong>Plant Molecular Virology lab of Prof. Dr. Yi Xu</strong> on <strong>genomics- and AI-driven identification of plant viruses</strong>. The lab studies the mechanisms and control of virus diseases in soybean and potato, work that connects directly with my own research on soybean stay-green associated virus.",
   education: [
     {
       degree: "Ph.D. Plant Pathology",
@@ -777,6 +777,17 @@ export const cvData = {
     }
   ],
   skills: [
+    {
+      category: "Plant Molecular Virology & Virus Discovery",
+      details: [
+        "Genomics- and AI-driven plant virus identification",
+        "Viral genome assembly, annotation and curation",
+        "Virome data mining (GenBank, NCBI Virus)",
+        "Machine learning for virus detection and classification",
+        "Plant virus diagnostics (PCR, ELISA, sequencing-based)",
+        "Soybean and potato virus pathosystems"
+      ]
+    },
     {
       category: "Molecular Biology & Plant Pathology",
       details: [

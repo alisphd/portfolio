@@ -105,9 +105,9 @@ const GALLERY_CATEGORY_COLORS: Record<string, string> = {
 
 const TYPING_ROLES = [
   'Plant Pathologist & Bioinformatician',
+  'Genomics AI for Plant Virus Identification',
+  'Plant Molecular Virology Researcher',
   'Computational Genomics Researcher',
-  'Ph.D. Student in Plant Pathology',
-  'Multi-omics Data Scientist',
 ];
 
 const SITE_URL = 'https://alisphd.github.io/portfolio/';
@@ -115,7 +115,7 @@ const SITE_IMAGE_URL = `${SITE_URL}portrait.jpg`;
 const SITE_NAME = 'Saqib Ali Portfolio';
 const SEO_TITLE = 'Saqib Ali | Plant Pathologist & Bioinformatician Portfolio';
 const SEO_DESCRIPTION =
-  'Portfolio of Saqib Ali, a Ph.D. student in plant pathology at Nanjing Agricultural University and a bioinformatician working on computational genomics, phylogenomics, wet-lab diagnostics, and digital research tools.';
+  'Portfolio of Saqib Ali, a Ph.D. student in plant pathology at Nanjing Agricultural University working on genomics and AI for plant virus identification in the Plant Molecular Virology lab, with a background in computational genomics, phylogenomics, and wet-lab diagnostics.';
 
 const GOOGLE_DRIVE_FILE_REGEX = /drive\.google\.com\/file\/d\/([^/]+)/i;
 
@@ -225,10 +225,11 @@ export default function App() {
           jobTitle: cvData.role,
           knowsAbout: [
             'Plant pathology',
+            'Plant molecular virology',
+            'Genomics AI for virus identification',
             'Bioinformatics',
             'Computational genomics',
             'Plant disease diagnostics',
-            'Wet-lab molecular diagnostics',
             'Multi-omics integration',
           ],
           homeLocation: {
@@ -714,9 +715,9 @@ export default function App() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
                     {[
-                      { icon: Sprout, title: "Wet-Lab Expertise", desc: ["Molecular diagnostics & PCR", "SSR genotyping & MAS", "Biochemical stress screening"] },
-                      { icon: Dna, title: "Computational Biology", desc: ["Genome-wide & synteny mapping", "Protein structure & dynamics", "Phylogenomics & evolution"] },
-                      { icon: Leaf, title: "Data Workflows", desc: ["R/Python pipelines", "Plant-pathogen interactions", "Stress-responsive gene discovery"] }
+                      { icon: Microscope, title: "Plant Molecular Virology", desc: ["Genomics- & AI-driven virus ID", "Viral genome assembly & annotation", "Soybean & potato virus pathosystems"] },
+                      { icon: Brain, title: "Genomics & AI", desc: ["ML for virus detection", "Genome-wide & synteny analysis", "Phylogenomics & molecular evolution"] },
+                      { icon: FlaskConical, title: "Wet-Lab & Field", desc: ["Molecular diagnostics & PCR", "SSR genotyping & MAS", "Biochemical stress screening"] }
                     ].map((item, i) => (
                       <div key={i} className="p-8 rounded-2xl bg-white dark:bg-slate-700/40 border border-slate-200 dark:border-slate-600/50 shadow-sm hover:bg-teal-50 dark:hover:bg-slate-700/60 hover:shadow-md hover:border-teal-200 dark:hover:border-teal-500/50 transition-all duration-300 group">
                         <div className="w-14 h-14 bg-slate-50 dark:bg-slate-800/50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-white dark:group-hover:bg-slate-800 group-hover:shadow-sm transition-all duration-300">
