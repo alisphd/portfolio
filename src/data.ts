@@ -10,7 +10,7 @@ export const cvData = {
     wechat: "saqibali01",
     location: "Chiniot, Punjab, Pakistan"
   },
-  about: "<strong>Plant pathologist and bioinformatician (M.Sc. Hons.)</strong> specializing in comparative genomics, phylogenomics, molecular evolution, structural bioinformatics, and network pharmacology. Combines wet-lab experience in molecular diagnostics, SSR genotyping, marker-assisted selection, and physiological stress screening with computational expertise in genome-wide gene family analysis, synteny mapping, protein structure prediction, docking, molecular dynamics, population genetics, and integrative R/Python workflows for plant–pathogen interaction and functional genomics research.<br/><br/>Currently a <strong>Ph.D. student in Plant Pathology at Nanjing Agricultural University</strong> (Chinese Government Scholarship – High-Level Graduate Program), working in the <strong>Plant Molecular Virology lab of Prof. Dr. Yi Xu</strong> on <strong>genomics- and AI-driven identification of plant viruses</strong>. The lab studies the mechanisms and control of virus diseases in soybean and potato, work that connects directly with my own research on soybean stay-green associated virus.",
+  about: "<strong>Plant pathologist and bioinformatician (M.Sc. Hons.)</strong> specializing in comparative genomics, phylogenomics, molecular evolution, structural bioinformatics, and network pharmacology. Combines wet-lab experience in molecular diagnostics, SSR genotyping, marker-assisted selection, and physiological stress screening with computational expertise in genome-wide gene family analysis, synteny mapping, protein structure prediction, docking, molecular dynamics, population genetics, and integrative R/Python workflows for plant–pathogen interaction and functional genomics research.<br/><br/>Currently a <strong>Ph.D. student in Plant Pathology at Nanjing Agricultural University</strong> (Chinese Government Scholarship – High-Level Graduate Program), working with Prof. Dr. Yi Xu.",
   education: [
     {
       degree: "Ph.D. Plant Pathology",
@@ -170,20 +170,17 @@ export const cvData = {
         {
           name: "Evolutionary Origins and Structural Mechanism of V2-Mediated Host Immunity Suppression in Soybean Stay-Green Associated Virus (SoSGV)",
           details: [
-            "Compiled 54 complete SoSGV genomes plus 15 begomovirus/curtovirus/mastrevirus outgroups from GenBank; performed MAFFT L-INS-i alignment, manual curation in BioEdit, V2 ORF extraction, and reconstructed maximum-likelihood (96% bootstrap) and Bayesian phylogenies in MEGA11/ggtree/MrBayes under the GTR+G+I model, recovering SoSGV as a distinct monophyletic lineage.",
-            "Estimated population genetic parameters in DnaSP (Hd = 0.962, π = 0.022, Tajima's D = −1.49), consistent with recent demographic expansion; detected two robust CP-region recombination events (p < 1×10⁻⁶) using RDP5 with seven algorithms and independently verified mosaic structure via custom Python SimPlot-style sliding-window analysis.",
-            "Identified episodic positive selection at V2 codons 35 and 36 (MEME, p < 0.1), gene-wide adaptive signal (BUSTED, p = 0.035), and independent support from FEL, FUBAR, and CODEML (M8 vs M8a: 2ΔlnL = 31.99, p = 1.55×10⁻⁸); predicted V2 structure (mean pLDDT = 73.36) using ColabFold, docked the complex with ASK1/SKP1 via HDOCK (score = −209.25, 39 interface residues), and assessed short-timescale structural behavior by GROMACS molecular dynamics simulation (10 ns, CHARMM36m)."
+            "Reconstructed the evolutionary history of SoSGV from complete viral genomes alongside related outgroup taxa, resolving its phylogenetic position and the events shaping its divergence.",
+            "Characterised population genetic diversity, recombination and selection pressure across the viral genome to identify the evolutionary forces acting on the virus.",
+            "Combined protein structure prediction, protein–protein docking and short-timescale molecular dynamics to explore how the V2 protein may interfere with host immunity signalling."
           ]
         },
         {
           name: "Genome-Wide Identification and Integrative Characterization of the IQD Gene Family in Soybean Wm82.a6",
           details: [
-            "Retrieved and validated 69 non-redundant GmIQD proteins from the Wm82.a6 soybean genome (48,387 gene models) using a combined HMMER, NCBI Batch CD-Search (CDD/Pfam PF00612), and manual domain-validation pipeline across 83 preliminary candidates.",
-            "Reconstructed a maximum-likelihood comparative phylogeny of 131 IQD proteins from soybean, Arabidopsis, and rice using MAFFT L-INS-i and IQ-TREE/ModelFinder (JTT+R6), classifying GmIQD proteins into four major groups and identifying a soybean-expanded clade consistent with polyploidy-driven retention.",
-            "Performed MCScanX whole-genome self-collinearity analysis to identify 37 unique GmIQD duplicated pairs; estimated Ka/Ks ratios for 30 pairs (median 0.281, range 0.100–0.592), confirming dominant purifying selection after duplication.",
-            "Scanned 2 kb upstream promoter regions using PlantCARE, detecting enrichment of W-box (88.4%), ABRE (73.9%), AuxRE, ERE, MeJA, MBS, DRE/CRT, and GARE motifs across 69 GmIQD promoters.",
-            "Mined public soybean drought time-course RNA-seq data (GSE69469; 36 libraries, BR16 leaves, ZT0–ZT20, six timepoints) to identify 13 edgeR-supported drought-responsive GmIQD events across 11 genes (FDR ≤0.01, |FC| ≥2).",
-            "Developed a multi-evidence integrated scoring framework combining promoter strength, MCScanX support, Ka/Ks constraint, drought log2FC magnitude, edgeR DEG status, and Wm82.a6-novel candidate status to prioritize GmIQD26 and GmIQD16 as top candidates for functional validation."
+            "Identified and validated the non-redundant GmIQD gene family in the soybean Wm82.a6 genome through combined domain-based searching and manual domain validation.",
+            "Reconstructed a comparative phylogeny with Arabidopsis and rice IQD proteins, classified soybean members into major groups, and analysed duplication events together with selection pressure to trace family expansion.",
+            "Integrated promoter cis-element analysis with public drought time-course RNA-seq data to prioritise candidate genes for functional validation."
           ]
         }
       ]
