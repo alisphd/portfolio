@@ -6,7 +6,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178c6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-6.x-646cff?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
 
-Personal portfolio website for **Saqib Ali**, a Ph.D. student in Plant Pathology at Nanjing Agricultural University (Chinese Government Scholarship – High-Level Graduate Program) working in the Plant Molecular Virology lab of Prof. Dr. Yi Xu on genomics- and AI-driven plant virus identification, with a background in computational genomics, phylogenomics, molecular diagnostics, and research software.
+Personal portfolio website for **Saqib Ali**, a Ph.D. student in Plant Pathology at Nanjing Agricultural University, working on plant molecular virology and genomics, with a background in computational genomics, phylogenomics, molecular diagnostics, and research software.
 
 ## Live Portfolio
 

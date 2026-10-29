@@ -10,7 +10,7 @@ export const cvData = {
     wechat: "saqibali01",
     location: "Chiniot, Punjab, Pakistan"
   },
-  about: "<strong>Plant pathologist and bioinformatician (M.Sc. Hons.)</strong> specializing in comparative genomics, phylogenomics, molecular evolution, structural bioinformatics, and network pharmacology. Combines wet-lab experience in molecular diagnostics, SSR genotyping, marker-assisted selection, and physiological stress screening with computational expertise in genome-wide gene family analysis, synteny mapping, protein structure prediction, docking, molecular dynamics, population genetics, and integrative R/Python workflows for plant–pathogen interaction and functional genomics research.<br/><br/>Currently a <strong>Ph.D. student in Plant Pathology at Nanjing Agricultural University</strong> (Chinese Government Scholarship – High-Level Graduate Program), working with Prof. Dr. Yi Xu.",
+  about: "<strong>Plant pathologist and bioinformatician (M.Sc. Hons.)</strong> specializing in comparative genomics, phylogenomics, molecular evolution, structural bioinformatics, and network pharmacology. Combines wet-lab experience in molecular diagnostics, SSR genotyping, marker-assisted selection, and physiological stress screening with computational expertise in genome-wide gene family analysis, synteny mapping, protein structure prediction, docking, molecular dynamics, population genetics, and integrative R/Python workflows for plant–pathogen interaction and functional genomics research.<br/><br/>Currently a <strong>Ph.D. student in Plant Pathology at Nanjing Agricultural University</strong>.",
   education: [
     {
       degree: "Ph.D. Plant Pathology",
@@ -18,8 +18,6 @@ export const cvData = {
       institutionUrl: "https://www.njau.edu.cn/",
       location: "Nanjing, Jiangsu, China",
       period: "Sep 2026 – Present",
-      advisor: "Prof. Dr. Yi Xu",
-      award: "Chinese Government Scholarship (CSC) – High-Level Graduate Program",
       featured: true
     },
     {
@@ -223,12 +221,6 @@ export const cvData = {
     "Ad-hoc Reviewer, Journal of Advances in Biology & Biotechnology (2025)."
   ],
   honors: [
-    {
-      title: "Chinese Government Scholarship (CSC) – High-Level Graduate Program",
-      organization: "China Scholarship Council",
-      location: "Nanjing, China",
-      period: "Sep 2026 – Present"
-    },
     {
       title: "Ehsaas Undergraduate Scholarship",
       organization: "HEC Pakistan",

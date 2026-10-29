@@ -583,10 +583,6 @@ export default function App() {
                 <GraduationCap className="w-4 h-4 text-teal-600 dark:text-teal-400" />
                 {cvData.role}
               </span>
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-50 dark:bg-amber-900/30 border border-amber-100 dark:border-amber-800/50 text-amber-800 dark:text-amber-300 text-sm font-bold shadow-sm">
-                <Award className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-                CSC High-Level Graduate Program Scholar
-              </span>
             </motion.div>
 
             <motion.div
