@@ -113,6 +113,7 @@ const TYPING_ROLES = [
 
 const RESEARCH_INTEREST_SCORE = '22.5';
 const CITATION_COUNT = 1;
+const H_INDEX = 1;
 
 const PUBLICATION_COUNTS = (() => {
   const p: any = cvData.publications ?? {};
@@ -749,14 +750,15 @@ export default function App() {
                     ))}
                   </div>
 
-                  <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="mt-10 grid grid-cols-2 lg:grid-cols-5 gap-4">
                     {[
                       { value: PUBLICATION_COUNTS.publications, label: 'Publications & preprints' },
                       { value: CITATION_COUNT, label: 'Citations' },
+                      { value: H_INDEX, label: 'h-index' },
                       { value: PUBLICATION_COUNTS.conferences, label: 'Conference abstracts' },
                       { value: RESEARCH_INTEREST_SCORE, label: 'Research Interest Score', source: 'ResearchGate' }
                     ].map((metric, i) => (
-                      <div key={i} className="rounded-2xl border border-slate-200 dark:border-slate-600/50 bg-slate-50/60 dark:bg-slate-700/30 px-6 py-5 text-center sm:text-left transition-colors duration-300">
+                      <div key={i} className={`rounded-2xl border border-slate-200 dark:border-slate-600/50 bg-slate-50/60 dark:bg-slate-700/30 px-5 py-5 text-center sm:text-left transition-colors duration-300 ${i === 4 ? 'col-span-2 lg:col-span-1' : ''}`}>
                         <div className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">{metric.value}</div>
                         <div className="mt-1 text-[11px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">{metric.label}</div>
                         {metric.source && (
