@@ -112,6 +112,7 @@ const TYPING_ROLES = [
 ];
 
 const RESEARCH_INTEREST_SCORE = '22.5';
+const CITATION_COUNT = 1;
 
 const PUBLICATION_COUNTS = (() => {
   const p: any = cvData.publications ?? {};
@@ -748,9 +749,10 @@ export default function App() {
                     ))}
                   </div>
 
-                  <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     {[
                       { value: PUBLICATION_COUNTS.publications, label: 'Publications & preprints' },
+                      { value: CITATION_COUNT, label: 'Citations' },
                       { value: PUBLICATION_COUNTS.conferences, label: 'Conference abstracts' },
                       { value: RESEARCH_INTEREST_SCORE, label: 'Research Interest Score', source: 'ResearchGate' }
                     ].map((metric, i) => (
