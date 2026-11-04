@@ -111,6 +111,17 @@ const TYPING_ROLES = [
   'Computational Genomics Researcher',
 ];
 
+const RESEARCH_INTEREST_SCORE = '22.5';
+
+const PUBLICATION_COUNTS = (() => {
+  const p: any = cvData.publications ?? {};
+  const publications = [p.published, p.submitted, p.reviewSubmitted, p.reviews, p.preprints]
+    .filter(Array.isArray)
+    .reduce((total: number, group: any[]) => total + group.length, 0);
+  const conferences = Array.isArray(p.conferences) ? p.conferences.length : 0;
+  return { publications, conferences };
+})();
+
 const SITE_URL = 'https://alisphd.github.io/portfolio/';
 const SITE_IMAGE_URL = `${SITE_URL}portrait.jpg`;
 const SITE_NAME = 'Saqib Ali Portfolio';
@@ -733,6 +744,22 @@ export default function App() {
                             </li>
                           ))}
                         </ul>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    {[
+                      { value: PUBLICATION_COUNTS.publications, label: 'Publications & preprints' },
+                      { value: PUBLICATION_COUNTS.conferences, label: 'Conference abstracts' },
+                      { value: RESEARCH_INTEREST_SCORE, label: 'Research Interest Score', source: 'ResearchGate' }
+                    ].map((metric, i) => (
+                      <div key={i} className="rounded-2xl border border-slate-200 dark:border-slate-600/50 bg-slate-50/60 dark:bg-slate-700/30 px-6 py-5 text-center sm:text-left transition-colors duration-300">
+                        <div className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">{metric.value}</div>
+                        <div className="mt-1 text-[11px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">{metric.label}</div>
+                        {metric.source && (
+                          <div className="mt-0.5 text-[11px] font-medium text-slate-400 dark:text-slate-500">{metric.source}</div>
+                        )}
                       </div>
                     ))}
                   </div>
