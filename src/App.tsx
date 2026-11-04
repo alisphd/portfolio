@@ -583,6 +583,10 @@ export default function App() {
                 <GraduationCap className="w-4 h-4 text-teal-600 dark:text-teal-400" />
                 {cvData.role}
               </span>
+              <span className="inline-flex items-center gap-1.5 px-2 text-sm font-semibold text-slate-500 dark:text-slate-400">
+                <MapPin className="w-4 h-4" />
+                {cvData.contact.location}
+              </span>
             </motion.div>
 
             <motion.div

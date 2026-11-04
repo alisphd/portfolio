@@ -8,7 +8,7 @@ export const cvData = {
     linkedin: "saqibalilogan",
     github: "saqibalilogan",
     wechat: "saqibali01",
-    location: "Chiniot, Punjab, Pakistan"
+    location: "Nanjing, China"
   },
   about: "<strong>Plant pathologist and bioinformatician (M.Sc. Hons.)</strong> specializing in comparative genomics, phylogenomics, molecular evolution, structural bioinformatics, and network pharmacology. Combines wet-lab experience in molecular diagnostics, SSR genotyping, marker-assisted selection, and physiological stress screening with computational expertise in genome-wide gene family analysis, synteny mapping, protein structure prediction, docking, molecular dynamics, population genetics, and integrative R/Python workflows for plant–pathogen interaction and functional genomics research.<br/><br/>Currently a <strong>Ph.D. student in Plant Pathology at Nanjing Agricultural University</strong>.",
   education: [
