@@ -1,7 +1,7 @@
 export const cvData = {
   name: "Saqib Ali",
   title: "Plant Pathologist & Bioinformatician",
-  role: "Ph.D. Student · Plant Molecular Virology & Genomics AI",
+  role: "Ph.D. Student at Nanjing Agricultural University",
   contact: {
     phone: "+92-347-1158-223",
     email: "saqibalilogan223@gmail.com",
@@ -13,7 +13,7 @@ export const cvData = {
   about: "<strong>Plant pathologist and bioinformatician (M.Sc. Hons.)</strong> specializing in comparative genomics, phylogenomics, molecular evolution, structural bioinformatics, and network pharmacology. Combines wet-lab experience in molecular diagnostics, SSR genotyping, marker-assisted selection, and physiological stress screening with computational expertise in genome-wide gene family analysis, synteny mapping, protein structure prediction, docking, molecular dynamics, population genetics, and integrative R/Python workflows for plant–pathogen interaction and functional genomics research.<br/><br/>Currently a <strong>Ph.D. student in Plant Pathology at Nanjing Agricultural University</strong>.",
   education: [
     {
-      degree: "Ph.D. Plant Pathology",
+      degree: "Doctor of Philosophy (Ph.D.) in Plant Pathology",
       institution: "Nanjing Agricultural University",
       institutionUrl: "https://www.njau.edu.cn/",
       location: "Nanjing, Jiangsu, China",

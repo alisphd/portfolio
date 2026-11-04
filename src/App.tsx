@@ -104,9 +104,9 @@ const GALLERY_CATEGORY_COLORS: Record<string, string> = {
 };
 
 const TYPING_ROLES = [
-  'Plant Pathologist & Bioinformatician',
+  'Plant Molecular Virology & Genomics AI',
   'Genomics AI for Plant Virus Identification',
-  'Plant Molecular Virology Researcher',
+  'Plant Pathologist & Bioinformatician',
   'Computational Genomics Researcher',
 ];
 
