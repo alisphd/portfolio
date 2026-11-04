@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import {
   Mail, Phone, MapPin, Linkedin, BookOpen, Briefcase,
   Award, GraduationCap, Code, FileText, User, ChevronRight, ChevronLeft, ChevronDown,
-  Search, ExternalLink, Image, Layers, Sparkles, Building, PlayCircle, Binary, Library, Trophy, ShieldCheck, Sun, Moon, ArrowUpRight, ArrowUp, Github, Code2, Globe, Cpu, Database, Fingerprint, Activity, Terminal, Layout, Share2, Workflow, MessageSquare, Mic, FileAudio, Youtube, Podcast, Zap, MonitorPlay, Focus, X, Microscope, Sprout, Dna, FlaskConical, Leaf, FileSearch, Brain, FlaskRound, Atom, Filter
+  Search, ExternalLink, Image, Layers, Sparkles, Building, PlayCircle, Binary, Library, Trophy, ShieldCheck, Sun, Moon, ArrowUpRight, ArrowUp, Github, Code2, Globe, Home, Cpu, Database, Fingerprint, Activity, Terminal, Layout, Share2, Workflow, MessageSquare, Mic, FileAudio, Youtube, Podcast, Zap, MonitorPlay, Focus, X, Microscope, Sprout, Dna, FlaskConical, Leaf, FileSearch, Brain, FlaskRound, Atom, Filter
 } from 'lucide-react';
 import { cvData } from './data';
 
@@ -23,7 +23,7 @@ interface TabConfig {
 }
 
 const TABS: TabConfig[] = [
-  { id: 'about', label: 'About Me', icon: User },
+  { id: 'about', label: 'Home', icon: Home },
   { id: 'experience', label: 'Experience', icon: FlaskConical },
   { id: 'education', label: 'Education', icon: GraduationCap },
   { id: 'publications', label: 'Publications', icon: FileSearch },
